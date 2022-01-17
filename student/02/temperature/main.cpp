@@ -7,8 +7,8 @@ int main()
     double lampotila = 0;
     cout << "Enter a temperature: "<< endl;
     cin >> lampotila;
-    double fahrenheit = (lampotila * 1.8) +32;
-    cout << lampotila <<" degrees Celsius is " << fahrenheit <<" degrees Fahrenheit" << endl;
+    double celsius = (lampotila - 32) / 1.8;
+    cout << lampotila <<" degrees Fahrenheit is " << celsius <<" degrees Celsius" << endl;
 
 
     return 0;
