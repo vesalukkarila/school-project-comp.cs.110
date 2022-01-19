@@ -24,7 +24,7 @@ int main()
         {
             if (luku % kasvava == 0)
             {
-                if (luku/kasvava - kasvava < kertoja2 - kertoja1 and luku/kasvava - kasvava > 0)
+                if (luku/kasvava - kasvava < kertoja2 - kertoja1 and luku/kasvava - kasvava >= 0)
                 {
                     kertoja2 = luku/kasvava;
                     kertoja1 = kasvava;
