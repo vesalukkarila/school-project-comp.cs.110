@@ -13,7 +13,6 @@ int main()
     int kertoja1 = 0;
     int kertoja2 = 100;
 
-    int k = 1;
     if (luku <= 0)
     {
         cout << "Only positive numbers accepted" << endl;
@@ -21,14 +20,14 @@ int main()
     }
     else
     {
-        for ( k; k < luku/2; ++k )
+        for ( int kasvava = 1; kasvava < luku/2; ++kasvava )
         {
-            if (luku % k == 0)
+            if (luku % kasvava == 0)
             {
-                if (luku/k - k < kertoja2 - kertoja1 and luku/k - k > 0)
+                if (luku/kasvava - kasvava < kertoja2 - kertoja1 and luku/kasvava - kasvava > 0)
                 {
-                    kertoja2 = luku/k;
-                    kertoja1 = k;
+                    kertoja2 = luku/kasvava;
+                    kertoja1 = kasvava;
                 }
             }
             else
