@@ -16,6 +16,7 @@ int main()
         }
         else if (luku % 3 == 0)
         {
+
             std::cout << "zip" << std::endl;
         }
 
