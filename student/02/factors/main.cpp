@@ -12,9 +12,8 @@ int main()
 
     int kertoja1 = 0;
     int kertoja2 = 100;
-    int luku1 = 0;
-    int luku2 = 0;
 
+    int k = 1;
     if (luku <= 0)
     {
         cout << "Only positive numbers accepted" << endl;
@@ -22,14 +21,21 @@ int main()
     }
     else
     {
-        luku1 = luku / 2;
-        if (luku1 * luku1 == luku )
+        for ( k; k < luku/2; ++k )
         {
-            cout << luku << " = " << luku1 << " * " << luku1 << endl;
+            if (luku % k == 0)
+            {
+                if (luku/k - k < kertoja2 - kertoja1 and luku/k - k > 0)
+                {
+                    kertoja2 = luku/k;
+                    kertoja1 = k;
+                }
+            }
+            else
+                continue;
+
         }
-
-
-
+        cout << luku << " = " << kertoja1 << " * " << kertoja2 << endl;
     }
     return 0;
 }
