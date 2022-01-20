@@ -33,7 +33,7 @@ int main()
     cout << "Enter the number of drawn balls: ";
     cin >> nostetut;
 
-    if (totaalimr >0 and nostetut > 0 and nostetut < totaalimr)
+    if (totaalimr >0 and nostetut > 0 and nostetut <= totaalimr)
     {
         unsigned long int tulos = laskenta (totaalimr, nostetut);
         cout << "The probability of guessing all " << nostetut << " balls correctly is 1/" << tulos << endl;
