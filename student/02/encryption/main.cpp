@@ -19,9 +19,8 @@ int pienaakkoset(string mjono)
             return 1;
         }
 
-        return 0;
-
     }
+    return 0;
 }
 
 
@@ -39,6 +38,7 @@ int kaikkipienaakkoset(string mjono)
         }
 
     }
+    return 0;
 }
 
 
