@@ -38,9 +38,27 @@ int kaikkipienaakkoset(string mjono)
             return 1;
         }
 
+    }
+}
+
+
+void kaanna_salattava(string viesti, string salaus)
+{
+    string uusimerkki = "";
+    string uusimjono = "";
+    int merkkilkm = viesti.size();
+    for (int laskuri = 0; laskuri < merkkilkm; ++laskuri)
+    {
+        char merkki;
+        merkki = viesti.at(laskuri);
+        int merkin_ascii_arvo_eli_kryptauksen_indeksikohta = static_cast<int>(merkki);
+
+        uusimerkki = salaus.at(merkin_ascii_arvo_eli_kryptauksen_indeksikohta-97);
+        uusimjono += uusimerkki;
 
     }
 
+    cout << uusimjono << endl;
 }
 
 
@@ -73,6 +91,8 @@ int main()
     if (kolmas == 1)
         return EXIT_FAILURE;
 
+
+    kaanna_salattava(salattava, annettukoodirivi);
 
     return 0;
 }
