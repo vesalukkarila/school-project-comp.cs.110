@@ -93,12 +93,13 @@ int main()
     int kolmas = pienaakkoset(salattava);
     if (kolmas == 1)
     {
-        cout << "Error! The encryption key must contain only lower case characters." << endl;
+        cout << "Error! The text to be encrypted must contain only lower case characters." << endl;
         return EXIT_FAILURE;
 
 
-    kaanna_salattava(salattava, annettukoodirivi);
+
     }
+    kaanna_salattava(salattava, annettukoodirivi);
     return 0;
 }
 
