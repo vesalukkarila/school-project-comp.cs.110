@@ -11,9 +11,8 @@ int pienaakkoset(string mjono)
     for (int laskuri = 0; laskuri < lkm; laskuri++)
     {
         if (islower(mjono.at(laskuri)))
-        {   cout << "Oikein" << endl;
                 continue;
-        }
+
         else
         {
             cout << "Error! The encryption key must contain only lower case characters." << endl;
@@ -65,6 +64,13 @@ int main()
 
     int toinen = kaikkipienaakkoset(annettukoodirivi);
     if (toinen == 1)
+        return EXIT_FAILURE;
+
+    string salattava = "";
+    cout << "Enter the text to be encrypted: ";
+    getline (cin, salattava);
+    int kolmas = pienaakkoset(salattava);
+    if (kolmas == 1)
         return EXIT_FAILURE;
 
 
