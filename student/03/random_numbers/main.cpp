@@ -6,7 +6,25 @@ using namespace std;
 
 void produce_random_numbers(unsigned int lower, unsigned int upper)
 {
-    // Implement your function here
+    int siemen = 0;
+    cout << "Enter a seed value: ";
+    cin >> siemen;
+    default_random_engine gen(siemen);
+    uniform_int_distribution<int> valilta(lower, upper);
+
+    while (true)
+    {
+        char syote = 'a';
+        cout << endl;
+        cout << "Your drawn random number is " << valilta(gen) << endl;
+        cout << "Press q to quit or any other key to continue: ";
+        cin >> syote;
+        if (syote == 'q')
+            break;
+
+    }
+
+
 }
 
 int main()
