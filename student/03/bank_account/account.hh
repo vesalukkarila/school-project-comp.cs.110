@@ -11,7 +11,7 @@ public:
 
     // More methods
     void print() const;
-    bool set_credit_limit(int luottoraja);
+    void set_credit_limit(int luottoraja);
     void save_money(int talletettu_summa);
     void take_money(int nostettu_summa);
     void transfer_to(Account nimi, int siirto_summa);       //epävarma ekasta parametrista, onhan se sen tietotyyppi
@@ -32,7 +32,9 @@ private:
     // More attributes/methods
     std::string ownerattr_;     //olion attribuutti
     bool creditattr_;    //olion attribuutti
-    int luottorajaattr_;
+    int luottorajaattr_;    //sisällä luotu, alustusarvo 0
+    int rahaatililla_;      //sisällä luotu, alustusarvo 0
+    std::string iban_;
 };
 
 #endif // ACCOUNT_HH
