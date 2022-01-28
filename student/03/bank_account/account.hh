@@ -13,8 +13,8 @@ public:
     void print() const;
     void set_credit_limit(int luottoraja);
     void save_money(int talletettu_summa);
-    void take_money(int nostettu_summa);
-    void transfer_to(Account nimi, int siirto_summa);       //epävarma ekasta parametrista, onhan se sen tietotyyppi
+    bool take_money(int nostettu_summa);
+    void transfer_to(Account& nimi, int siirto_summa);       //epävarma ekasta parametrista, onhan se sen tietotyyppi
 
 
 private:
