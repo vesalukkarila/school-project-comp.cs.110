@@ -32,7 +32,7 @@ private:
     // More attributes/methods
     std::string ownerattr_;     //olion attribuutti
     bool creditattr_;    //olion attribuutti
-
+    int luottorajaattr_;
 };
 
 #endif // ACCOUNT_HH
