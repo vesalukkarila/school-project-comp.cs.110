@@ -35,7 +35,15 @@ void Account::save_money(int talletettu_summa)
 
 void Account::take_money(int nostettu_summa)
 {
+    if (nostettu_summa < rahaatililla_)
+    {
+        rahaatililla_ -= nostettu_summa;
+        std::cout << nostettu_summa << " euros taken: new balance of " << iban_
+                 << " is " << rahaatililla_ << " euros" << std::endl;
+    }
 
+    else
+        std::cout << "Cannot take money: balance underflow" << std::endl;
 }
 
 void Account::transfer_to(Account nimi, int siirto_summa)
