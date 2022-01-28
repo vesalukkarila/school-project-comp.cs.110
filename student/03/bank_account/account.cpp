@@ -6,6 +6,31 @@ Account::Account(const std::string& owner, bool has_credit):
     generate_iban();
 }
 
+void Account::print() const
+{
+
+}
+
+bool Account::set_credit_limit(int luottoraja)
+{
+
+}
+
+void Account::save_money(int talletettu_summa)
+{
+
+}
+
+void Account::take_money(int nostettu_summa)
+{
+
+}
+
+void Account::transfer_to(Account nimi, int siirto_summa)
+{
+
+}
+
 // Setting initial value for the static attribute running_number_
 int Account::running_number_ = 0;
 
