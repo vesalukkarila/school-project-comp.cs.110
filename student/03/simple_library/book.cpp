@@ -16,6 +16,7 @@ void Book::loan(Date olio)
 {
     if (availabilityattr_ == "yes")
     {
+        cout << "-available" << endl;
         availabilityattr_ = "no";
 
         lainausattr_= olio;
@@ -34,13 +35,10 @@ void Book::loan(Date olio)
 void Book::print() const
 {
     cout << tekijaattr_ << " : " << teosattr_ << endl;
-    if (availabilityattr_ == "yes")
+    if (availabilityattr_ == "no")
     {
-        cout << "-available" << endl;
-    }
 
-    else
-    {
+
         cout << "- loaned: ";
         lainausattr_.print();
         cout << "- to be returned: ";
