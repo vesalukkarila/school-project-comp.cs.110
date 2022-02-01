@@ -12,17 +12,17 @@ int main()
     // Creating a book
     Book book1("Kivi", "Seitseman veljesta");
     book1.print();              //Kivi : Seitseman veljesta
-                                //- available
+                                //-available
 
     // Loaning a book
-    book1.loan(today);
+    book1.loan(today);          //-available
 
     // Two weeks later
-    today.advance(14);
-
-    // Trying to loan a loaned book
-    book1.loan(today);          //Already loaned: cannot be loaned
-    book1.print();              //Kivi : Seitseman veljesta
+    today.advance(14);                                                  //muuttaa todayolion attribuutteja
+                                                                        //jos vain sanon et lainausattr=today ja palautus=today.advance(28)
+    // Trying to loan a loaned book                                     //ja hyödynnän semantiikkaa niin todayolion muutokset ei kohdistu lainaus
+    book1.loan(today);          //Already loaned: cannot be loaned      //ja palautusolioihin. semntiikkaa pitää käyttää niin parametrivälityksessä
+    book1.print();              //Kivi : Seitseman veljesta             //kuin muuttujaan tallentamisessa
                                 //- loaned: 05.05.2020
                                 //- to be returned: 02.06.2020
 
