@@ -16,7 +16,7 @@ void Book::loan(Date olio)
 {
     if (availabilityattr_ == "yes")
     {
-        cout << "-available" << endl;
+        //cout << "-available" << endl;   //tää
         availabilityattr_ = "no";
 
         lainausattr_= olio;
@@ -44,6 +44,9 @@ void Book::print() const
         cout << "- to be returned: ";
         palautusattr_.print();
     }
+
+    else
+        cout << "- available" << endl;
 }
 
 //Varatun kirjan tulostukseen tarvitaan lainaus ja palautuspäivämäärä (attribuutit, eikö? oliokohtainen joihin metodeilla tunkeudutaan).

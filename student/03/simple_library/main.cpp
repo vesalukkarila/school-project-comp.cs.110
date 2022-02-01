@@ -41,8 +41,9 @@ int main()
                                 //- available
 
     // Loaning again (two weeks later)
-    book1.loan(today);          //Kivi : Seitseman veljesta
-    book1.print();              //- loaned: 19.05.2020
+    book1.loan(today);
+    book1.print();              //Kivi : Seitseman veljesta
+                                //- loaned: 19.05.2020
                                 //- to be returned: 16.06.2020
 
     return 0;
