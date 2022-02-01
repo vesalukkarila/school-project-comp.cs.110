@@ -54,7 +54,8 @@ void Book::renew()
 {
     if (availabilityattr_ == "yes")
         cout << "Not loaned: cannot be renewed" << endl;
-
+    else
+        palautusattr_.advance(28);
 }
 
 //Renew funktioon tarvii palautuspvm:n (attribuutti) edistämistä 28 vuorokaudella
