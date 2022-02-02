@@ -56,6 +56,21 @@ bool is_ordered_non_strict_ascending(std::vector <int> vektori)
 //Funktio is_arithmetic_series palauttaa totuusarvon, joka kertoo, muodostavatko vektorissa olevat
 //luvut aritmeettisen lukusarjan. (Sarja on aritmeettinen, jos sen peräkkäisten termien erotus on vakio.)
 
+bool is_arithmetic_series(std::vector <int> vektori)
+{
+    int pituus = vektori.size();
+    int ekojen_erotus = vektori.at(1) - vektori.at(0);
+    for (int indeksi = 0; indeksi < pituus; ++indeksi)
+    {
+        if (indeksi == 0)
+            continue;
+        else if (vektori.at(indeksi) - vektori.at(indeksi-1 == ekojen_erotus))
+            continue;
+        else
+            return false;
+    }
+    return true;
+}
 
 //Funktio is_geometric_series palauttaa totuusarvon, joka kertoo, muodostavatko vektorissa olevat luvut geometrisen lukusarjan.
 //(Sarja on geometrinen, jos sen peräkkäisten termien suhdeluku on vakio. Kokonaislukusarjalla tämä suhdeluku on rationaaliluku,
