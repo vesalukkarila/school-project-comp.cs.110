@@ -2,18 +2,64 @@
 #include <iostream>
 #include <vector>
 
-
+//Funktio read_integers on osittain toteutettu. Jatka toteutus valmiiksi.
+//Funktio antaa käyttäjän syöttää niin monta lukua kuin jälkimmäinen parametri määrää,
+//ja tallentaa luvut ensimmäisenä parametrina olevaan vektoriin. (HUOM! Pohdi myös, miksi tehtävänannon laatija
+//on päättänyt välittää vektorin parametrina eikä paluuarvona.)
 void read_integers(std::vector< int >& ints, int count)
 {
     int new_integer = 0;
     for(int i = 0; i < count; ++i)
     {
         std::cin >> new_integer;
-        // TODO: Implement your solution here
+        ints.push_back(new_integer);
     }
 }
 
 // TODO: Implement your solution here
+
+
+//Funktio same_values palauttaa totuusarvon, joka kertoo, ovatko kaikki vektorissa olevat luvut samoja.
+bool same_values(std::vector< int > vektori)
+{
+    for (int vektorin_alkio : vektori)
+    {
+        int vertailu = vektori.at(0);
+        if (vektorin_alkio == vertailu)
+            continue;
+        else
+            return false;
+
+
+    }
+    return true;
+
+}
+
+//Funktio is_ordered_non_strict_ascending palauttaa totuusarvon, joka kertoo, ovatko vektorissa olevat
+//luvut ei-tiukassa nousevassa suuruusjärjestyksessä (identtiset arvot sallitaan).
+bool is_ordered_non_strict_ascending(std::vector <int> vektori)
+{
+    int pituus = vektori.size();    //tää pitää ratkaista tai tehdä toisella tavalla looppi
+    for (int indeksi = 0; indeksi < pituus; ++indeksi)
+    {
+        if (indeksi == 0)
+            continue;
+        else if (vektori.at(indeksi) >= vektori.at(indeksi-1))
+            continue;
+        else
+            return false;
+    }
+    return true;
+}
+
+//Funktio is_arithmetic_series palauttaa totuusarvon, joka kertoo, muodostavatko vektorissa olevat
+//luvut aritmeettisen lukusarjan. (Sarja on aritmeettinen, jos sen peräkkäisten termien erotus on vakio.)
+
+
+//Funktio is_geometric_series palauttaa totuusarvon, joka kertoo, muodostavatko vektorissa olevat luvut geometrisen lukusarjan.
+//(Sarja on geometrinen, jos sen peräkkäisten termien suhdeluku on vakio. Kokonaislukusarjalla tämä suhdeluku on rationaaliluku,
+//jolloin pelkistä nollista koostuvaa sarjaa ei pidetä geometrisena.)
 
 
 int main()
