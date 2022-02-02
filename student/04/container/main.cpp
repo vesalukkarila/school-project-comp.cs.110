@@ -76,6 +76,25 @@ bool is_arithmetic_series(std::vector <int> vektori)
 //(Sarja on geometrinen, jos sen peräkkäisten termien suhdeluku on vakio. Kokonaislukusarjalla tämä suhdeluku on rationaaliluku,
 //jolloin pelkistä nollista koostuvaa sarjaa ei pidetä geometrisena.)
 
+bool is_geometric_series(std::vector <int> vektori)
+{
+    int pituus = vektori.size();
+    int kerroin = vektori.at(1)/vektori.at(0);
+
+    for (int indeksi = 0; indeksi < pituus; ++indeksi)
+    {
+        if (indeksi == 0)
+            continue;
+        else if (vektori.at(indeksi) == 0)
+            return false;
+        else if (vektori.at(indeksi)/kerroin == vektori.at(indeksi-1))
+            continue;
+        else
+            return false;
+
+    }
+   return true;
+}
 
 int main()
 {
