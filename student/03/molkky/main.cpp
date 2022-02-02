@@ -1,4 +1,4 @@
-#include "player.hh"
+#include "player.hh"        //tänne pitää inclutoida .hh koska .cpp lisätään käännösvaiheessa
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -8,9 +8,9 @@ int main()
 {
     Player player1 = Player("Matti");
     Player player2 = Player("Teppo");
-    Player* in_turn = 0;
-
-    int turn = 1;
+    Player* in_turn = 0;                    //minkätyyppiseen muuttujaan osoitin osoittaa, jännästi laitettu osoittamaan nollaa vaikkei se ole
+                                            //PLayer-tyyppiä. Olisiko voinut laittaa nullptr ja ehkä yhtä hyvin player1 tai player2 sen sijaan
+    int turn = 1;                           //koska silmukassa se määrätään uusiksi kuitenkin
     while (true)
     {
         if (turn % 2 != 0)
