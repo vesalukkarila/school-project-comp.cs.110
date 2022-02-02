@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include <algorithm>    //find:a varten
 
 //Funktio read_integers on osittain toteutettu. Jatka toteutus valmiiksi.
 //Funktio antaa käyttäjän syöttää niin monta lukua kuin jälkimmäinen parametri määrää,
@@ -40,7 +41,7 @@ bool same_values(std::vector< int > vektori)
 //luvut ei-tiukassa nousevassa suuruusjärjestyksessä (identtiset arvot sallitaan).
 bool is_ordered_non_strict_ascending(std::vector <int> vektori)
 {
-    int pituus = vektori.size();    //tää pitää ratkaista tai tehdä toisella tavalla looppi
+    int pituus = vektori.size();
     for (int indeksi = 0; indeksi < pituus; ++indeksi)
     {
         if (indeksi == 0)
@@ -64,7 +65,7 @@ bool is_arithmetic_series(std::vector <int> vektori)
     {
         if (indeksi == 0)
             continue;
-        else if (vektori.at(indeksi) - vektori.at(indeksi-1 == ekojen_erotus))
+        else if (vektori.at(indeksi) - vektori.at(indeksi-1) == ekojen_erotus)
             continue;
         else
             return false;
@@ -78,15 +79,20 @@ bool is_arithmetic_series(std::vector <int> vektori)
 
 bool is_geometric_series(std::vector <int> vektori)
 {
+    int nolla = 0;
+    if (std::count(vektori.begin(), vektori.end(), nolla))      //TÄÄ ON HYVÄ, MYÖS FIND TARJOLLA MUT SIIHEN LOPPUUN JOKU !=vektori.end
+            return false;
     int pituus = vektori.size();
     int kerroin = vektori.at(1)/vektori.at(0);
 
     for (int indeksi = 0; indeksi < pituus; ++indeksi)
     {
+        //if (vektori.at(indeksi) == 0)  //heitto
+          //  return false;
+
         if (indeksi == 0)
             continue;
-        else if (vektori.at(indeksi) == 0)
-            return false;
+
         else if (vektori.at(indeksi)/kerroin == vektori.at(indeksi-1))
             continue;
         else
