@@ -6,7 +6,7 @@ using namespace std;
 
 Book::Book(const string &tekija, const string &teos):                   // täson nyt olio strinmuuttujaan alustettuna
     tekijaattr_(tekija), teosattr_(teos), availabilityattr_("yes"),
-    olioattr_(), lainausattr_(), palautusattr_()
+     lainausattr_(), palautusattr_()
 
 {
 
