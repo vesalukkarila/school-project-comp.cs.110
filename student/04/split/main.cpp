@@ -24,13 +24,15 @@ vector <std::string> split(string rivi, char erotin, bool totuusarvo = false)
         {
             if (indeksi == 0 and rivi.at(indeksi) == erotin)
             {   if (rivi.at(indeksi+1) == erotin)
-                    vektori.push_back("");  //jos eka erotin ja sen perään erotin, lisä tyhjän vektoriin
+                    vektori.push_back("");  //jos eka erotin ja sen perään erotin, lisä tyhjän vektoriin //laskuri+1
                 else
                     continue;   //ohitta ekan jos erotin ja jälkimmäinen kirjain
             }
             else if (rivi.at(indeksi) == erotin and rivi.at(indeksi-1) == erotin)    //jos erotin ja edeltävä erotin
             {
                 vektori.push_back("");
+                if (indeksi == pituus-1)
+                    vektori.push_back("");
 
             }
             else if (rivi.at(indeksi) != erotin and indeksi< pituus-1)        //jos kirjain ja ei viimeinen
