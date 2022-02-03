@@ -56,15 +56,40 @@ vector <std::string> split(string rivi, char erotin, bool totuusarvo = false)
 
     else if (totuusarvo == true)
     {
-        for (indeksi=0; indeksi<pituus; ++indeksi)
-            if (rivi.at(indeksi) != erotin)
+        for (indeksi = 0; indeksi < pituus; ++indeksi)
+        {
+            if (indeksi == 0 and rivi.at(indeksi) == erotin)                    //ohittaa ensimmäisen jos erotin
+                continue;
+            if (rivi.at(indeksi) == erotin and rivi.at(indeksi-1) == erotin)    //jos erotin ja edeltävä erotin
             {
-                apulaskuri +=1;
+                continue;         //x2
+            }
+            else if (rivi.at(indeksi) != erotin and apulaskuri == 0 and indeksi<pituus-1)             //jos kirjain ja ei edeltäviä kirjaimia
+            {
                 apuindeksi = indeksi;
+                apulaskuri += 1;
+            }
+            else if (rivi.at(indeksi) != erotin and apulaskuri>0 and indeksi < (pituus-1))               //jos kirjain ja edeltäviä kirjaimia
+            {
+                apulaskuri +=1;                                                                          //ja indeksi<pituus!!!
+                apuindeksi = indeksi;
+            }
+            else if (rivi.at(indeksi) == erotin and apulaskuri > 0)     //jos erotin ja edeltäviä kirjaimia
+            {
                 string mjono = rivi.substr(apuindeksi, apulaskuri);
                 vektori.push_back(mjono);
                 apulaskuri = 0;
             }
+            else
+            {
+                apulaskuri +=1;
+                if (apulaskuri < 2)
+                    apuindeksi = indeksi;
+                string mjono = rivi.substr(apuindeksi, apulaskuri);
+                vektori.push_back(mjono);
+                apulaskuri = 0;
+            }
+        }
     }
 
     return vektori;
