@@ -29,22 +29,33 @@ vector <std::string> split(string rivi, char erotin, bool totuusarvo = false)
                 vektori.push_back("");
 
             }
-            else if (rivi.at(indeksi) != erotin and apulaskuri == 0 and indeksi<pituus-1)             //jos kirjain ja ei edeltäviä kirjaimia
+            else if (rivi.at(indeksi) != erotin and indeksi< pituus-1)        //jos kirjain ja ei viimeinen
             {
-                apuindeksi = indeksi;
-                apulaskuri += 1;
-            }
-            else if (rivi.at(indeksi) != erotin and apulaskuri>0)               //jos kirjain ja edeltäviä kirjaimia
-            {
-                apulaskuri +=1;
-            }
-            else if (rivi.at(indeksi) == erotin and apulaskuri > 0)  //jos erotin ja edeltäviä kirjaimia
+                if (apulaskuri == 0)  //jos eka kirjain
+                {
+                    apuindeksi = indeksi;
+                    apulaskuri +=1;
+                }
+                else                  //jos aiempia kirjaimia
+                    apulaskuri +=1;
+
+             }
+
+
+            else if (rivi.at(indeksi) == erotin and apulaskuri>0)              //jos erotin ja apulaskuri>0
             {
                 string mjono = rivi.substr(apuindeksi, apulaskuri);
                 vektori.push_back(mjono);
                 apulaskuri = 0;
             }
-            else
+            else if (rivi.at(indeksi) != erotin and indeksi == pituus-1 and apulaskuri>1) //jos kirjain ja viimeinen ja edeltäviäkirjaimia
+            {
+                apulaskuri +=1;
+                string mjono = rivi.substr(apuindeksi, apulaskuri);
+                vektori.push_back(mjono);
+                apulaskuri = 0;
+            }
+            else if (rivi.at(indeksi) != erotin and indeksi == pituus-1 and apulaskuri==0) // jos kirjain ja viimeinen ja ainoa kirjain
             {
                 apulaskuri +=1;
                 apuindeksi = indeksi;
@@ -59,37 +70,44 @@ vector <std::string> split(string rivi, char erotin, bool totuusarvo = false)
     {
         for (indeksi = 0; indeksi < pituus; ++indeksi)
         {
-            if (indeksi == 0 and rivi.at(indeksi) == erotin)                    //ohittaa ensimmäisen jos erotin
-                continue;
-            if (rivi.at(indeksi) == erotin and rivi.at(indeksi-1) == erotin)    //jos erotin ja edeltävä erotin
-            {
-                continue;         //x2
-            }
-            else if (rivi.at(indeksi) != erotin and apulaskuri == 0 and indeksi<pituus-1)             //jos kirjain ja ei edeltäviä kirjaimia
-            {
-                apuindeksi = indeksi;
-                apulaskuri += 1;
-            }
-            else if (rivi.at(indeksi) != erotin and apulaskuri>0 and indeksi < (pituus-1))               //jos kirjain ja edeltäviä kirjaimia
-            {
-                apulaskuri +=1;                                                                          //ja indeksi<pituus!!!
-                apuindeksi = indeksi;
-            }
-            else if (rivi.at(indeksi) == erotin and apulaskuri > 0)     //jos erotin ja edeltäviä kirjaimia
-            {
-                string mjono = rivi.substr(apuindeksi, apulaskuri);
-                vektori.push_back(mjono);
-                apulaskuri = 0;
-            }
-            else
-            {
-                apulaskuri +=1;
-                if (apulaskuri < 2)
-                    apuindeksi = indeksi;
-                string mjono = rivi.substr(apuindeksi, apulaskuri);
-                vektori.push_back(mjono);
-                apulaskuri = 0;
-            }
+          if (rivi.at(indeksi) == erotin and indeksi == 0)                  // jos erotin ja indeksi 0
+              continue;
+          else if (rivi.at(indeksi) == erotin and rivi.at(indeksi-1) == erotin) //jos erotin ja edellinen erotin, continue
+              continue;
+          else if (rivi.at(indeksi) != erotin and indeksi< pituus-1)        //jos kirjain ja ei viimeinen
+          {
+              if (apulaskuri == 0)  //jos eka kirjain
+              {
+                  apuindeksi = indeksi;
+                  apulaskuri +=1;
+              }
+              else                  //jos aiempia kirjaimia
+                  apulaskuri +=1;
+
+           }
+
+
+          else if (rivi.at(indeksi) == erotin and apulaskuri>0)              //jos erotin ja apulaskuri>0
+          {
+              string mjono = rivi.substr(apuindeksi, apulaskuri);
+              vektori.push_back(mjono);
+              apulaskuri = 0;
+          }
+          else if (rivi.at(indeksi) != erotin and indeksi == pituus-1 and apulaskuri>1) //jos kirjain ja viimeinen ja edeltäviäkirjaimia
+          {
+              apulaskuri +=1;
+              string mjono = rivi.substr(apuindeksi, apulaskuri);
+              vektori.push_back(mjono);
+              apulaskuri = 0;
+          }
+          else if (rivi.at(indeksi) != erotin and indeksi == pituus-1 and apulaskuri==0) // jos kirjain ja viimeinen ja ainoa kirjain
+          {
+              apulaskuri +=1;
+              apuindeksi = indeksi;
+              string mjono = rivi.substr(apuindeksi, apulaskuri);
+              vektori.push_back(mjono);
+              apulaskuri = 0;
+          }
         }
     }
 
