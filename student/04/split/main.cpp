@@ -10,10 +10,24 @@ using std::string;
 
 vector <std::string> split(string rivi, char erottaja, bool totuusarvo = false)
 {
+    string::size_type pituus = rivi.length();
+    string::size_type indeksi;
+    for (indeksi = 0; indeksi < pituus; ++indeksi)
+    {
 
+
+    }
 
 
 }
+//erotinmerkin löytäminen, jakaminen osiin ja lisääminen vectoriin jonka palautus (tässä tarkkana, paikallinen muuttuja), tulostus tapahtuu mainissa
+//2 versiota, toisessa ei tyhjiä alkioita
+
+//Jos päädyt sellaiseen ratkaisuun, jossa käyt merkkijonon indeksejä läpi toistorakenteessa,
+//käytä indeksimuuttujan tietotyyppinä string::size_type, älä int.          //MIKSI?
+
+//lfind + laskuri jota verrataan string pituuteen, toistorakenteessa indeksi kerrallaan, lisäis kaikki vectoriin ja poistais vectorista 2:ssa versiossa
+//käy string toistossa läpi ja jos indeksi = erotin ja indeksi-1=erotin niin lisää teksti.at(erotin) vektoriin
 int main()
 {
     std::string line = "";
