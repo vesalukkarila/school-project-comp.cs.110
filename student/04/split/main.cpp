@@ -8,17 +8,66 @@ using std::string;
 // Toteuta funktio split, joka jakaa parametrina annetun merkkijonon erotinmerkkien
 //kohdalta osiin ja palauttaa osat vector-muuttujaan tallennettuna.
 
-vector <std::string> split(string rivi, char erottaja, bool totuusarvo = false)
+vector <std::string> split(string rivi, char erotin, bool totuusarvo = false)
 {
     string::size_type pituus = rivi.length();
     string::size_type indeksi;
-    for (indeksi = 0; indeksi < pituus; ++indeksi)
+    vector<string> vektori;
+    vector<char> vektori2;
+
+    string::size_type apuindeksi = 0;
+    int apulaskuri = 0;         //mahdollisesti sizetype
+
+    if (totuusarvo == false)
     {
-
-
+        for (indeksi = 0; indeksi < pituus; ++indeksi)
+        {
+            if (indeksi == 0 and rivi.at(indeksi) == erotin)                    //ohittaa ensimmäisen jos erotin
+                continue;
+            if (rivi.at(indeksi) == erotin and rivi.at(indeksi-1) == erotin)    //jos erotin ja edeltävä erotin
+            {
+                vektori.push_back("");         //x2?
+            }
+            else if (rivi.at(indeksi) != erotin and apulaskuri == 0 and indeksi<pituus-1)             //jos kirjain ja ei edeltäviä kirjaimia
+            {
+                apuindeksi = indeksi;
+                apulaskuri += 1;
+            }
+            else if (rivi.at(indeksi) != erotin and apulaskuri>0)               //jos kirjain ja edeltäviä kirjaimia
+            {
+                apulaskuri +=1;
+            }
+            else if (rivi.at(indeksi) == erotin and apulaskuri > 0)  //jos erotin ja edeltäviä kirjaimia
+            {
+                string mjono = rivi.substr(apuindeksi, apulaskuri);
+                vektori.push_back(mjono);
+                apulaskuri = 0;
+            }
+            else
+            {
+                apulaskuri +=1;
+                apuindeksi = indeksi;
+                string mjono = rivi.substr(apuindeksi, apulaskuri);
+                vektori.push_back(mjono);
+                apulaskuri = 0;
+            }
+        }
     }
 
+    else if (totuusarvo == true)
+    {
+        for (indeksi=0; indeksi<pituus; ++indeksi)
+            if (rivi.at(indeksi) != erotin)
+            {
+                apulaskuri +=1;
+                apuindeksi = indeksi;
+                string mjono = rivi.substr(apuindeksi, apulaskuri);
+                vektori.push_back(mjono);
+                apulaskuri = 0;
+            }
+    }
 
+    return vektori;
 }
 //erotinmerkin löytäminen, jakaminen osiin ja lisääminen vectoriin jonka palautus (tässä tarkkana, paikallinen muuttuja), tulostus tapahtuu mainissa
 //2 versiota, toisessa ei tyhjiä alkioita
