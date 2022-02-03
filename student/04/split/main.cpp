@@ -27,7 +27,7 @@ vector <std::string> split(string rivi, char erotin, bool totuusarvo = false)
             if (rivi.at(indeksi) == erotin and rivi.at(indeksi-1) == erotin)    //jos erotin ja edeltävä erotin
             {
                 vektori.push_back("");
-                vektori.push_back(""); //x2? lisätty
+
             }
             else if (rivi.at(indeksi) != erotin and apulaskuri == 0 and indeksi<pituus-1)             //jos kirjain ja ei edeltäviä kirjaimia
             {
