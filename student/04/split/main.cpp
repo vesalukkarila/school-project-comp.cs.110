@@ -2,11 +2,18 @@
 #include <string>
 #include <vector>
 
+using std::vector;
+using std::string;
 
-// TODO: Implement split function here
-// Do not change main function
+// Toteuta funktio split, joka jakaa parametrina annetun merkkijonon erotinmerkkien
+//kohdalta osiin ja palauttaa osat vector-muuttujaan tallennettuna.
+
+vector <std::string> split(string rivi, char erottaja, bool totuusarvo = false)
+{
 
 
+
+}
 int main()
 {
     std::string line = "";
