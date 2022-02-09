@@ -169,6 +169,37 @@ string kysy_tayttotapaa()
 }
 
 
+// Tarkistaa onko vaaka-tai pystyriveillä vierekkäisiä tyhjiä ruutuja.
+// Paluuarvona false jos häviön kriteeri täyttyy, viiteparametrina vector-tyypin pelilauta
+// jonka alkiot vektoreita, joiden alkion kokonaislukuja.
+bool tyhjat_vierekkain(vector<vector<int>>& pelilauta)
+{
+    // Tarkistaa ensin vaakasuuntaiset rivit, onko tyhjiä vierekkäin.
+    for (int y_laskuri = 0; y_laskuri<5; ++y_laskuri)
+    {
+        for (int x_laskuri = 1; x_laskuri<4; ++x_laskuri)
+        {
+            if (pelilauta.at(y_laskuri).at(x_laskuri) == 0 and
+                    (pelilauta.at(y_laskuri).at(x_laskuri-1) ==0 or
+                     pelilauta.at(y_laskuri).at(x_laskuri+1) ==0))
+                return false;
+        }
+    }
+    // Sitten tarkistetaan pystyrivit, onko tyhjiä vierekkäin.
+    for (int x_laskuri = 0; x_laskuri<5; ++x_laskuri)
+    {
+        for (int y_laskuri = 1; y_laskuri<4; ++y_laskuri)
+        {
+            if (pelilauta.at(y_laskuri).at(x_laskuri) == 0 and
+                    (pelilauta.at(y_laskuri-1).at(x_laskuri) ==0 or
+                     pelilauta.at(y_laskuri+1).at(x_laskuri) ==0))
+                return false;
+        }
+    }
+
+    return true;
+}
+
 
 
 void kysy_koordinaatteja(vector<vector<int>>& pelilauta)
