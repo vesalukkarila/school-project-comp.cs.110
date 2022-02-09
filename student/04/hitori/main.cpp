@@ -153,13 +153,58 @@ bool tyhjat_vierekkain(vector<vector<int>>& pelilauta)
     return true;
 }
 
+bool jaako_numero_yksin(vector<vector<int>>& pelilauta) //tää on raskas tyyli käydä läpi mutten keksinyt mikä olisi oikea tapa
+{
+    bool vasen_ylakulma = pelilauta.at(0).at(1) == 0 and pelilauta.at(1).at(0) == 0;
+    bool oikea_ylakulma = pelilauta.at(0).at(3) == 0 and pelilauta.at(1).at(4) == 0;
+    bool vasen_alakulma = pelilauta.at(4).at(1) == 0 and pelilauta.at(3).at(0) == 0;
+    bool oikea_alakulma = pelilauta.at(4).at(3) == 0 and pelilauta.at(3).at(4) == 0;
+
+    if (vasen_ylakulma == true or oikea_ylakulma == true or vasen_alakulma == true or oikea_alakulma == true)
+        return false;
+    for (int x = 1; x < 4; ++ x)    //eka rivi keskeltä 0,1 0,2 0,3
+    {
+        if (pelilauta.at(0).at(x-1)==0 and pelilauta.at(0).at(x+1)==0 and pelilauta.at(1).at(x)==0)
+            return false;
+    }
+
+    for (int y = 1; y < 4; ++y)       //vasen laita
+    {
+        if (pelilauta.at(y-1).at(0)==0 and pelilauta.at(y+1).at(0)==0 and pelilauta.at(y).at(1)==0)
+            return false;
+    }
+
+    for (int y = 1; y < 4; ++y)       //oikea laita
+    {
+        if (pelilauta.at(y-1).at(4)==0 and pelilauta.at(y+1).at(4)==0 and pelilauta.at(y).at(3)==0)
+            return false;
+    }
+
+    for (int x = 1; x < 4; ++ x)    //ala laita
+    {
+        if (pelilauta.at(4).at(x-1)==0 and pelilauta.at(4).at(x+1)==0 and pelilauta.at(3).at(x)==0)
+            return false;
+    }
+
+    for (int y = 1; y<4; ++y)
+    {
+        for (int x = 1; x < 4; ++x)     //ylös, alas, vasen, oikea
+        {
+            if (pelilauta.at(y-1).at(x) == 0 and pelilauta.at(y+1).at(x) == 0
+                    and pelilauta.at(y).at(x-1) == 0 and pelilauta.at(y).at(x+1) == 0)
+                return false;
+        }
+    }
+    return true;
+}
+
 void kysy_poistettavat(vector<vector<int>>& pelilauta)
 {
-    while (true)                    // ohjaus funktioon joka poistaa alkion josta tarkistus jääkö irralleen-huomioi kulmat-"youlost"+paluuarvo
-    {                               //"allready removed" tarkistus uupuu, ylläolevasta ohjaus toiseen funktioon
-        string x_mjonona;           // uuden pelilaudan tulostus siitä funkusta jonka poistit, sille parametrina vektoriolio
-        string y_mjonona;           //näistä paluu tähän funkkuun joka kysyy koordinaatteja aina uudelleen ja tarkistaa syötteet
-                                    //voiton tarkistusfunktio jostain ja tulostus, main:sta?
+    while (true)
+    {
+        string x_mjonona;
+        string y_mjonona;
+
         cout << "Enter removable element (x, y): ";
         cin >> x_mjonona;
         if (tolower(x_mjonona.at(0)) == 'q')        //Lopetus jos 'q'
@@ -195,14 +240,19 @@ void kysy_poistettavat(vector<vector<int>>& pelilauta)
             return;                         //muuta jos muutat paluuarvontyyppiä
         }
         //  -numero jää yksin, huomioi reunat ja kulmat
-        //näistä ilmoitus ja paluu ja lopetus
+        if (jaako_numero_yksin(pelilauta) == false)
+        {
+            cout << "You lost" << endl;
+            return;
+        }
+
         //voitontarkistus - ilmoitus ja paluu ja lopetus
 
     }
 }
 
 
-
+//5 COMMITTIA, PITIKÖ NE PUSHATA VAI RIITTIKÖ TUO COMMIT MITKÄ TEIN
 int main()
 {
     vector<vector<int>> pelilauta;
