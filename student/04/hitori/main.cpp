@@ -200,6 +200,65 @@ bool tyhjat_vierekkain(vector<vector<int>>& pelilauta)
     return true;
 }
 
+// Tarkistaa valitettavan raskaalla tavalla jääkö jokin numero irralleen toisista.
+// Paluuarvona false jos häviö kriteeri täyttyy, viiteparametrina vector-tyypin pelilauta
+// jonka alkiot vektoreita, joiden alkion kokonaislukuja.
+bool jaako_numero_yksin(vector<vector<int>>& pelilauta)
+{
+    bool vasen_ylakulma = pelilauta.at(0).at(1) == 0 and pelilauta.at(1).at(0) == 0;
+    bool oikea_ylakulma = pelilauta.at(0).at(3) == 0 and pelilauta.at(1).at(4) == 0;
+    bool vasen_alakulma = pelilauta.at(4).at(1) == 0 and pelilauta.at(3).at(0) == 0;
+    bool oikea_alakulma = pelilauta.at(4).at(3) == 0 and pelilauta.at(3).at(4) == 0;
+
+    if (vasen_ylakulma == true or oikea_ylakulma == true
+            or vasen_alakulma == true or oikea_alakulma == true)
+        return false;
+
+    //Tarkistetaan onko koordinaattien 0,1;0,2;0,3 ympäristössä kaikki tyhjiä
+    for (int x = 1; x < 4; ++ x)
+    {
+        if (pelilauta.at(0).at(x-1)==0 and pelilauta.at(0).at(x+1)==0
+                and pelilauta.at(1).at(x)==0)
+            return false;
+    }
+
+    //Tarkistetaan onko koordinaattien 1,0;2,0;3,0 ympäristössä kaikki tyhjiä
+    for (int y = 1; y < 4; ++y)
+    {
+        if (pelilauta.at(y-1).at(0)==0 and pelilauta.at(y+1).at(0)==0
+                and pelilauta.at(y).at(1)==0)
+            return false;
+    }
+
+    //Tarkistetaan onko koordinaattien 1,4;2,4;3,4 ympäristössä kaikki tyhjiä
+    for (int y = 1; y < 4; ++y)
+    {
+        if (pelilauta.at(y-1).at(4)==0 and pelilauta.at(y+1).at(4)==0
+                and pelilauta.at(y).at(3)==0)
+            return false;
+    }
+
+    //Tarkistetaan onko koordinaattien 4,1;4,2;4,3 ympäristössä kaikki tyhjiä
+    for (int x = 1; x < 4; ++ x)
+    {
+        if (pelilauta.at(4).at(x-1)==0 and pelilauta.at(4).at(x+1)==0
+                and pelilauta.at(3).at(x)==0)
+            return false;
+    }
+
+    //Viimeiseksi tarkistetaan keskellä jääneiden 9:n ruudun ympäristö
+    for (int y = 1; y<4; ++y)
+    {
+        for (int x = 1; x < 4; ++x)
+        {
+            if (pelilauta.at(y-1).at(x) == 0 and pelilauta.at(y+1).at(x) == 0
+                    and pelilauta.at(y).at(x-1) == 0 and pelilauta.at(y).at(x+1) == 0)
+                return false;
+        }
+    }
+    return true;
+}
+
 
 
 void kysy_koordinaatteja(vector<vector<int>>& pelilauta)
