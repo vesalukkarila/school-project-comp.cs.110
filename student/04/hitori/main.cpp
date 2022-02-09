@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cctype>
-
+#include <random>
 using namespace std;
 
 const unsigned int BOARD_SIDE = 5;
@@ -35,29 +35,48 @@ unsigned int stoi_with_check(const string& str) // joka muuttaa annetun numeeris
     }
 }
 
-// Tulostaa pelilaudan rivi- ja sarakenumeroineen.
-//
-// Prints the game board with row and column numbers.
 
+void arvo_pelilaudan_numerot(vector<vector<int>>& pelilauta)
 
-
-void arvo_pelilaudan_numerot()
 {
+    int siemen;
+    cout<< "Enter a seed value: ";
+    cin >> siemen;
+    default_random_engine satunnaislukugeneraattoriolio(siemen);
+    uniform_int_distribution<int> jakauma(1,5);
 
-    cout<< "Funktio arpoo pelilaudan numerot ja tallentaa nämä vektorinvektorin alkioihin " << endl;
+    for (int ulompilaskuri = 0; ulompilaskuri < 5; ++ulompilaskuri)
+    {
+        vector<int> rivi;
+        for (int sisempilaskuri = 0; sisempilaskuri < 5; ++sisempilaskuri)
+        {
+            int luku = jakauma(satunnaislukugeneraattoriolio);
+            rivi.push_back(luku);
+        }
+        pelilauta.push_back(rivi);
+
+    }
+}
+
+void kysy_pelilaudan_numerot(vector<vector<int>>& pelilauta)  //patametrina ja paluuarvona pelilauta viiteparametrina johon tehdään muutoksia
+{
+    int syote;
+    cout << "Input: ";
+    for (int ulompilaskuri = 0; ulompilaskuri < 5; ++ulompilaskuri)
+    {
+        vector<int> rivi;
+        for ( int sisempilaskuri = 0; sisempilaskuri < 5; ++sisempilaskuri)
+        {
+            cin >> syote;
+            rivi.push_back(syote);
+        }
+        pelilauta.push_back(rivi);
+    }
 
 }
 
-void kysy_pelilaudan_numerot()
+string kysy_tayttotapaa()
 {
-    cout << "Funktio kysyy käyttäjältä 25 numeroa ja tallentaa nämä vektorinvektorin alkioihin" << endl;
-
-}
-
-void kysy_tayttotapaa()
-{
-
-
     while (true)
     {
         string syote;
@@ -68,38 +87,37 @@ void kysy_tayttotapaa()
             char merkki;
             merkki = syote.at(0);
             if (tolower(merkki) == 'r')
-            {
-                arvo_pelilaudan_numerot();
-                return;
-            }
+                return "arvo";
+
             else if (tolower(merkki) == 'i')
-            {
-                kysy_pelilaudan_numerot();
-                return;
-            }
+                return "kysy";
         }
+
         else
             continue;
     }
 }
 
-void kysy_poistettavat()            //"allready removed" tarkistus uupuu
+void kysy_poistettavat(vector<vector<int>>& pelilauta)
 {
-    while (true)
-    {
-        string x_mjonona;
-        string y_mjonona;
-        int x_lukuna;
-        int y_lukuna;
-        string koordinaatit_mjono;
+    while (true)                    // ohjaus funktioon joka poistaa alkion josta tarkistus jääkö irralleen-huomioi kulmat-"youlost"+paluuarvo
+    {                               //"allready removed" tarkistus uupuu, ylläolevasta ohjaus toiseen funktioon
+        string x_mjonona;           // uuden pelilaudan tulostus siitä funkusta jonka poistit, sille parametrina vektoriolio
+        string y_mjonona;           //näistä paluu tähän funkkuun joka kysyy koordinaatteja aina uudelleen ja tarkistaa syötteet
+                                    //voiton tarkistusfunktio jostain ja tulostus, main:sta?
         cout << "Enter removable element (x, y): ";
         cin >> x_mjonona;
+        if (tolower(x_mjonona.at(0)) == 'q')
+        {
+            cout << "Quitting" << endl;
+            return;
+        }
         cin >> y_mjonona;
+        int x_lukuna = stoi_with_check(x_mjonona);
+        int y_lukuna = stoi_with_check(y_mjonona);
 
         while (true)
         {
-            x_lukuna = stoi_with_check(x_mjonona);
-            y_lukuna = stoi_with_check(y_mjonona);
             if (x_lukuna == false or y_lukuna == false
                     or x_lukuna < 1 or x_lukuna > 5
                     or y_lukuna < 1 or y_lukuna > 5)
@@ -108,19 +126,62 @@ void kysy_poistettavat()            //"allready removed" tarkistus uupuu
                 break;
             }
 
-
+            //TÄSTÄ KUTSU FUNKTIOON JOKA POISTAA LUVUN, TARKISTAA ONKO POISTETTU AIEMMIN, TARKISTAA JÄÄKÖ IRRALLEEN-HUOMIOI KULMAT-TARKISTAA VOITON
             cout << x_lukuna << "ja" << y_lukuna << endl;
             cout << x_lukuna * y_lukuna << endl;
             break;
         }
     }
 }
+
+// Tulostaa pelilaudan rivi- ja sarakenumeroineen.
+//
+// Prints the game board with row and column numbers.
+void print(const vector<vector<int>>& gameboard)
+
+//YLLÄOLEVALLE annetaan parametrina pelilauta, joka on tyypiltään vektori, jonka alkiot ovat vektoreita, jonka alkiot ovat kokonaislukuja
+
+{
+    cout << "=================" << endl;
+    cout << "|   | 1 2 3 4 5 |" << endl;
+    cout << "-----------------" << endl;
+    for(unsigned int i = 0; i < BOARD_SIDE; ++i)
+    {
+        cout << "| " << i + 1 << " | ";
+        for(unsigned int j = 0; j < BOARD_SIDE; ++j)
+        {
+            if(gameboard.at(i).at(j) == 0)
+            {
+                cout << EMPTY << " ";
+            }
+            else
+            {
+                cout << gameboard.at(i).at(j) << " ";
+            }
+        }
+        cout << "|" << endl;
+    }
+    cout << "=================" << endl;
+}
+
 int main()
 {
-    kysy_tayttotapaa();
-    cout << "Palasi mainiin ksy_tayttotapa" << endl;        //poista myöhemmin
+    vector<vector<int>> pelilauta;
+    string paluuarvo = kysy_tayttotapaa();
 
-    kysy_poistettavat();
+    if (paluuarvo == "arvo")
+        arvo_pelilaudan_numerot(pelilauta);
+    else if (paluuarvo == "kysy")
+        kysy_pelilaudan_numerot(pelilauta);
+
+    for (int luku = 0; luku<5;++luku)   //testiä
+    {
+        for (int luku2=0; luku2<5; ++luku2)
+            cout << pelilauta.at(luku).at(luku2);
+    }
+    cout << endl;   //testiä
+    kysy_poistettavat(pelilauta);
+
     cout << "Palasi mainiin poistettavista koordinaateista" << endl;
 
 
