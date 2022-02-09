@@ -149,7 +149,7 @@ string kysy_tayttotapaa()
     {
         string syote;
         cout << "Select start (R for random, I for input): ";
-        cin >> syote;
+        getline(cin, syote);
         if (syote.length()==1)
         {
             char merkki;
@@ -161,7 +161,10 @@ string kysy_tayttotapaa()
                 return "kysy";
         }
         else
+        {
+            //cout << endl;
             continue;
+        }
     }
 }
 
@@ -257,12 +260,12 @@ bool jaako_numero_yksin(vector<vector<int>>& pelilauta)
 }
 
 // Tarkistaa esiintyykö kukin numero vain kerran pysty-ja vaakariveillä.
-// Paluuarvona true jos voiton kriteerit täyttyyviiteparametrina vector-tyypin pelilauta
+// Paluuarvona true jos voiton kriteerit täyttyy. Viiteparametrina vector-tyypin pelilauta
 // jonka alkiot vektoreita, joiden alkion kokonaislukuja.
 bool voiton_tarkistus(vector<vector<int>>& pelilauta)
 {
     //Tarkistetaan vaakarivit käymällä indeksit läpi for-loopissa
-    //Jokaisen luvun aiempi esiintyvyys varmistetaan tarkistus-vektoriin avulla,
+    //Jokaisen luvun aiempi esiintyvyys varmistetaan tarkistus-vektorin avulla,
     //johon aiempien indeksien luvut on tallennettu vertailua varten
     for (int y = 0; y < 5; ++y)
     {
@@ -273,12 +276,16 @@ bool voiton_tarkistus(vector<vector<int>>& pelilauta)
             if (std::find(tarkistus_vektori.begin(), tarkistus_vektori.end(), luku)
                     != tarkistus_vektori.end())
                 return false;
-            else
-                tarkistus_vektori.push_back(luku);
+            else if (luku != 0)
+                    tarkistus_vektori.push_back(luku);
+
         }
     }
 
-    //Tarkistetaan pystyrivit
+
+    //Tarkistetaan pystyrivit käymällä indeksit läpi for-loopissa
+    //Jokaisen luvun aiempi esiintyvyys varmistetaan tarkistus-vektorin avulla,
+    //johon aiempien indeksien luvut on tallennettu vertailua varten
     for (int x = 0; x < 5; ++x)
     {
         vector <int> tarkistus_vektori;
@@ -288,7 +295,7 @@ bool voiton_tarkistus(vector<vector<int>>& pelilauta)
             if (std::find(tarkistus_vektori.begin(), tarkistus_vektori.end(), luku)
                     != tarkistus_vektori.end())
                 return false;
-            else
+            else if (luku != 0)
                 tarkistus_vektori.push_back(luku);
         }
     }
