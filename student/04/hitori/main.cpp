@@ -259,7 +259,49 @@ bool jaako_numero_yksin(vector<vector<int>>& pelilauta)
     return true;
 }
 
+// Tarkistaa esiintyykö kukin numero vain kerran pysty-ja vaakariveillä.
+// Paluuarvona true jos voiton kriteerit täyttyy. Viiteparametrina vector-tyypin pelilauta
+// jonka alkiot vektoreita, joiden alkion kokonaislukuja.
+bool voiton_tarkistus(vector<vector<int>>& pelilauta)
+{
+    //Tarkistetaan vaakarivit käymällä indeksit läpi for-loopissa
+    //Jokaisen luvun aiempi esiintyvyys varmistetaan tarkistus-vektorin avulla,
+    //johon aiempien indeksien luvut on tallennettu vertailua varten
+    for (int y = 0; y < 5; ++y)
+    {
+        vector <int> tarkistus_vektori;
+        for (int x  = 0; x < 5; ++x)
+        {
+            int luku = pelilauta.at(y).at(x);
+            if (std::find(tarkistus_vektori.begin(), tarkistus_vektori.end(), luku)
+                    != tarkistus_vektori.end())
+                return false;
+            else if (luku != 0)
+                    tarkistus_vektori.push_back(luku);
 
+        }
+    }
+
+
+    //Tarkistetaan pystyrivit käymällä indeksit läpi for-loopissa
+    //Jokaisen luvun aiempi esiintyvyys varmistetaan tarkistus-vektorin avulla,
+    //johon aiempien indeksien luvut on tallennettu vertailua varten
+    for (int x = 0; x < 5; ++x)
+    {
+        vector <int> tarkistus_vektori;
+        for (int y = 0; y < 5; ++y)
+        {
+            int luku = pelilauta.at(y).at(x);
+            if (std::find(tarkistus_vektori.begin(), tarkistus_vektori.end(), luku)
+                    != tarkistus_vektori.end())
+                return false;
+            else if (luku != 0)
+                tarkistus_vektori.push_back(luku);
+        }
+    }
+
+    return true;
+}
 
 void kysy_koordinaatteja(vector<vector<int>>& pelilauta)
 {
