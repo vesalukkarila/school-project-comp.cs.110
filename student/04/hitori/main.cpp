@@ -205,7 +205,9 @@ void kysy_koordinaatteja(vector<vector<int>>& pelilauta)
             continue;
         }
 
-
+        //Asettaa koordinaatin arvoksi nollan
+        pelilauta.at(y_lukuna-1).at(x_lukuna-1) = 0;
+        print(pelilauta);
 
         //Seuraavaksi häviötilanteiden tarkistukset
         if (tyhjat_vierekkain(pelilauta) == false or jaako_numero_yksin(pelilauta) == false)
