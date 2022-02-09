@@ -126,6 +126,33 @@ string kysy_tayttotapaa()
     }
 }
 
+bool tyhjat_vierekkain(vector<vector<int>>& pelilauta)
+{
+    for (int y_laskuri = 0; y_laskuri<5; ++y_laskuri)   //tarkistaa ensin vaakasuuntaiset rivit, onko tyhjiä vierekkäin
+    {
+        for (int x_laskuri = 1; x_laskuri<4; ++x_laskuri)
+        {
+            if (pelilauta.at(y_laskuri).at(x_laskuri) == 0 and
+                    (pelilauta.at(y_laskuri).at(x_laskuri-1) ==0 or
+                     pelilauta.at(y_laskuri).at(x_laskuri+1) ==0))
+                return false;
+        }
+    }
+
+    for (int x_laskuri = 0; x_laskuri<5; ++x_laskuri)   //sitten tarkistetaan pystyrivit
+    {
+        for (int y_laskuri = 1; y_laskuri<4; ++y_laskuri)
+        {
+            if (pelilauta.at(y_laskuri).at(x_laskuri) == 0 and
+                    (pelilauta.at(y_laskuri-1).at(x_laskuri) ==0 or
+                     pelilauta.at(y_laskuri+1).at(x_laskuri) ==0))
+                return false;
+        }
+    }
+
+    return true;
+}
+
 void kysy_poistettavat(vector<vector<int>>& pelilauta)
 {
     while (true)                    // ohjaus funktioon joka poistaa alkion josta tarkistus jääkö irralleen-huomioi kulmat-"youlost"+paluuarvo
@@ -160,7 +187,15 @@ void kysy_poistettavat(vector<vector<int>>& pelilauta)
         pelilauta.at(y_lukuna-1).at(x_lukuna-1) = 0;
         //tulostus
         print(pelilauta);
-        //virhetarkistukset - ilmoitus ja paluu ja lopetus
+        //virhetarkistukset -
+        //  -kaks nollaa vierekkäin
+        if (tyhjat_vierekkain(pelilauta) == false)
+        {
+            cout << "You lost" << endl;
+            return;                         //muuta jos muutat paluuarvontyyppiä
+        }
+        //  -numero jää yksin, huomioi reunat ja kulmat
+        //näistä ilmoitus ja paluu ja lopetus
         //voitontarkistus - ilmoitus ja paluu ja lopetus
 
     }
