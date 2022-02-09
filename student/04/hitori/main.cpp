@@ -169,139 +169,7 @@ string kysy_tayttotapaa()
 }
 
 
-// Tarkistaa onko vaaka-tai pystyriveillä vierekkäisiä tyhjiä ruutuja.
-// Paluuarvona false jos häviön kriteeri täyttyy, viiteparametrina vector-tyypin pelilauta
-// jonka alkiot vektoreita, joiden alkion kokonaislukuja.
-bool tyhjat_vierekkain(vector<vector<int>>& pelilauta)
-{
-    // Tarkistaa ensin vaakasuuntaiset rivit, onko tyhjiä vierekkäin.
-    for (int y_laskuri = 0; y_laskuri<5; ++y_laskuri)
-    {
-        for (int x_laskuri = 1; x_laskuri<4; ++x_laskuri)
-        {
-            if (pelilauta.at(y_laskuri).at(x_laskuri) == 0 and
-                    (pelilauta.at(y_laskuri).at(x_laskuri-1) ==0 or
-                     pelilauta.at(y_laskuri).at(x_laskuri+1) ==0))
-                return false;
-        }
-    }
-    // Sitten tarkistetaan pystyrivit, onko tyhjiä vierekkäin.
-    for (int x_laskuri = 0; x_laskuri<5; ++x_laskuri)
-    {
-        for (int y_laskuri = 1; y_laskuri<4; ++y_laskuri)
-        {
-            if (pelilauta.at(y_laskuri).at(x_laskuri) == 0 and
-                    (pelilauta.at(y_laskuri-1).at(x_laskuri) ==0 or
-                     pelilauta.at(y_laskuri+1).at(x_laskuri) ==0))
-                return false;
-        }
-    }
 
-    return true;
-}
-
-// Tarkistaa valitettavan raskaalla tavalla jääkö jokin numero irralleen toisista.
-// Paluuarvona false jos häviö kriteeri täyttyy, viiteparametrina vector-tyypin pelilauta
-// jonka alkiot vektoreita, joiden alkion kokonaislukuja.
-bool jaako_numero_yksin(vector<vector<int>>& pelilauta)
-{
-    bool vasen_ylakulma = pelilauta.at(0).at(1) == 0 and pelilauta.at(1).at(0) == 0;
-    bool oikea_ylakulma = pelilauta.at(0).at(3) == 0 and pelilauta.at(1).at(4) == 0;
-    bool vasen_alakulma = pelilauta.at(4).at(1) == 0 and pelilauta.at(3).at(0) == 0;
-    bool oikea_alakulma = pelilauta.at(4).at(3) == 0 and pelilauta.at(3).at(4) == 0;
-
-    if (vasen_ylakulma == true or oikea_ylakulma == true
-            or vasen_alakulma == true or oikea_alakulma == true)
-        return false;
-
-    //Tarkistetaan onko koordinaattien 0,1;0,2;0,3 ympäristössä kaikki tyhjiä
-    for (int x = 1; x < 4; ++ x)
-    {
-        if (pelilauta.at(0).at(x-1)==0 and pelilauta.at(0).at(x+1)==0
-                and pelilauta.at(1).at(x)==0)
-            return false;
-    }
-
-    //Tarkistetaan onko koordinaattien 1,0;2,0;3,0 ympäristössä kaikki tyhjiä
-    for (int y = 1; y < 4; ++y)
-    {
-        if (pelilauta.at(y-1).at(0)==0 and pelilauta.at(y+1).at(0)==0
-                and pelilauta.at(y).at(1)==0)
-            return false;
-    }
-
-    //Tarkistetaan onko koordinaattien 1,4;2,4;3,4 ympäristössä kaikki tyhjiä
-    for (int y = 1; y < 4; ++y)
-    {
-        if (pelilauta.at(y-1).at(4)==0 and pelilauta.at(y+1).at(4)==0
-                and pelilauta.at(y).at(3)==0)
-            return false;
-    }
-
-    //Tarkistetaan onko koordinaattien 4,1;4,2;4,3 ympäristössä kaikki tyhjiä
-    for (int x = 1; x < 4; ++ x)
-    {
-        if (pelilauta.at(4).at(x-1)==0 and pelilauta.at(4).at(x+1)==0
-                and pelilauta.at(3).at(x)==0)
-            return false;
-    }
-
-    //Viimeiseksi tarkistetaan keskellä jääneiden 9:n ruudun ympäristö
-    for (int y = 1; y<4; ++y)
-    {
-        for (int x = 1; x < 4; ++x)
-        {
-            if (pelilauta.at(y-1).at(x) == 0 and pelilauta.at(y+1).at(x) == 0
-                    and pelilauta.at(y).at(x-1) == 0 and pelilauta.at(y).at(x+1) == 0)
-                return false;
-        }
-    }
-    return true;
-}
-
-// Tarkistaa esiintyykö kukin numero vain kerran pysty-ja vaakariveillä.
-// Paluuarvona true jos voiton kriteerit täyttyy. Viiteparametrina vector-tyypin pelilauta
-// jonka alkiot vektoreita, joiden alkion kokonaislukuja.
-bool voiton_tarkistus(vector<vector<int>>& pelilauta)
-{
-    //Tarkistetaan vaakarivit käymällä indeksit läpi for-loopissa
-    //Jokaisen luvun aiempi esiintyvyys varmistetaan tarkistus-vektorin avulla,
-    //johon aiempien indeksien luvut on tallennettu vertailua varten
-    for (int y = 0; y < 5; ++y)
-    {
-        vector <int> tarkistus_vektori;
-        for (int x  = 0; x < 5; ++x)
-        {
-            int luku = pelilauta.at(y).at(x);
-            if (std::find(tarkistus_vektori.begin(), tarkistus_vektori.end(), luku)
-                    != tarkistus_vektori.end())
-                return false;
-            else if (luku != 0)
-                    tarkistus_vektori.push_back(luku);
-
-        }
-    }
-
-
-    //Tarkistetaan pystyrivit käymällä indeksit läpi for-loopissa
-    //Jokaisen luvun aiempi esiintyvyys varmistetaan tarkistus-vektorin avulla,
-    //johon aiempien indeksien luvut on tallennettu vertailua varten
-    for (int x = 0; x < 5; ++x)
-    {
-        vector <int> tarkistus_vektori;
-        for (int y = 0; y < 5; ++y)
-        {
-            int luku = pelilauta.at(y).at(x);
-            if (std::find(tarkistus_vektori.begin(), tarkistus_vektori.end(), luku)
-                    != tarkistus_vektori.end())
-                return false;
-            else if (luku != 0)
-                tarkistus_vektori.push_back(luku);
-        }
-    }
-
-    return true;
-}
 
 void kysy_koordinaatteja(vector<vector<int>>& pelilauta)
 {
@@ -337,9 +205,7 @@ void kysy_koordinaatteja(vector<vector<int>>& pelilauta)
             continue;
         }
 
-        //Asettaa koordinaatin arvoksi nollan
-        pelilauta.at(y_lukuna-1).at(x_lukuna-1) = 0;
-        print(pelilauta);
+
 
         //Seuraavaksi häviötilanteiden tarkistukset
         if (tyhjat_vierekkain(pelilauta) == false or jaako_numero_yksin(pelilauta) == false)
