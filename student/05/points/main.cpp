@@ -23,7 +23,6 @@ int main()
     {
         string rivi;
         string pisteet;
-        int luku = stoi(pisteet);
         map<string, int> mapisto;
         //mapisto.insert({nimi, pisteet})
         //erottelu : kohdalta tiedostoa lukiessa jos onnistuu, tarkistus löytyykö mapistosta,
@@ -31,9 +30,10 @@ int main()
         //jos ei insertillä uusi avain-hyötykuorma pari
         while (getline(avausolio, rivi, ':'))
         {
-            cout << rivi;
+
             getline(avausolio, pisteet);
-            cout <<  " ja " << pisteet << endl;
+            int luku = stoi(pisteet);
+
 
             if (mapisto.find(rivi) != mapisto.end())    //eli jos löytyy sanakirjasta
                 mapisto.at(rivi) += luku;
@@ -41,7 +41,12 @@ int main()
                 mapisto.insert({rivi, luku});
 
         }
+        cout << "Final scores:" << endl;
+        for (auto tietopari : mapisto )
+        {
+            cout << tietopari.first << ": " << tietopari.second << endl;
         }
+    }
 
     avausolio.close();
 
