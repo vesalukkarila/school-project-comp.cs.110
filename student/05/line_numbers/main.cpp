@@ -28,6 +28,9 @@ int main()
             ++l;
         }
     }
+    tiedosto_olio.close();
+    tiedostoon_kirjoitus_olio.close();
+
     return 0;
 }
 
