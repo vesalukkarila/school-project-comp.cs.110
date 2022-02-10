@@ -10,11 +10,13 @@ int main()
     getline (cin, tiedostonimi);
     cout << "Output file: ";
     getline(cin, kirjoitettavatiedosto);
-    ofstream tiedostoon_kirjoitus_olio(kirjoitettavatiedosto);
+    ofstream tiedostoon_kirjoitus_olio(kirjoitettavatiedosto);  //avataan tiedosto ja esitellään ofstream olio, rakentajalle param.tiedosto
     ifstream tiedosto_olio(tiedostonimi);   //esitellään ifstream-tyyppinen olio, jonka rakentajalle parametrina luettava tiedosto
-    if (not tiedosto_olio)
+    if (not tiedosto_olio)                  // yllä myös avataan käsiteltävä tiedosto)
     {
         cout << "Error! The file " << tiedostonimi << " cannot be opened." << endl;
+        tiedosto_olio.close();
+        tiedostoon_kirjoitus_olio.close();
         return 1;
     }
     else
