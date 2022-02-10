@@ -28,8 +28,9 @@ int main()
         {
             ++valin_eka;                                                //iteraattorin kasvatus
             --valin_vika;                                               //iteraattorin miinustus tokavikaan
+            shuffle(valin_eka, valin_vika, generator);  //shufflella määrätyltä väliltä satunnaigeneraattorinavulla sekoitus
+
         }
-        shuffle(valin_eka, valin_vika, generator);  //shufflella määrätyltä väliltä satunnaigeneraattorinavulla sekoitus
         cout << word << endl;
 
 	
