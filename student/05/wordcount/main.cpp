@@ -41,17 +41,20 @@ int main()
         while ( tiedostonavausolio >> sana)
         {
             if (sana.length()<3)
-                mapisto.insert({sana+" ", vektori});    //tässä on se lyhyiden sanojen kiertäminen
+                mapisto.insert({sana, vektori});    //tässä on se lyhyiden sanojen kiertäminen
             else
                 mapisto.insert({sana, vektori});
         }
 
-        //setin siirtäminen mappiin
-        tiedostonavausolio.close();
-        ifstream tiedostonavausolio(tiedosto);  //rakennetaan ja esitellään tiedostonavausolio ja avataan tiedosto joka parametrina
 
-        while (getline(tiedostonavausolio, rivi)) //täsä oli while (getline(tiedostoavausolio, rivi), nyt kaikki kerrala yritys
+        tiedostonavausolio.close();
+        ifstream tiedostonavausolio(tiedosto);
+
+        while (getline(tiedostonavausolio, rivi))
         {
+
+
+            //tästä eteenpäin se etsii mapistoon talletettuja mjonoja riviltä ja löytää mjonoa mjonojen sisältä
             rivilaskuri +=1;
             for (auto m : mapisto)
             {
