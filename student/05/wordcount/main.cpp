@@ -70,7 +70,7 @@ int main()
             << ": ";
 
             vector<int>::size_type koko = tietopari.second.size();
-            for (int indeksi = 1; indeksi < koko; ++indeksi)
+            for (vector<int>::size_type indeksi = 1; indeksi < koko; ++indeksi)
             {
                 if (indeksi == koko-1)
                     cout << tietopari.second.at(indeksi);
