@@ -9,7 +9,7 @@ bool palindrome_recursive(std::string s)
   RECURSIVE_FUNC
 
 
-          if (s.length() == 1)
+          if (s.length() <= 1)
                   return true;
           else
           {
@@ -19,6 +19,8 @@ bool palindrome_recursive(std::string s)
               {
                   s.erase(0, 1);
                   s.erase(s.length()-1, 1);
+                  if (s.length() == 0)
+                      return true;
                   return palindrome_recursive(s);
               }
               else
