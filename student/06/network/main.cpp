@@ -61,18 +61,31 @@ void print (string id, mapintietotyyppi const& mapisto, string tulostuspisteet =
         vector<string>::const_iterator iter = mapisto.at(id).begin();
         for (;iter != mapisto.at(id).end(); ++iter)
         {
-            tulostuspisteet += "..";
-            cout << tulostuspisteet << *iter << endl;
 
-            //print (*iter, mapisto, tulostuspisteet + ".."); //iterillä osoitetaan tietoon joten *, kutsutaan joka alkiolla printtiä
+            print (*iter, mapisto, tulostuspisteet + ".."); //iterillä osoitetaan tietoon joten *, kutsutaan joka alkiolla printtiä
 
         }
     }
 }
 //Jos henkilölle ei ole kirjattu värvättyjä tai henkilöä ei ole kirjattu ollenkaan, tulostetaan vain hänen tunnisteensa.
-void count (string id)
+void count (string id, mapintietotyyppi const& mapisto, int& laskuri)
 {
 
+    //triviaalitapaus
+    if (mapisto.find(id) == mapisto.end())
+    {
+        laskuri +=0;
+    }
+    else
+    {
+        vector<string>::const_iterator iter = mapisto.at(id).begin();
+        for (; iter != mapisto.at(id).end(); ++iter)
+        {
+            laskuri += 1;
+            count(*iter, mapisto, laskuri);
+        }
+
+    }
 }
 
 void depth (string id )
@@ -118,11 +131,6 @@ int main()
 
 
 
-
-
-
-
-
         else if(command == "P" or command == "p")
         {
             string pisteet = "..";
@@ -140,13 +148,6 @@ int main()
         }
 
 
-
-
-
-
-
-
-
         else if(command == "C" or command == "c")
         {
             if(parts.size() != 2)
@@ -157,14 +158,12 @@ int main()
             std::string id = parts.at(1);
 
             // TODO: Implement the command here!        //COUNT TÄHÄN
+            int laskuri = 0;
+            count(id, mapisto, laskuri);
+            cout << laskuri << endl;
+
 
         }
-
-
-
-
-
-
 
         else if(command == "D" or command == "d")
         {
