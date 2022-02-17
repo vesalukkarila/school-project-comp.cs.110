@@ -88,9 +88,18 @@ void count (string id, mapintietotyyppi const& mapisto, int& laskuri)
     }
 }
 
-void depth (string id )
+int depth (string id, mapintietotyyppi const& mapisto )
 {
-
+    int laskuri = 0;
+    if (mapisto.find(id) != mapisto.end())
+    {
+        for (string alkio : mapisto.at(id))
+        {
+            if (depth(alkio, mapisto) > laskuri)
+                laskuri = depth(alkio, mapisto);
+        }
+    }
+return laskuri + 1;
 }
 
 int main()
@@ -175,6 +184,8 @@ int main()
             std::string id = parts.at(1);
 
             // TODO: Implement the command here!        //DEPTH TÄHÄN
+
+            cout << depth(id, mapisto) << endl;
 
         }
 
