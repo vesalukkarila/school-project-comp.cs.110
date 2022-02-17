@@ -38,14 +38,38 @@ using mapintietotyyppi = unordered_map <string, vector<string>> ;
 
 void store (string id1, string id2, mapintietotyyppi& mapisto)
 {
+    if (mapisto.find(id1) == mapisto.end()) //jos avain ei löydy mapista..
+    {
+        mapisto.insert({id1, {}});      //luo avaimen ja alustaa vektorin tyhjäksi
+    }
+    mapisto.at(id1).push_back(id2);     // joka tapauksessa luo uuden avain-arvo parin
 
 }
 
-void print (string id)
+void print (string id, mapintietotyyppi const& mapisto, string tulostuspisteet = "")
 {
+//triviaalitapaus
+    if (mapisto.find(id) == mapisto.end()   //jos ei avaimena tai on hkuormana muttei jälkeläisiä
+            or mapisto.at(id).empty())
+    {
+        cout << tulostuspisteet << id << endl;
+    }
+    //yleistapaus
+    else
+    {
+        cout << tulostuspisteet << id << endl;
+        vector<string>::const_iterator iter = mapisto.at(id).begin();
+        for (;iter != mapisto.at(id).end(); ++iter)
+        {
+            tulostuspisteet += "..";
+            cout << tulostuspisteet << *iter << endl;
 
+            //print (*iter, mapisto, tulostuspisteet + ".."); //iterillä osoitetaan tietoon joten *, kutsutaan joka alkiolla printtiä
+
+        }
+    }
 }
-
+//Jos henkilölle ei ole kirjattu värvättyjä tai henkilöä ei ole kirjattu ollenkaan, tulostetaan vain hänen tunnisteensa.
 void count (string id)
 {
 
@@ -88,7 +112,7 @@ int main()
             std::string id2 = parts.at(2);
 
             // TODO: Implement the command here!        //STORE TÄHÄN 2 PARAMETRIA
-
+            store(id1, id2, mapisto);
 
         }
 
@@ -111,6 +135,7 @@ int main()
 
             // TODO: Implement the command here!        //PRINT TÄHÄN
 
+            print(id, mapisto);
 
         }
 
