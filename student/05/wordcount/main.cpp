@@ -5,6 +5,7 @@
 #include <vector>
 #include <utility>
 #include <string>
+#include <sstream>
 using namespace std;
 
 int main()
@@ -17,7 +18,7 @@ int main()
     string rivi;
     string sana;
     set <string> setti;
-    map <string, vector<int>> mapisto;
+    map <string, set<int>> mapisto;
     vector <int> vektori = {0};
     vector <string> lausevektori;
     int rivilaskuri = 0;
@@ -31,67 +32,58 @@ int main()
         return 1;
     }
 
-    else
-    {
-        //while (getline(tiedostonavausolio, rivi))
-        //for ( int laskuri = 1; getline(tiedostonavausolio, rivi); ++laskuri)
-        //while (getline(tiedostonavausolio, rivi))
-           // cout << rivi << endl;
+   // else
+    //{
+      //  while ( tiedostonavausolio >> sana)
+        //{
 
-        while ( tiedostonavausolio >> sana)
-        {
-            if (sana.length()<3)
-                mapisto.insert({sana, vektori});    //tässä on se lyhyiden sanojen kiertäminen
-            else
-                mapisto.insert({sana, vektori});
-        }
+          //  mapisto.insert({sana, vektori});    //lisätään mappiin (uniikki) sana ja tyhjä vektori
+
+        //}
 
 
-        tiedostonavausolio.close();
-        ifstream tiedostonavausolio(tiedosto);
+       // tiedostonavausolio.close();         //suljen jotta voin loopata uusiksi
+       // ifstream tiedostonavausolio(tiedosto);
 
         while (getline(tiedostonavausolio, rivi))
         {
-
-
-            //tästä eteenpäin se etsii mapistoon talletettuja mjonoja riviltä ja löytää mjonoa mjonojen sisältä
             rivilaskuri +=1;
-            for (auto m : mapisto)
-            {
-                if (rivi.find(m.first) != string::npos)
-                {
-                    mapisto[m.first].at(0) +=1;
-                    mapisto[m.first].push_back(rivilaskuri);
-                }
-            }
-
+            istringstream sanat(rivi); //lisätty
+            while(sanat >> sana)                 //for (auto m : mapisto)
+               {
+                   if (mapisto.find(sana) == mapisto.end()) //if (rivi.find(m.first) != string::npos)  //koska find aloittaa loopin aina kun yksi löytyy
+                   {
+                       mapisto.insert({sana, {}});         //mapisto[m.first].at(0) +=1;  //vektorin 0-indeksiin lisää yhden esiintymän
+                                                            //mapisto[m.first].push_back(rivilaskuri); //vektorin loppuun lisää rivin jolla esiintyy
+                   }
+                   mapisto.at(sana).insert(rivilaskuri);
+               }
         }
-        //LÖYTÄÄ "A" JA "ON" SANOJEN SISÄLTÄ
+
+
+
+
+        //TULOSTUS osio OK! ei oo enää kun muutti hyötykuorman setiksi
         for (auto tietopari : mapisto)
         {
-            cout << tietopari.first << " " << tietopari.second.at(0)
+            vector<int>::size_type koko = tietopari.second.size();
+
+            cout << tietopari.first << " " << koko
             << ": ";
 
-            vector<int>::size_type koko = tietopari.second.size();
-            for (vector<int>::size_type indeksi = 1; indeksi < koko; ++indeksi)
+            for (set<int>::iterator iter = tietopari.second.begin(); iter != tietopari.second.end(); ++iter)
             {
-                if (indeksi == koko-1)
-                    cout << tietopari.second.at(indeksi);
-                else
-                    cout << tietopari.second.at(indeksi) << ", ";
 
+                cout << *iter;
+                if ((++iter) != tietopari.second.end())
+                    cout << ", ";
+                else
+                    cout << endl;
+                iter--;
             }
-            cout << endl;
         }
 
-        //for (auto v : lausevektori)
-        //{
-          //  rivilaskuri +=1;
-          //  for (auto m : mapisto)
-          //      if ()
-        //}
 
-    }
 
 
     return 0;
