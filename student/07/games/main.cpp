@@ -25,6 +25,7 @@
 #include <fstream>          //tiedostojen lukeminen
 #include <sstream>          //stringstream
 #include <cctype>       //toupper
+#include <set>
 
 using namespace std;
 
@@ -114,7 +115,7 @@ bool tiedoston_avaus (PELIEN_TIETOTYYPPI& pelit_map)
     return true;
 }
 
-//ALL_GAMES komento
+//ALL_GAMES komento VALMIS
 void pelien_tulostus(PELIEN_TIETOTYYPPI const& pelit_map)
 {
     //VALMIS
@@ -124,16 +125,68 @@ void pelien_tulostus(PELIEN_TIETOTYYPPI const& pelit_map)
 }
 
 
+//GAME komento
+void pelin_tiedot (PELIEN_TIETOTYYPPI const& pelit_map, vector<string> const& apuvektori) // lainausmerkki pelinnimessä tarkista!! split käytetty mainissa, mitä teki?
+{
+    if (pelit_map.find(apuvektori.at(1)) == pelit_map.end())
+    {
+        cout << "Error: Game" << EI_LOYDY_TEKSTI << endl;
+        return;
+    }
+    cout << "Game " << apuvektori.at(1) << " has these scores and players, listed in ascending order:" << endl;
+    //piste: nimi, nimi tulostus tekemättä
+
+}
+
+//ALL_PLAYERS komento VALMIS
+void kaikki_pelaajat(PELIEN_TIETOTYYPPI const& pelit_map)
+{
+    set <string> apusetti;
+    for (auto ulompi_pari : pelit_map)
+        for (auto sisempi_pari : pelit_map.at(ulompi_pari.first))
+            apusetti.insert(sisempi_pari.first);
+    cout << "All players in alphabetical order: " << endl;
+    for (auto alkio : apusetti)
+        cout << alkio << endl;
+
+}
+
+//PLAYER komento kaikki pelaajan pelaamat pelit VALMIS
+void pelaajan_pelit (PELIEN_TIETOTYYPPI const& pelit_map, vector<string> apuvektori)
+{
+    set <string> pelisetti;
+    string pelaaja = apuvektori.at(1);
+    for (auto ulompi_pari : pelit_map)
+    {
+        if (pelit_map.at(ulompi_pari.first).find(pelaaja) != pelit_map.at(ulompi_pari.first).end())
+        {
+            pelisetti.insert(ulompi_pari.first);
+        }
+    }
+    if (pelisetti.empty())
+        {
+            cout << "Error: Player" << EI_LOYDY_TEKSTI << endl; //lähinnä treenin vuoksi
+            return;
+        }
+    cout << "Player " << apuvektori.at(1) << " plays the following games:" << endl;       //esimerkissä playEs
+    for (auto alkio : pelisetti)
+        cout << alkio << endl;
+}
+
+
 //KOMENTOJEN PERUSTEELLA FUNKTIOIDEN KUTSU TÄSTÄ FUNKTIOSTA, JOTTEI MAIN TÄYTY
 void funktio_kutsut (PELIEN_TIETOTYYPPI& pelit_map, string const& komento_isolla, vector<string> const& apuvektori)//pelit_map vain viitteenä, koska sitä muokataan
 {
     if (komento_isolla == "ALL_GAMES")
         pelien_tulostus(pelit_map);
-    //else if (komento_isolla == "")
+    else if (komento_isolla == "GAME")
+        pelin_tiedot(pelit_map, apuvektori);
 
-    //else if (komento_isolla == "")
+    else if (komento_isolla == "ALL_PLAYERS")
+        kaikki_pelaajat(pelit_map);
 
-    //else if (komento_isolla == "")
+    else if (komento_isolla == "PLAYER")
+        pelaajan_pelit(pelit_map, apuvektori);
 
     //else if (komento_isolla == "")
 }
@@ -201,3 +254,12 @@ int main()
 }
 
 //1 commit tiedoston luku ja ilmoistukset
+//2 COMMIT mainissa komennon ja parametrien tarkistus ja funktio_kutsut valmis
+
+
+//omia testejä...
+//for (auto tietopari : pelit_map)
+//{
+ //   cout << tietopari.first << endl;
+  //  for(auto sisempipari :  pelit_map.at(tietopari.first))
+    //    cout << sisempipari.first << endl;
