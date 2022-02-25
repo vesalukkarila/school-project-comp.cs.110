@@ -26,6 +26,8 @@
 #include <sstream>          //stringstream
 #include <cctype>       //toupper
 #include <set>
+#include <utility>      //pair
+#include <algorithm>    //sort
 
 using namespace std;
 
@@ -125,17 +127,57 @@ void pelien_tulostus(PELIEN_TIETOTYYPPI const& pelit_map)
 }
 
 
-//GAME komento
-void pelin_tiedot (PELIEN_TIETOTYYPPI const& pelit_map, vector<string> const& apuvektori) // lainausmerkki pelinnimessä tarkista!! split käytetty mainissa, mitä teki?
+
+//GAME komento tulostaa pelin pisteet ja pelaajat suuruus- ja aakkosjärjestyksen mukaisesti. Ei palauta tai muuta mitään.
+void pelin_tiedot (PELIEN_TIETOTYYPPI const& pelit_map, vector<string> const& apuvektori)
 {
-    if (pelit_map.find(apuvektori.at(1)) == pelit_map.end())
+    string pelin_nimi = apuvektori.at(1);
+    //mikäli peliä ei löydy tietorakenteesta, annetaan virheilmoitus ja poistutaan funktiosta
+    if (pelit_map.find(pelin_nimi) == pelit_map.end())
     {
         cout << "Error: Game" << EI_LOYDY_TEKSTI << endl;
         return;
     }
-    cout << "Game " << apuvektori.at(1) << " has these scores and players, listed in ascending order:" << endl;
-    //piste: nimi, nimi tulostus tekemättä
 
+    cout << "Game " << apuvektori.at(1) << " has these scores and players, listed in ascending order:" << endl;
+
+    //map:n avain-arvo alkiot lisätään päinvastaisessa järjestyksessä apusetti:n
+    //jolloin ne ovat automaattisesti suuruusjärjestyksessä pisteiden mukaan
+    //ja aakkojärjestyksessä mikäli pisteet ovat yhtäsuuret
+    set <pair<int, string>> apusetti;
+
+    for (auto tietopari : pelit_map.at(pelin_nimi))
+    {
+        pair <int, string> apupair = make_pair(tietopari.second, tietopari.first);
+        apusetti.insert(apupair);
+    }
+
+    //laskuri ensimmäisen parin käsittelemiseksi
+    int laskuri = 0;
+    //ja pisteet_setti aiempien pisteiden vertailua varten
+    set<int> pisteet_setti;
+    for ( auto pari : apusetti)
+    {
+     // Tulosta piste ja nimi jos enimmäinen alkio
+     if (laskuri == 0)
+     {
+         cout << pari.first << " : " << pari.second;
+         laskuri++;
+         pisteet_setti.insert(pari.first);  //lisätään pisteet vertailua varten
+         continue;
+     }
+     // Tulosta pilkku ja nimi jos pisteet samat kuin aiemmalla
+     else if (pisteet_setti.find(pari.first) != pisteet_setti.end())
+     {
+         cout << ", " << pari.second;
+     }
+     else
+     {
+        cout << endl;
+        cout << pari.first << " : " << pari.second;     }
+
+     }
+     cout << endl;
 }
 
 //ALL_PLAYERS komento VALMIS
@@ -235,17 +277,7 @@ int main()
 
 
     }
-    //TEKEMÄSSÄ: Yleistä komennon tarkistusta, jotta lyhyellä koodilla saan tarkistettua parametrien riittävän määrän ja välitettyä funktiokutsun ja parametrit funktioon.
-    //Komennoissa sallitaan sekä pienet että isot kirjaimet. (Tässä voit käyttää char-tyypin toupper-funktiota.
-    //Ennen kuin vertaat käyttäjän antamaa syötettä esim. sanaan QUIT, muuta syötteessä olevan komennon kaikki kirjaimet isoiksi.)
-
-    //Kullakin komennolla on 0-3 parametria. Jos parametreja on liian vähän, ohjelma antaa virheilmoituksen HUOM!!
-    //ylimääräisistä parametreista ei välitetä
-
-    //isot kirjaimet komennossa vertailuksi
-
-
-
+    //TEKEMÄSSÄ:
 
 
 
