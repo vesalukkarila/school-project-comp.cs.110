@@ -23,6 +23,8 @@
 #include <vector>
 #include <map>
 #include <fstream>          //tiedostojen lukeminen
+#include <sstream>          //stringstream
+#include <cctype>       //toupper
 
 using namespace std;
 
@@ -63,6 +65,7 @@ std::vector<std::string> split( const std::string& str, char delim = ';' )      
 
 bool rivit_kunnossa(vector <string> const& rivivektori)
 {
+    //VALMIS
     //Tarkistaa että vektorissa on 3 alkiota ja ettei pelin (indeksi 0) tai pelaajan (indeksi 1) kohta ole tyhjä
     return rivivektori.size() == 3
             && !rivivektori.at(0).empty()
@@ -71,6 +74,7 @@ bool rivit_kunnossa(vector <string> const& rivivektori)
 
 bool tiedoston_avaus (PELIEN_TIETOTYYPPI& pelit_map)
 {
+    //VALMIS, voiko osia käyttää?
     string tiedosto = "";
     cout << "Give a name for input file: ";
     getline(cin, tiedosto);
@@ -96,7 +100,6 @@ bool tiedoston_avaus (PELIEN_TIETOTYYPPI& pelit_map)
             return false;
         }
 
-
         string peli = rivi_vektori.at(0);
         string pelaaja = rivi_vektori.at(1);
         int pisteet = stoi(rivi_vektori.at(2));
@@ -108,10 +111,39 @@ bool tiedoston_avaus (PELIEN_TIETOTYYPPI& pelit_map)
         pelit_map.at(peli).insert({pelaaja, pisteet});  //peli löytyy, lisätään sisempään sanakirjaan avain-arvo-pariksi pelaaja&pisteet
     }
 
-
     return true;
 }
 
+//ALL_GAMES komento
+void pelien_tulostus(PELIEN_TIETOTYYPPI const& pelit_map)
+{
+    //VALMIS
+    cout << "All games in alphabetical order:" << endl;
+    for (auto tietopari : pelit_map)
+        cout << tietopari.first << endl;
+}
+
+
+//KOMENTOJEN PERUSTEELLA FUNKTIOIDEN KUTSU TÄSTÄ FUNKTIOSTA, JOTTEI MAIN TÄYTY
+void funktio_kutsut (PELIEN_TIETOTYYPPI& pelit_map, string const& komento_isolla, vector<string> const& apuvektori)//pelit_map vain viitteenä, koska sitä muokataan
+{
+    if (komento_isolla == "ALL_GAMES")
+        pelien_tulostus(pelit_map);
+    //else if (komento_isolla == "")
+
+    //else if (komento_isolla == "")
+
+    //else if (komento_isolla == "")
+
+    //else if (komento_isolla == "")
+}
+//VAKIOMUUTTUJA MAP, PELIT-MAININ APUVEKTORIA VARTEN VERTAILU ALKIOIDEN MÄÄRISTÄ
+const map<string, vector<string>::size_type> KOMENTO_TARKISTUS = {{"ALL_GAMES", 1}, {"GAME", 2},//hyötykuorma muutettu sizetypeksi jotta vertailu onnistuu mainissa, aiemmin int.
+                                   {"ALL_PLAYERS", 1}, {"PLAYER", 2},   //int lukua kasvatetu yhdellä helpomman vertailun vuoksi mainissa, todellisuudessa parametreja yksi merkittyä vähemmän
+                                   {"ADD_GAME", 2}, {"ADD_PLAYER", 4},
+                                   {"REMOVE_PLAYER", 2}};
+
+const map<string, string> KUTSUT = {{"ALL_GAMES", "pelien_tulostus"}};
 int main()
 {
     //tiedostorakenne
@@ -119,17 +151,53 @@ int main()
     if (!tiedoston_avaus(pelit_map))
         return 1;
 
-
-    //omia testejä...
-    for (auto tietopari : pelit_map)
+    while (true)
     {
-        cout << tietopari.first << endl;
-        for(auto sisempipari :  pelit_map.at(tietopari.first))
-            cout << sisempipari.first << endl;
+        string rivi;
+        //string sana;
+        vector <string> apuvektori;
+        cout << "games> ";
+        getline (cin, rivi);
+        apuvektori = split(rivi, ' ');      // split pätkii rivin sanoiksi
+        string komento_isolla = "";
+        for (auto merkki : apuvektori.at(0))
+        {
+            komento_isolla += toupper(merkki);
+        }
+        if (komento_isolla == "QUIT")
+            return EXIT_SUCCESS;
+        else if (KOMENTO_TARKISTUS.find(komento_isolla) != KOMENTO_TARKISTUS.end() //komennon ja parametrimäärän oikeellisuus tarkistetaan
+                && apuvektori.size() >= KOMENTO_TARKISTUS.at(komento_isolla))    //jos syötteenä annettu komento löytyy komennot-vakiosta ja vektorin koko väh.hkuormaa vastaava
+        {
+            //parametrina pelit_map, komento ja koko apuvektori josta voi kussakin funktiossa valita tarvittavan määrän parametreja
+            funktio_kutsut(pelit_map, komento_isolla, apuvektori);
+
+        }
+        else
+        {
+            cout << VIRHE_TEKSTI << endl;    //Jos itse komento ei ole hyväksytty/ parametreja liian vähän: Error: Invalid input.
+            continue;
+        }
+
+
+
     }
+    //TEKEMÄSSÄ: Yleistä komennon tarkistusta, jotta lyhyellä koodilla saan tarkistettua parametrien riittävän määrän ja välitettyä funktiokutsun ja parametrit funktioon.
+    //Komennoissa sallitaan sekä pienet että isot kirjaimet. (Tässä voit käyttää char-tyypin toupper-funktiota.
+    //Ennen kuin vertaat käyttäjän antamaa syötettä esim. sanaan QUIT, muuta syötteessä olevan komennon kaikki kirjaimet isoiksi.)
+
+    //Kullakin komennolla on 0-3 parametria. Jos parametreja on liian vähän, ohjelma antaa virheilmoituksen HUOM!!
+    //ylimääräisistä parametreista ei välitetä
+
+    //isot kirjaimet komennossa vertailuksi
+
+
+
 
 
 
 
     return EXIT_SUCCESS;
 }
+
+//1 commit tiedoston luku ja ilmoistukset
