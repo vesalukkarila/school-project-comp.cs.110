@@ -35,7 +35,7 @@ using namespace std;
 using PELIEN_TIETOTYYPPI = map<string, map<string, int>>;
 
 //merkkijonovakiot
-const string VIRHE_TEKSTI = "Error. Invalid input.";
+const string VIRHE_TEKSTI = "Error: Invalid input.";
 const string EI_LOYDY_TEKSTI = " could not be found.";
 
 
@@ -210,7 +210,7 @@ void pelaajan_pelit (PELIEN_TIETOTYYPPI const& pelit_map, vector<string> apuvekt
             cout << "Error: Player" << EI_LOYDY_TEKSTI << endl; //lähinnä treenin vuoksi
             return;
         }
-    cout << "Player " << apuvektori.at(1) << " plays the following games:" << endl;       //esimerkissä playEs
+    cout << "Player " << apuvektori.at(1) << " playes the following games:" << endl;       //esimerkissä playEs
     for (auto alkio : pelisetti)
         cout << alkio << endl;
 }
