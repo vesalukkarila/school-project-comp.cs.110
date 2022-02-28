@@ -250,7 +250,7 @@ void uusi_pelaaja (PELIEN_TIETOTYYPPI& pelit_map, vector<string> apuvektori)    
     // Peliä ei löydy, virheilmoitus ja funktiosta poistuminen.
     if (pelit_map.find(pelin_nimi) == pelit_map.end())
     {
-        cout << "Error: Game" << VIRHE_TEKSTI << endl;
+        cout << "Error: Game" << EI_LOYDY_TEKSTI << endl;
         return;
     }
     // Peli löytyy, pelaaja on uusi - lisätään uutena
