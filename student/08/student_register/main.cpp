@@ -156,10 +156,11 @@ int main() {
                 std::string puh_numero;
                 std::cout << "Enter a new phone number: ";
                 std::getline(std::cin, puh_numero);
+                std::cout << std::endl;
                 if (is_valid_phone_number(puh_numero))      //jos puhelinnumero validi
                 {
                     //riittää kun muokkaa tietuetta osoittimen kautta sillä molemmat mapit osoittavat tietueeseen
-                    std::cout << std::endl;                     //alla parts.at(1) on komennon parametri eli opiskelijanumero joka avaimena
+                                        //alla parts.at(1) on komennon parametri eli opiskelijanumero joka avaimena
                     student_numbers.at(parts.at(1))->phone_number = puh_numero; //okei tähän tuli NUOLI, koska?? muutetaan puhelinnumero syötteen mukaan
 
                     //tietueeseen muutoksen tekeminen yllä ok
