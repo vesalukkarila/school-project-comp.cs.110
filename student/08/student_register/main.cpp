@@ -170,7 +170,7 @@ int main() {
 
                     std::ofstream tiedostoon_kirjoitus_olio(file_name);   //luodaan kirjoitusolio ja avataan tiedosto kirjoitusta varten
                     //tietueen tiedot tiedostoon. yhden avaimen takana olevat yhdelle riville
-                    for (auto tietopari : student_numbers)
+                    for (auto tietopari : user_ids)
                     {
                         //haluan kirjoittaa jokaisen hyötykuormana olevan tietueen kentän arvon erotinmerkillä erotettuna tiedostoon
 
