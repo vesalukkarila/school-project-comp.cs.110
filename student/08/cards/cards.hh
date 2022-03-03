@@ -22,27 +22,31 @@ class Cards {
       Card_data* get_topmost();
 
       // Adds a new card with the given id as the topmost element.
+      //Korttipinon päällimmäiseksi voi lisätä uuden kortin, jonka numero välitetään lisäysoperaatiolle parametrina.
       void add(int id);
 
       // Prints the content of the data structure with ordinal numbers to the
       // output stream given as a parameter starting from the first element.
-      void print_from_top_to_bottom(std::ostream& s);
+      void print_from_top_to_bottom(std::ostream& s);   //parametrina cout
 
       // Removes the topmost card and passes it in the reference parameter id to the caller.
       // Returns false, if the data structure is empty, otherwise returns true.
+      //Korttipinosta voi poistaa päällimmäisen kortin. Tämän päällimmäisen kortin numero välitetään metodista kutsujalle (viiteparametrissa id).
       bool remove(int& id);
 
       // Moves the last element of the data structure as the first one.
       // Returns false, if the data structure is empty, otherwise returns true.
+      //Korttipinon alimmaisen kortin voi siirtää päällimmäiseksi.
       bool bottom_to_top();
 
       // Moves the first element of the data structure as the last one.
       // Returns false, if the data structure is empty, otherwise returns true.
+      //Korttipinon päällimmäisen kortin voi siirtää pinon alimmaiseksi.
       bool top_to_bottom();
 
       // Prints the content of the data structure with ordinal numbers to the
       // output stream given as a parameter starting from the last element.
-      void print_from_bottom_to_top(std::ostream& s);
+      void print_from_bottom_to_top(std::ostream& s);   //parametrina cout
 
       // A dynamic data structure must have a destructor
       // that can be called to deallocate memory,
