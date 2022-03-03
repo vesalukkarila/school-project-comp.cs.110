@@ -81,8 +81,8 @@ bool Cards::bottom_to_top()
     if (top_ == nullptr)
         return false;
     Card_data* osoitin = top_;  //paikallismuuttujaosoittimeen kopioidaan topin osoittama osoite
-    Card_data* viimeinen;
-    Card_data* tokavika;
+    Card_data* viimeinen = nullptr;
+    Card_data* tokavika = nullptr;
     while (true)
     {
         //vikasta ekaks siirretyn previous osoittamaan nullptr
@@ -97,8 +97,9 @@ bool Cards::bottom_to_top()
             viimeinen->previous = nullptr;  //ekaksi siirrettävän previous osoittamaan nullptr!!!
             top_->previous = viimeinen;     //entinen eka osoitaa uuteen ekaan!!!
             top_ = viimeinen;       // attribuuti top_ osoittaa uuteen ensimmäiseen
-            tokavika->next = nullptr; // tokavikan next osoittamaan nullptr
+            //tokavika->next = nullptr; // tokavikan next osoittamaan nullptr
             bottom_ = tokavika;
+            bottom_->next = nullptr;    //sama kuin 2 riviä ylempänä
             return true;
         //tän ois voinut tehdä ilman "viimeinen" osoittajaa, "osoitin" osoittajalla ois pärjännyt hyvin
         }
