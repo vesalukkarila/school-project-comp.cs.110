@@ -152,6 +152,21 @@ bool Cards::top_to_bottom()
 bool Cards::remove(int &id)
 {
 
+    if (top_->data != id)
+        return false;
+    else
+    {
+        if (top_->data == id)
+        {
+            Card_data* poistettava = top_;
+            top_ = top_->next;      //top osoittaa tokaa
+            top_->previous = nullptr;   //tokan previous osoittaa nullptr
+            delete poistettava;
+        }
+
+
+    }
+    return true;
 }
 
 

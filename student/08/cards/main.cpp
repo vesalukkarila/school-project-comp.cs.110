@@ -43,17 +43,17 @@ int main() {
 
 
     cout << endl << "print_from_bottom_to_top" << endl;
-    deck.print_from_bottom_to_top(cout);        //INNOKKAIMMILLE
+    deck.print_from_bottom_to_top(cout);        //INNOKKAIMMILLE ja mähän oon
 
-/*
+
 
     cout << endl;
     int value = 0;
-    while(deck.remove(value)) {
+    while(deck.remove(value)) {     //while true
         cout << "remove " << value << endl;
     }
 
-*/
+
     cout << endl << "destructor" << endl;
     return EXIT_SUCCESS;
 }
