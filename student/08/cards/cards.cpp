@@ -155,7 +155,8 @@ bool Cards::top_to_bottom()
 bool Cards::remove(int &id)
 {
 
-    if (top_->data != id or top_ == nullptr)    //lisätty jos top osoittaa tyhjään
+
+    if ( top_ == nullptr)    //lisätty jos top osoittaa tyhjään
         return false;
     else
     {
@@ -164,7 +165,9 @@ bool Cards::remove(int &id)
             Card_data* poistettava = top_;
             top_ = top_->next;      //top osoittamaan ekan seuraavaan joka voi olla nullptr
             top_->previous = nullptr;   //tokan previous osoittaa nullptr
+
             delete poistettava;
+            id = top_->data;
         }
 
 
@@ -172,7 +175,7 @@ bool Cards::remove(int &id)
     return true;
 }
 
-
+//REMOVESSA VIKAA TAI ADDISSA. ADDISSA EI OLE VIITEPARAMETRIA(?)
 
 //tulostus vikasta ekaan INNOKKAILLE! JEE!
 void Cards::print_from_bottom_to_top(std::ostream &s)
