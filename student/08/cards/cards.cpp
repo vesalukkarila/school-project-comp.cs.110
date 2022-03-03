@@ -74,14 +74,14 @@ void Cards::print_from_top_to_bottom(std::ostream &s)
 }
 
 
-//siirto vikasta ekaks
+//siirto vikasta ekaks TÄÄLLÄ FATAALI ERRORI
 bool Cards::bottom_to_top()
 {
-    if (top_ == nullptr)
+    if (top_ == nullptr or top_ == bottom_ or bottom_ == nullptr)
         return false;
     Card_data* osoitin = top_;  //paikallismuuttujaosoittimeen kopioidaan topin osoittama osoite
     Card_data* viimeinen = nullptr;
-    Card_data* tokavika = nullptr;
+    //Card_data* tokavika = nullptr;
     while (true)
     {
         //vikasta ekaks siirretyn previous osoittamaan nullptr
@@ -90,22 +90,21 @@ bool Cards::bottom_to_top()
 
         if (osoitin->next == nullptr)   //jos kysessä on viimeinen alkio
         {
-            viimeinen = osoitin;
-            //entisen tokavikan next pitää saada osoittamaan nullprt!!
+            bottom_ = osoitin->previous;    //bottom osoittaa tokavikaan
+            bottom_->next = nullptr;        //ja sen next nullptr
+            viimeinen = osoitin;        //
             viimeinen->next = top_; //viimeinen joka siirretään ensimmäiseksi laitetaan osoittamaan entistä ensimmäistä
             viimeinen->previous = nullptr;  //ekaksi siirrettävän previous osoittamaan nullptr!!!
             top_->previous = viimeinen;     //entinen eka osoitaa uuteen ekaan!!!
             top_ = viimeinen;       // attribuuti top_ osoittaa uuteen ensimmäiseen
-            //tokavika->next = nullptr; // tokavikan next osoittamaan nullptr
-            bottom_ = tokavika;
-            bottom_->next = nullptr;    //sama kuin 2 riviä ylempänä5
+
 
             return true;
         //tän ois voinut tehdä ilman "viimeinen" osoittajaa, "osoitin" osoittajalla ois pärjännyt hyvin
         }
         else
         {
-            tokavika = osoitin;
+           // tokavika = osoitin;
             osoitin = osoitin->next;
         }
     }
