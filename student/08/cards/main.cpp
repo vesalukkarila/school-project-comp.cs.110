@@ -1,5 +1,6 @@
 #include "cards.hh"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -32,6 +33,7 @@ int main() {
     cout << endl << "print_from_top_to_bottom" << endl;
     deck.print_from_top_to_bottom(cout);        //tulostus ensimmäisestä viimeiseen, alusta loppuun
 
+    /*
     cout << endl << "top_to_bottom * 1" << endl;
     deck.top_to_bottom();                       //siirtää ekan viimeiseksi, eli alusta loppuun
 
@@ -47,6 +49,7 @@ int main() {
         cout << "remove " << value << endl;
     }
 
+*/
     cout << endl << "destructor" << endl;
     return EXIT_SUCCESS;
 }

@@ -1,12 +1,13 @@
 #include "cards.hh"
+#include <iostream>
+#include <string>
 
 using namespace std;
 
 // TODO: Implement the methods here
 
 //luo deck olio, jolle attribuutin top_, alussa osoittaa nullptr.
-Cards::Cards():
-    top_(nullptr)
+Cards::Cards(): top_(nullptr)
 {
 
 }
@@ -40,6 +41,52 @@ void Cards::add(int id)
 void Cards::print_from_top_to_bottom(std::ostream &s)
 {
 
+    if (top_ == nullptr)
+        return;
+    else
+    {
+        int laskuri = 1;
+
+        Card_data* osoitin = top_;
+        while (true)
+        {
+            s << laskuri << ": " << osoitin->data << endl;
+            laskuri += 1;
+            osoitin = osoitin->next;
+            if (osoitin == nullptr)
+                break;
+        }
+    }
+}
+
+
+//siirto vikasta ekaks
+bool Cards::bottom_to_top()
+{
+    if (top_ == nullptr)
+        return false;
+    Card_data* osoitin = top_;  //paikallismuuttujaosoittimeen kopioidaan topin osoittama osoite
+    Card_data* viimeinen;
+    Card_data* tokavika;
+    while (true)
+    {
+
+        if (osoitin->next == nullptr)   //jos kysessä on viimeinen alkio
+        {
+            viimeinen = osoitin;
+            //entisen tokavikan next pitää saada osoittamaan nullprt!!
+            viimeinen->next = top_; //viimeinen joka siirretään ensimmäiseksi laitetaan osoittamaan entistä ensimmäistä
+            top_ = viimeinen;       // attribuuti top_ osoittaa uuteen ensimmäiseen
+            tokavika->next = nullptr; // tokavikan next osoittamaan nullptr
+            return true;
+        //tän ois voinut tehdä ilman "viimeinen" osoittajaa, "osoitin" osoittajalla ois pärjännyt hyvin
+        }
+        else
+        {
+            tokavika = osoitin;
+            osoitin = osoitin->next;
+        }
+    }
 }
 
 
@@ -50,11 +97,7 @@ bool Cards::remove(int &id)
 }
 
 
-//siirto vikasta ekaks
-bool Cards::bottom_to_top()
-{
 
-}
 
 
 //siirto ekasta vikaks
@@ -66,6 +109,17 @@ bool Cards::top_to_bottom()
 
 //tulostus vikasta ekaan INNOKKAILLE! JEE!
 void Cards::print_from_bottom_to_top(std::ostream &s)
+{
+
+}
+
+//Purkaja jee!
+Cards::~Cards()
+{
+
+}
+
+int Cards::recursive_print(Card_data *top, std::ostream &s)
 {
 
 }
