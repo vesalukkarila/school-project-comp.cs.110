@@ -150,7 +150,7 @@ bool Cards::top_to_bottom()
 }
 
 
-
+//tulostaa oikein mutta herjat jatkuu....
 //poistaa ekan eli päällimmäisen eli top_, poistaa siis dynaamisen muuttujan
 bool Cards::remove(int &id)
 {
@@ -161,18 +161,18 @@ bool Cards::remove(int &id)
     else
     {
 
-            Card_data* poistettava = top_;
-            top_ = top_->next;      //top osoittamaan ekan seuraavaan joka voi olla nullptr siirsin tän tänne ylös ja nyt tulostaa 0,4,3,2 eikä 4,3,2,1
-            if ( top_ != nullptr)
-            {
-                top_->previous = nullptr;   //tokan previous osoittaa nullptr
+        Card_data* poistettava = top_;
+        id = poistettava->data;
 
-            }
-            id = poistettava->data;
+        if (top_ == bottom_)
+        {
+            top_ = nullptr;
+            bottom_ = nullptr;
+        }
+        else
+            top_ = top_->next;
 
-            delete poistettava;
-
-
+        delete poistettava;
 
     }
     return true;
