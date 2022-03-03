@@ -160,15 +160,18 @@ bool Cards::remove(int &id)
         return false;
     else
     {
-        if (top_->data == id)
-        {
+
             Card_data* poistettava = top_;
-            top_ = top_->next;      //top osoittamaan ekan seuraavaan joka voi olla nullptr
-            top_->previous = nullptr;   //tokan previous osoittaa nullptr
+            top_ = top_->next;      //top osoittamaan ekan seuraavaan joka voi olla nullptr siirsin tän tänne ylös ja nyt tulostaa 0,4,3,2 eikä 4,3,2,1
+            if ( top_ != nullptr)
+            {
+                top_->previous = nullptr;   //tokan previous osoittaa nullptr
+
+            }
+            id = poistettava->data;
 
             delete poistettava;
-            id = top_->data;
-        }
+
 
 
     }
