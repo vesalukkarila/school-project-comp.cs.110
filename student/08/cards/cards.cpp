@@ -174,11 +174,6 @@ bool Cards::remove(int &id)
 
 
 
-
-
-
-
-
 //tulostus vikasta ekaan INNOKKAILLE! JEE!
 void Cards::print_from_bottom_to_top(std::ostream &s)
 {

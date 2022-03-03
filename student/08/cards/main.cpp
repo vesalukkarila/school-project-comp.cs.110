@@ -1,6 +1,5 @@
 #include "cards.hh"
 #include <iostream>
-//#include <string>
 
 using namespace std;
 
