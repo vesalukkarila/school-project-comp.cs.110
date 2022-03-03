@@ -117,7 +117,7 @@ bool Cards::top_to_bottom()
         return false;
     Card_data* eka_vikaks = top_;
     Card_data* osoitin = top_;
-    Card_data* toka;
+    //Card_data* toka;
     int laskuri = 1;
     while (true)
     {
@@ -125,12 +125,14 @@ bool Cards::top_to_bottom()
         if (osoitin->next == nullptr)   //jos viimeinen alkio, siirretään se osoittamaan uutta viimeistä
         {
             osoitin->next = eka_vikaks;
+            top_ = eka_vikaks->next;
+            eka_vikaks->next->previous = nullptr;
             eka_vikaks->next = nullptr; //uuuden viimeisen next osoittamaan nullptr
             eka_vikaks->previous = osoitin; //uuden vikan previous osoittamaan vanhaa vikaa!!
             bottom_ = eka_vikaks;       //bottom attribuutti osoittaa uutta vvikaa
             //top_ siirretään osoittamaan uutta ekaa
-            top_ = toka;
-            toka->previous = nullptr;   //uusi ekan previous osoittaa nullptr
+           // top_ = toka;  toisiks ylin lisätty
+            //toka->previous = nullptr;   //uusi ekan previous osoittaa nullptr     siirretty eri muotoon kolmanneks ylimmäks
 
             return true;
         }
@@ -138,8 +140,8 @@ bool Cards::top_to_bottom()
         {
             osoitin = osoitin->next;
             laskuri += 1;
-            if (laskuri == 2)
-                toka = osoitin;
+            /*if (laskuri == 2)     poistettu kun ei hyvksy toka osoittimen käyttöä jostain syystä
+                toka = osoitin;*/
         }
 
     }
@@ -198,8 +200,9 @@ void Cards::print_from_bottom_to_top(std::ostream &s)
 }
 
 
-
+/*
 int Cards::recursive_print(Card_data *top, std::ostream &s)
 {
 
 }
+*/
