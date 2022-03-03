@@ -1,6 +1,5 @@
 #include "cards.hh"
 #include <iostream>
-#include <string>
 
 using namespace std;
 
@@ -99,7 +98,8 @@ bool Cards::bottom_to_top()
             top_ = viimeinen;       // attribuuti top_ osoittaa uuteen ensimmäiseen
             //tokavika->next = nullptr; // tokavikan next osoittamaan nullptr
             bottom_ = tokavika;
-            bottom_->next = nullptr;    //sama kuin 2 riviä ylempänä
+            bottom_->next = nullptr;    //sama kuin 2 riviä ylempänä5
+
             return true;
         //tän ois voinut tehdä ilman "viimeinen" osoittajaa, "osoitin" osoittajalla ois pärjännyt hyvin
         }
