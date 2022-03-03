@@ -89,6 +89,38 @@ bool Cards::bottom_to_top()
     }
 }
 
+//siirto ekasta vikaks
+bool Cards::top_to_bottom()
+{
+    if (top_ == nullptr)
+        return false;
+    Card_data* eka_vikaks = top_;
+    Card_data* osoitin = top_;
+    Card_data* toka;
+    int laskuri = 1;
+    while (true)
+    {
+        if (osoitin->next == nullptr)   //jos viimeinen alkio, siirretään se osoittamaan uutta viimeistä
+        {
+            osoitin->next = eka_vikaks;
+            eka_vikaks->next = nullptr; //uuuden viimeisen next osoittamaan nullptr
+            //top_ siirretään osoittamaan uutta ekaa
+            top_ = toka;
+            return true;
+        }
+        else
+        {
+            osoitin = osoitin->next;
+            laskuri += 1;
+            if (laskuri == 2)
+                toka = osoitin;
+        }
+
+    }
+
+}
+
+
 
 //poistaa ekan eli päällimmäisen eli top_, poistaa siis dynaamisen muuttujan
 bool Cards::remove(int &id)
@@ -100,11 +132,7 @@ bool Cards::remove(int &id)
 
 
 
-//siirto ekasta vikaks
-bool Cards::top_to_bottom()
-{
 
-}
 
 
 //tulostus vikasta ekaan INNOKKAILLE! JEE!

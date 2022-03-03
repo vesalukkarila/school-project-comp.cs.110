@@ -33,12 +33,13 @@ int main() {
     cout << endl << "print_from_top_to_bottom" << endl;
     deck.print_from_top_to_bottom(cout);        //tulostus ensimmäisestä viimeiseen, alusta loppuun
 
-    /*
+
     cout << endl << "top_to_bottom * 1" << endl;
     deck.top_to_bottom();                       //siirtää ekan viimeiseksi, eli alusta loppuun
 
+
     cout << endl << "print_from_top_to_bottom" << endl;
-    deck.print_from_top_to_bottom(cout);        //INNOKKAIMMILLE
+    deck.print_from_top_to_bottom(cout);
 
     cout << endl << "print_from_bottom_to_top" << endl;
     deck.print_from_bottom_to_top(cout);        //INNOKKAIMMILLE
