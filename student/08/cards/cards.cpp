@@ -7,9 +7,20 @@ using namespace std;
 // TODO: Implement the methods here
 
 //luo deck olio, jolle attribuutin top_, alussa osoittaa nullptr.
-Cards::Cards(): top_(nullptr)
+Cards::Cards(): top_(nullptr), bottom_(nullptr)
 {
 
+}
+
+//Purkaja jee!
+Cards::~Cards()
+{
+   while ( top_ != nullptr ) {
+      Card_data* item_to_be_released = top_; //first on attribuuttii jonka tyyppi List_item. paikallisosoittimeen kopioidaan first:n osoittama muistiosoite
+      top_ = top_->next;    //attribuuttiosoittimen muistipaikka laitetaan osoittamaan next:n osoittamaan alkioon
+                    // Se kopioi ekalla rivillä first_:n osoittaman muistiosoitteen paikallismuuttujaosoittimen muistipaikalle
+      delete item_to_be_released;
+   }
 }
 
 
@@ -24,15 +35,19 @@ Card_data *Cards::get_topmost()
 void Cards::add(int id)
 {
     //luodaan paikallismuuttujaosoitin jonka muistipaikalle tallentuu uuden dynaamisen muuttujan osoite
-    Card_data* paikallisosoitin = new Card_data{id, nullptr};   //paikallisosoittimeen tallentuu uuden dynaamisen muuttujan osoite
+    Card_data* paikallisosoitin = new Card_data{id, nullptr, nullptr};   //paikallisosoittimeen tallentuu uuden dynaamisen muuttujan osoite
     if (top_ == nullptr)
     {
         top_ = paikallisosoitin;                //attribuutin muistiin kopioidaan paikallisosoittimen osoittama osoite
+        bottom_ = paikallisosoitin;         //ekan alkion lisäyksessä määräytyy bottom!!!!
     }
     else
     {
         paikallisosoitin->next = top_;          //paikallisosoittimeen tallentuu entisen topin osoittama osoite
+        top_->previous = paikallisosoitin;      //topin eteen ilmestyneeseen po osoittamaan muistipaikaan osoittaa previous!!
+
         top_ = paikallisosoitin;                //uudeksi topiksi tulee paikallisosoittimen osoittama osoite
+
     }
 }
 
@@ -70,14 +85,20 @@ bool Cards::bottom_to_top()
     Card_data* tokavika;
     while (true)
     {
+        //vikasta ekaks siirretyn previous osoittamaan nullptr
+        //entinen ekan osoittamaan uuteen ekaan
+        //bottom_ osoittamaan uutta viimeistä
 
         if (osoitin->next == nullptr)   //jos kysessä on viimeinen alkio
         {
             viimeinen = osoitin;
             //entisen tokavikan next pitää saada osoittamaan nullprt!!
             viimeinen->next = top_; //viimeinen joka siirretään ensimmäiseksi laitetaan osoittamaan entistä ensimmäistä
+            viimeinen->previous = nullptr;  //ekaksi siirrettävän previous osoittamaan nullptr!!!
+            top_->previous = viimeinen;     //entinen eka osoitaa uuteen ekaan!!!
             top_ = viimeinen;       // attribuuti top_ osoittaa uuteen ensimmäiseen
             tokavika->next = nullptr; // tokavikan next osoittamaan nullptr
+            bottom_ = tokavika;
             return true;
         //tän ois voinut tehdä ilman "viimeinen" osoittajaa, "osoitin" osoittajalla ois pärjännyt hyvin
         }
@@ -100,12 +121,17 @@ bool Cards::top_to_bottom()
     int laskuri = 1;
     while (true)
     {
+
         if (osoitin->next == nullptr)   //jos viimeinen alkio, siirretään se osoittamaan uutta viimeistä
         {
             osoitin->next = eka_vikaks;
             eka_vikaks->next = nullptr; //uuuden viimeisen next osoittamaan nullptr
+            eka_vikaks->previous = osoitin; //uuden vikan previous osoittamaan vanhaa vikaa!!
+            bottom_ = eka_vikaks;       //bottom attribuutti osoittaa uutta vvikaa
             //top_ siirretään osoittamaan uutta ekaa
             top_ = toka;
+            toka->previous = nullptr;   //uusi ekan previous osoittaa nullptr
+
             return true;
         }
         else
@@ -138,14 +164,25 @@ bool Cards::remove(int &id)
 //tulostus vikasta ekaan INNOKKAILLE! JEE!
 void Cards::print_from_bottom_to_top(std::ostream &s)
 {
+    if (bottom_ == nullptr)
+        return;
 
+    else
+    {
+        int laskuri = 1;
+        Card_data* osoitin = bottom_;
+        while(true)
+        {
+            s << laskuri << ": " << osoitin->data << endl;
+            laskuri += 1;
+            osoitin = osoitin->previous;
+            if (osoitin == nullptr)
+                break;
+        }
+    }
 }
 
-//Purkaja jee!
-Cards::~Cards()
-{
 
-}
 
 int Cards::recursive_print(Card_data *top, std::ostream &s)
 {

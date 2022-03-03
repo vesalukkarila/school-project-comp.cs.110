@@ -21,8 +21,6 @@ int main() {
     }
 
 
-
-
     cout << endl << "print_from_top_to_bottom" << endl;
     deck.print_from_top_to_bottom(cout);        //printtaa metodissa alusta loppuun alkiot
 
@@ -41,8 +39,13 @@ int main() {
     cout << endl << "print_from_top_to_bottom" << endl;
     deck.print_from_top_to_bottom(cout);
 
+
+
+
     cout << endl << "print_from_bottom_to_top" << endl;
     deck.print_from_bottom_to_top(cout);        //INNOKKAIMMILLE
+
+/*
 
     cout << endl;
     int value = 0;
