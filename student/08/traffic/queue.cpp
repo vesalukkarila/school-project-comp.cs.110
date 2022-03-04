@@ -105,16 +105,46 @@ void Queue::print() const
 // resets the color to red again.
 //vaihtaa heti valonvärin, jos läpipäästettäviä, poistaa ne listasta (max cycle_-alkiota/kertaa dequeue) ja vaihtaa valon värin lopusssa
 //jos ei läpipäästettäviä first_==nullptr, vaihtaa alussa muttei ei vaihda valon väriä ennen funktiosta poistumista
+//tulostaa!!
 void Queue::switch_light()
 {
+    //vaihtaa valon vihreäksi
+    if (is_green_ == false)
+        is_green_ = true;
+    //vaihtaa valon punaiseksi
+    else
+        is_green_ = false;
 
+    //jos ei läpipäästettäviä, 2 tulostusta printin avulla, ei vaihda valon väriä.
+    if (first_ == nullptr)
+        print();
+    //alkioita löytyy, kutsuu dequeue cycle_kertaa ja tulostaa.jos alkioita vähemmän kuin cycle_
+    else
+    {
+        unsigned int laskuri = 0;
+        cout << "Vehicle(s) ";
+        while (first_ != nullptr and laskuri < cycle_)
+        {
+            cout << first_->reg_num << " ";
+            dequeue();
+            ++laskuri;
+        }
+        cout << "can go on" << endl;
+        is_green_ = false;
+    }
 }
 
 
 //poistaa ensimmäisen alkion, eimielestäni tarvitse parametreja
+//
 void Queue::dequeue()
 {
-
+    if (first_ != nullptr)
+    {
+        Vehicle* poistettava = first_;
+        first_ = first_->next;
+        delete poistettava;
+    }
 }
 
 
