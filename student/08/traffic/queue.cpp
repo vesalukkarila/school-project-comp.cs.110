@@ -30,7 +30,8 @@ Queue::~Queue()
 }
 
 
-// Resets the attribute cycle_. VALMIS
+// Resets the attribute cycle_.
+//VALMIS
 void Queue::reset_cycle(unsigned int cycle)
 {
     cycle_ = cycle;
@@ -59,6 +60,7 @@ void Queue::enqueue(const string &reg)
         last_ = osoitin;
         return;
     }
+
     //jos listassa jo alkioita, lisätään loppuun ja siirretään entisen viimeisen next ja last_ osoittamaan uutta viimeistä
     else if (is_green_ == false and first_ != nullptr)
     {
@@ -72,9 +74,28 @@ void Queue::enqueue(const string &reg)
 
 // Prints the color of traffic light and the register numbers of those
 // cars that are waiting in the traffic light queue (if any).
+//VALMIS
 void Queue::print() const
 {
-
+    //ei autoja jonossa, 2 tulostusta valon värin mukaan
+    if (first_ == nullptr)
+    {   if(is_green_ == false)
+            cout << r << EI_AUTOJA_JONOSSA << endl;
+        else
+            cout << g << EI_AUTOJA_JONOSSA << endl;
+    }
+    //alkioita>0, tulostetaan apuosoittimen avulla regnumerot, attribuutteihin ei muutoksia
+    else
+    {
+        Vehicle* apuosoitin = first_;
+        cout << r << "Vehicle(s) ";
+        while ( apuosoitin != nullptr)
+        {
+            cout << apuosoitin->reg_num << " ";
+            apuosoitin = apuosoitin->next;
+        }
+        cout << "waiting in traffic lights" << endl;
+    }
 }
 
 
