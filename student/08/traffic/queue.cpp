@@ -122,7 +122,7 @@ void Queue::switch_light()
     else
     {
         unsigned int laskuri = 0;
-        cout << "Vehicle(s) ";
+        cout << g << "Vehicle(s) ";
         while (first_ != nullptr and laskuri < cycle_)
         {
             cout << first_->reg_num << " ";
