@@ -110,7 +110,7 @@ int main() {
             {
                 komento_loytyy += 1;
 
-                if (vektori_ilman_komentoa.size() > alkio.parameter_number)
+                if (vektori_ilman_komentoa.size() != alkio.parameter_number)
                 {
                     cout << "Error: wrong number of parameters." << endl;
                     break;
