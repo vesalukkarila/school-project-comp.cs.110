@@ -57,7 +57,10 @@ const vector<Command> COMMANDS = {
     {"STOP", 0, true, nullptr},
     {"QUIT", 0, true, nullptr},
     {"EXIT", 0, true, nullptr},
-    {"Q", 0, true, nullptr}
+    {"Q", 0, true, nullptr},
+    {"^", 2, false, potenssi},
+    {"POWER", 2, false, potenssi},
+    {"EXP", 2, false, potenssi}
 };
 
 
