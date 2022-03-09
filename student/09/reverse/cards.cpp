@@ -49,7 +49,9 @@ void Cards::reverse()
     std::shared_ptr <Card_data> apu = top_;
 
 
-    if (top_->next == nullptr or top_ == nullptr)
+    if (top_ == nullptr)
+        return;
+    if (top_->next == nullptr)
         return;
     while (top_->next != nullptr)
        {
