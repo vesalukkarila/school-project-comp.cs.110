@@ -9,7 +9,7 @@
  */
 int greatest_v1(int *itemptr, int size)
 {
-    int suurin = 0;
+    int suurin = *itemptr;
     for (int* iter = itemptr; iter < itemptr + size; ++iter)
     {
         if (*iter > suurin)
@@ -26,7 +26,7 @@ int greatest_v1(int *itemptr, int size)
  */
 int greatest_v2(int *itemptr, int *endptr)
 {
-    int suurin = 0;         //katoaa olemasta???
+    int suurin = *itemptr;         //katoaa olemasta???
     //int* osoitin = itemptr;
     for (int* iter = itemptr; iter < endptr; ++iter)
     {
