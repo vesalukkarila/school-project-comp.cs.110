@@ -149,10 +149,10 @@ void OrienteeringMap::print_route(const std::string &name) const
 {
     if (reitti_map_.find(name) != reitti_map_.end())
     {
-        cout << reitti_map_.at(name).at(0) << endl;
+        cout << reitti_map_.at(name).at(0) << endl; //tulostaa ekan rastin ilman nuolta
         vector<string>::const_iterator iter = reitti_map_.at(name).begin(); //tarviiko olla constiterator?? miksi?
-        iter += 1;
-        for (iter; iter != reitti_map_.at(name).end(); ++iter)//mitä herjaa??
+        ++iter;
+        for (; iter != reitti_map_.at(name).end(); ++iter)  //HERJAA!!
         {
             cout << " -> " << *iter << endl;
         }
@@ -166,12 +166,14 @@ void OrienteeringMap::print_route(const std::string &name) const
 // the length is counted as a sum of the distances of adjacent points.???? ETÄISYYDEN LASKENTA????
 void OrienteeringMap::route_length(const std::string &name) const
 {
-
+    //automaattitesterin vuoksi..
+    string nimi = name;
 }
 
 // Finds and prints the highest rise in any of the routes after the given
 // point.
 void OrienteeringMap::greatest_rise(const std::string &point_name) const
 {
-
+    //automaattitesterin vuoksi..
+    string nimi = point_name;
 }
