@@ -45,7 +45,11 @@ void OrienteeringMap::set_map_size(int width, int height)
 //Entä jos luo rasti-olioita tästä samalla, tarvitaan silti tulostusta varten map?
 void OrienteeringMap::add_point(std::string name, int x, int y, int height, char marker)
 {
-
+    if (rasti_map_.find(name) == rasti_map_.end())
+    {
+        rasti_map_.insert({name, {name, x, y, height, marker}});    //nimi avaimena, hkuormana kaikki Rastin_tiedot structissa
+    }
+    kartta_.at(y-1).at(x-1) = make_shared<Rasti>(name, x, y, height, marker);   //laitetaan kartan pointteri osoittamaan dynaamisesti luotuun rastiolioon
 }
 
 
@@ -58,10 +62,27 @@ void OrienteeringMap::add_point(std::string name, int x, int y, int height, char
 //jos reitti uusi luo uuden reitin ja lisää hkuormaksi  OK
 bool OrienteeringMap::connect_route(std::string from, std::string to, std::string route_name)
 {
-
-
-
+    if (rasti_map_.find(from) == rasti_map_.end()   //jos jompikumpi rasteista ei löydy rastimapista - false
+            or rasti_map_.find(to) == rasti_map_.end())
+    {
+        return false;
+    }
+    if (reitti_map_.find(route_name) == reitti_map_.end())  //jos uusi reitti
+    {
+        reitti_map_.insert({route_name, {from, to}});
+        return true;
+    }
+    else if (reitti_map_.find(route_name) != reitti_map_.end()) //jos reitti jo olemassa ja
+    {
+        if ( reitti_map_.at(route_name).back() == from) //lähtö (from) nykyisen vektorin viimeisenä
+        {
+            reitti_map_.at(route_name).push_back(to);
+            return true;
+        }
+    }
+    return false;   //epävarma true/false, true kohdat mielestäni käsitelty yllä
 }
+
 
 //MAP-KOMENTO Prints the map
 void OrienteeringMap::print_map() const
