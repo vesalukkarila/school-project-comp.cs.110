@@ -157,6 +157,8 @@ void OrienteeringMap::print_route(const std::string &name) const
             cout << " -> " << *iter << endl;
         }
     }
+    else
+        cout << "Error: Route named " << name << " can`t be found" << endl;
 
 }
 
