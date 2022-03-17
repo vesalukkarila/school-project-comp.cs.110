@@ -87,17 +87,43 @@ bool OrienteeringMap::connect_route(std::string from, std::string to, std::strin
 //MAP-KOMENTO Prints the map
 void OrienteeringMap::print_map() const
 {
+    cout << " ";
+    int sarake_leveys = 3;
+    //Tulostetaan otsikkorivi, eli x-koordinaatit eli leveys
+    //Laskurin rajoittimena sisemmän vektorin alkioiden eli osoittimien määrä
+    for (unsigned int laskuri = 1; laskuri <= kartta_.at(0).size(); ++laskuri)
+    {
+        cout << setw(sarake_leveys) << right << laskuri;
+    }
+    cout << endl;
 
+    int rivi_nro_leveys = 2;
+    int rivi_nro = 1;
 
-
-
+    for (auto sisempi_vektori : kartta_)
+    {
+        cout << setw(rivi_nro_leveys) << right << rivi_nro;
+        ++rivi_nro;
+        for (auto alkio : sisempi_vektori)
+        {
+            if (alkio == nullptr)
+                cout << setw(sarake_leveys) << right << "."; //tähän jos nullptr tulosta piste, muutoin rastint tunnus
+            else
+               cout << setw(sarake_leveys) << right << alkio->hae_tunnus();
+        }
+        cout << endl;
+    }
 }
 
 // ROUTES-KOMENTO , tulostaa reitit aakkostettuna
 //TOIMII KATSO KOMMENTTI ALLA
 void OrienteeringMap::print_routes() const
 {
-
+    cout << "Routes:" << endl;
+    for (auto tietopari : reitti_map_)
+    {
+        cout << " - " << tietopari.first << endl;
+    }
 
 }
 
@@ -106,7 +132,11 @@ void OrienteeringMap::print_routes() const
 //TULOSTUS LÄHTEE TÄSTÄ LUOKASTA MUTTA HAKEE TIETOJA TOISESTA - LÄPPÄ
 void OrienteeringMap::print_points() const
 {
-
+    cout << "Points:" << endl;
+    for (auto tietopari : rasti_map_)
+    {
+        cout << " - " << tietopari.first << " : " << tietopari.second.tunnus << endl;   //tulosta rastin nimi ja tunnus
+    }
 
 }
 
@@ -117,7 +147,16 @@ void OrienteeringMap::print_points() const
 //HERJAA EXPRESSION RESULT UNUSED, tulostus toimii hyvin silti
 void OrienteeringMap::print_route(const std::string &name) const
 {
-
+    if (reitti_map_.find(name) != reitti_map_.end())
+    {
+        cout << reitti_map_.at(name).at(0) << endl;
+        vector<string>::const_iterator iter = reitti_map_.at(name).begin(); //tarviiko olla constiterator?? miksi?
+        iter += 1;
+        for (iter; iter != reitti_map_.at(name).end(); ++iter)//mitä herjaa??
+        {
+            cout << " -> " << *iter << endl;
+        }
+    }
 
 }
 
