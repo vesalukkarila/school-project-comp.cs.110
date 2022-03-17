@@ -12,7 +12,13 @@ OrienteeringMap::OrienteeringMap():
 //Purkaja kääntää kaikki osoittimet nullptr:n vapauttaen dynaamisesti luodut oliomuuttujat.
 OrienteeringMap::~OrienteeringMap()
 {
-
+    for (auto sisempi_vektori : kartta_)
+    {
+        for (auto alkio : sisempi_vektori)
+        {
+            alkio = nullptr;
+        }
+    }
 
 }
 
@@ -20,9 +26,18 @@ OrienteeringMap::~OrienteeringMap()
 //luo vektorinvektoreihin pointterit, shared perhaps
 void OrienteeringMap::set_map_size(int width, int height)
 {
+    for (int l = 0; l < height; ++l)
+    {
+        vector<shared_ptr<Rasti>> sisempi_vektori; //muutettu normaalipointteri
+        for (int p = 0; p < width; ++p)
+            //tehdään uusi älykäs osoitin joka osoittaa nullptr ja lisätään sisempään vektoriin
+        {
+            shared_ptr <Rasti> osoitin = nullptr;   //muutettu normaali pointteri
+            sisempi_vektori.push_back(osoitin);
 
-
-
+        }
+        kartta_.push_back(sisempi_vektori); //lisätään sisempi vektori(jossa osoittimia alkioissa) ulomman vektorin alkioksi
+    }
 }
 
 // Adds a new point in the map, with the given name, position (x and y
