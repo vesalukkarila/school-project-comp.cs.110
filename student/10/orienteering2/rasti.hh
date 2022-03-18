@@ -13,7 +13,8 @@ public:
     Rasti(string nimi, int x, int y, int korkeus, char tunnus);
 
     char hae_tunnus();
-    void print();
+    void print();   //mahdollisesti turha jos en keksi keinoa käyttää, ei pakollinen
+
 
 
 private:

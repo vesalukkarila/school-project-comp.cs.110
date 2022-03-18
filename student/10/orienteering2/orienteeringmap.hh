@@ -25,6 +25,13 @@
 using namespace std;
 
 class Rasti;
+struct Rastin_tiedot;   //voinee poistaa kunhan siivoaa
+using kartan_tietotyyppi = vector < vector < shared_ptr < Rasti >>> ;
+using rasti_mapin_tietotyyppi = map<string, Rastin_tiedot>;
+using reitti_mapin_tietotyyppi = map<string, vector<string>>;
+
+class Rasti;
+//EN TIEDÄ PITÄÄKÖ TÄÄ OLLA TÄSSÄ VAI ENNEN TÄTÄ VAI PRIVATE OSASSA
 struct Rastin_tiedot
 {
     string rastin_nimi;
@@ -32,6 +39,7 @@ struct Rastin_tiedot
     int y;
     int korkeus;
     char tunnus;
+    shared_ptr<Rastin_tiedot> seuraava;
 };
 
 
@@ -90,10 +98,11 @@ private:
     //sisältäen osoittimet joko rasteille tai reiteille
     // Good candidates for such structures are STL maps or vectors.
 
-    vector < vector < shared_ptr < Rasti >>> kartta_;   //SAMA KUIMPI POINTTERI: RASTI WAS NOT DECLARED IN THIS SCOPE
+    kartan_tietotyyppi kartta_;   //SAMA KUIMPI POINTTERI: RASTI WAS NOT DECLARED IN THIS SCOPE
     //vector<vector<Rasti*>> kartta_;  //tehty rasti-luokka mikäli haluaa olioihin viitatat kartasta, muutettu normaalipointteri
-    map<string, Rastin_tiedot> rasti_map_;
-    map<string, vector<string>> reitti_map_;
+    rasti_mapin_tietotyyppi rasti_map_;
+    reitti_mapin_tietotyyppi reitti_map_;
+    //alla hyötykuormana dynaaminen muuttuja jonka tyyppi rastin_tiedot
 
 };
 
