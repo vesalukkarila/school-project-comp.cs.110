@@ -1,20 +1,17 @@
+
 #include "rasti.hh"
-#include "orienteeringmap.hh"
 
-
-//ei pitäis tarvita purkajaa, oliot luodaan dynaamisesti ja orienteeringmap.cpp siirretään koordinaattiosoitin vian nullptr:ksi
+// Luokan rakentaja
 Rasti::Rasti(string nimi, int x, int y, int korkeus, char tunnus):
     nimi_(nimi), x_(x), y_(y), korkeus_(korkeus), tunnus_(tunnus)
 {
 
 }
-
+// Palauttaa olion attribuuttina olevan tunnus-merkin
+// Ei parametreja
 char Rasti::hae_tunnus()
 {
     return tunnus_;
 }
 
-void Rasti::print()
-{
 
-}

@@ -24,14 +24,13 @@
 
 using namespace std;
 
-class Rasti;
-struct Rastin_tiedot;   //voinee poistaa kunhan siivoaa
+struct Rastin_tiedot;
+
 using kartan_tietotyyppi = vector < vector < shared_ptr < Rasti >>> ;
 using rasti_mapin_tietotyyppi = map<string, Rastin_tiedot>;
 using reitti_mapin_tietotyyppi = map<string, vector<string>>;
 
-class Rasti;
-//EN TIEDÄ PITÄÄKÖ TÄÄ OLLA TÄSSÄ VAI ENNEN TÄTÄ VAI PRIVATE OSASSA
+// Rasti_mapin hyötykuormana oleva tietue
 struct Rastin_tiedot
 {
     string rastin_nimi;
@@ -41,7 +40,6 @@ struct Rastin_tiedot
     char tunnus;
     shared_ptr<Rastin_tiedot> seuraava;
 };
-
 
 class OrienteeringMap
 {
@@ -90,19 +88,14 @@ public:
     void greatest_rise(const std::string& point_name) const;
 
 private:
-    // Add here attributes and private methods.
-    //Lisää attribuutit ja yksityiset metodit
-    // At least you need a datastructure for points or routes or for both,
-    // containing Point* or Route* objects (pointers).
-    //Vähintään tarvitaan tietorakenne joko rasteille tai reiteille tai molemmille (map ja vector ehdokkaina)
-    //sisältäen osoittimet joko rasteille tai reiteille
-    // Good candidates for such structures are STL maps or vectors.
 
-    kartan_tietotyyppi kartta_;   //SAMA KUIMPI POINTTERI: RASTI WAS NOT DECLARED IN THIS SCOPE
-    //vector<vector<Rasti*>> kartta_;  //tehty rasti-luokka mikäli haluaa olioihin viitatat kartasta, muutettu normaalipointteri
+    // Tietorakenne jossa sisemmän vektorin alkioina älykkäät osoittimet
+    // dynaamisesti luotuihin Rasti-olioihin.
+    kartan_tietotyyppi kartta_;
+    // Tietorakenne johon rastien tiedot tallentuvat
     rasti_mapin_tietotyyppi rasti_map_;
+    // Tietorakenne johon reittien tiedot tallentuvat
     reitti_mapin_tietotyyppi reitti_map_;
-    //alla hyötykuormana dynaaminen muuttuja jonka tyyppi rastin_tiedot
 
 };
 

@@ -1,17 +1,20 @@
+
 #include "orienteeringmap.hh"
-#include "rasti.hh"
 #include <iostream>
 #include <cmath>
 #include <set>
 
 using namespace std;
+
+// Rakentaja
 OrienteeringMap::OrienteeringMap():
     kartta_(), rasti_map_(), reitti_map_()
 {
 
 }
 
-//Purkaja kääntää kaikki osoittimet nullptr:n vapauttaen dynaamisesti luodut oliomuuttujat.
+// Purkaja kääntää lopussa kaikki osoittimet nullptr:n
+// vapauttaen dynaamisesti luodut oliomuuttujat.
 OrienteeringMap::~OrienteeringMap()
 {
     for (auto sisempi_vektori : kartta_)
@@ -24,76 +27,83 @@ OrienteeringMap::~OrienteeringMap()
 
 }
 
-// Sets the width and height for the map.
-//luo vektorinvektoreihin pointterit, shared perhaps
+
+// Luo vektorinvektorin alkioihin älykkäät osoittimet
+// Vektoreiden ja alkioiden määrä saadaan syötetiedostosta
+// Ei paluuarvoa, parametreina kartan koko kokonaislukuina
 void OrienteeringMap::set_map_size(int width, int height)
 {
     for (int l = 0; l < height; ++l)
     {
         vector<shared_ptr<Rasti>> sisempi_vektori; //muutettu normaalipointteri
         for (int p = 0; p < width; ++p)
-            //tehdään uusi älykäs osoitin joka osoittaa nullptr ja lisätään sisempään vektoriin
+
         {
-            shared_ptr <Rasti> osoitin = nullptr;   //muutettu normaali pointteri
+            // Älykäs osoitin sisemmän vektorin alkioksi
+            shared_ptr <Rasti> osoitin = nullptr;
             sisempi_vektori.push_back(osoitin);
 
         }
-        kartta_.push_back(sisempi_vektori); //lisätään sisempi vektori(jossa osoittimia alkioissa) ulomman vektorin alkioksi
+        // Lisätään sisempi vektori ulomman vektorin alkioksi
+        kartta_.push_back(sisempi_vektori);
     }
 }
 
-// Adds a new point in the map, with the given name, position (x and y
-// coordinates), height and marker.
-//OK
+
+// Lisää rastin tiedot tietorakenteeseen rasti_map.
+// Lisäksi luo dynaamisen Rasti-olion johon kartta_-tietorakenteen
+// osoitin käännetään osoittamaan.
 void OrienteeringMap::add_point(std::string name, int x, int y, int height, char marker)
 {
     if (rasti_map_.find(name) == rasti_map_.end())
     {
         rasti_map_.insert({name, {name, x, y, height, marker, nullptr}});    //nimi avaimena, hkuormana kaikki Rastin_tiedot structissa
+        kartta_.at(y-1).at(x-1) = make_shared<Rasti>(name, x, y, height, marker);
     }
-    kartta_.at(y-1).at(x-1) = make_shared<Rasti>(name, x, y, height, marker);
-    //**TÄMÄ laitetaan kartan pointteri osoittamaan dynaamisesti luotuun rastiolioon
-    //tää vois olla myös dynaaminen struct, mutta koska tarvittiin luokka niin päätin laittaa sen tähän
 }
 
 
-// Connects two existing points such that the point 'to' will be immediately after the point 'from' in the route 'route_name'.
-// The given route can be either a new or an existing one, if it already exists, the connection between points will be
-// updated in the aforementioned way. Returns true, if connection was successful, i.e. if both the points
-// exist, otherwise returns false.
-//tarkistaa että rastit ovat olemassa, jos ei false OK
-//tarkistaa onko reitti jo olemassa, jos on from pitäisi olla viimeisenä hkuormana ja lisää to:n sen perään OK
-//jos reitti uusi luo uuden reitin ja lisää hkuormaksi  OK
+
+// Tallentaa reittien tiedot reitti_map:iin
+// Paluuarvona bool
+//Parametreina yhdistettävät rastit ja reitin nimi
 bool OrienteeringMap::connect_route(std::string from, std::string to, std::string route_name)
 {
-    if (rasti_map_.find(from) == rasti_map_.end()   //jos jompikumpi rasteista ei löydy rastimapista - false
+    // Jos jompikumpi rasteista ei löydy rasti_map:sta - false
+    if (rasti_map_.find(from) == rasti_map_.end()
             or rasti_map_.find(to) == rasti_map_.end())
-    {
         return false;
-    }
-    if (reitti_map_.find(route_name) == reitti_map_.end())  //jos uusi reitti, JOS dynaamista rakentaa niihin tähän
+
+    // Jos reitti on uusi - tallenetaan tiedot
+    if (reitti_map_.find(route_name) == reitti_map_.end())
     {
         reitti_map_.insert({route_name, {from, to}});
         return true;
     }
-    else if (reitti_map_.find(route_name) != reitti_map_.end()) //jos reitti jo olemassa eli Olio jo luotu, JA tähän
+
+    // Jos reitti jo olemassa, ja 1. parametri tiedoissa viimeisenä
+    // tallennetaan 2. parametri sen perään
+    else if (reitti_map_.find(route_name) != reitti_map_.end())
     {
-        if ( reitti_map_.at(route_name).back() == from) //lähtö (from) nykyisen vektorin viimeisenä
+        if ( reitti_map_.at(route_name).back() == from)
         {
             reitti_map_.at(route_name).push_back(to);
             return true;
         }
     }
-    return false;   //epävarma true/false, true kohdat mielestäni käsitelty yllä
+    return false;
 }
 
 
-//MAP-KOMENTO, OK
+
+// Tulostaa kartta_-attribuutin sisällön.
+// Ei paluuarvoa, ei parametreja.
 void OrienteeringMap::print_map() const
 {
     cout << " ";
     int sarake_leveys = 3;
-    //Tulostetaan otsikkorivi, eli x-koordinaatit eli leveys
+
+    //Tulostetaan otsikkorivi, eli x-koordinaatit numeroina
     //Laskurin rajoittimena sisemmän vektorin alkioiden eli osoittimien määrä
     for (unsigned int laskuri = 1; laskuri <= kartta_.at(0).size(); ++laskuri)
     {
@@ -106,21 +116,27 @@ void OrienteeringMap::print_map() const
 
     for (auto sisempi_vektori : kartta_)
     {
+        // Tulostetaan y-koordinaattien numerot
         cout << setw(rivi_nro_leveys) << right << rivi_nro;
         ++rivi_nro;
+
+        // For-loopissa tulostetaan osoittimen osoittaman olion tunnus
+        // tai piste jos osoitin = nullptr
         for (auto alkio : sisempi_vektori)
         {
             if (alkio == nullptr)
-                cout << setw(sarake_leveys) << right << "."; //tähän jos nullptr tulosta piste, muutoin rastint tunnus
+                cout << setw(sarake_leveys) << right << ".";
             else
-                //**TÄMÄ hakee dynaamisesti luodusta oliosta sen attribuutin olion omalla metodilla
                cout << setw(sarake_leveys) << right << alkio->hae_tunnus();
         }
         cout << endl;
     }
 }
 
-// ROUTES-KOMENTO , OK
+
+
+// Tulostaa reitit reitti_map:sta
+// Ei paluuarvoa, ei parametreja
 void OrienteeringMap::print_routes() const
 {
     cout << "Routes:" << endl;
@@ -131,7 +147,10 @@ void OrienteeringMap::print_routes() const
 
 }
 
-// POINTS-KOMENTO, OK
+
+
+// Tulostaa rastien nimen ja tunnuksen rasti_map:sta
+// Ei paluuarvoa, ei parametreja
 void OrienteeringMap::print_points() const
 {
     cout << "Points:" << endl;
@@ -143,7 +162,9 @@ void OrienteeringMap::print_points() const
 }
 
 
-//ROUTES <ROUTE>-KOMENTO, OK
+
+//Tulostaa reitin tiedot reitti_map:sta
+// Ei paluuarvoa, viiteparametrina reitin nimi
 void OrienteeringMap::print_route(const std::string &name) const
 {
     if (reitti_map_.find(name) != reitti_map_.end())
@@ -163,8 +184,8 @@ void OrienteeringMap::print_route(const std::string &name) const
 
 
 
-// Prints the given route's combined length,
-// the length is counted as a sum of the distances of adjacent points.???? ETÄISYYDEN LASKENTA????
+// Laskee reitin pituuden ohjeistuksessa annetulla kaavalla.
+// Ei paluuarvoa, viiteparametrina reitin nimi.
 void OrienteeringMap::route_length(const std::string &name) const
 {
     if (reitti_map_.find(name) == reitti_map_.end())
@@ -173,12 +194,14 @@ void OrienteeringMap::route_length(const std::string &name) const
         return;
     }
 
-    //TÄHÄN TULEE NYT ETÄISYYDEN LASKENTA, JOS SELVITÄT MITEN VOI SIIRTÄÄ OMAAN MODUULIIN NIIN SIIRRÄ SITTEN
+    // Iteroidaan kahden iteraattorin avulla kerrallaan kahden rastin
+    // välinen etäisyys ja lisätään tulos-muuttujaan.
     float tulos = 0;
     vector<string> reitin_rastit = reitti_map_.at(name);
     vector<string>::const_iterator iteraattori = reitin_rastit.begin();
     ++iteraattori;
     vector<string>::const_iterator edellinen = iteraattori - 1;
+
     for (; iteraattori < reitin_rastit.end(); ++iteraattori)
     {
         // Seuraavassa haetaan rastien x- ja y-koordinaatit rasti_mapin
@@ -192,8 +215,11 @@ void OrienteeringMap::route_length(const std::string &name) const
 
 }
 
-// Finds and prints the highest rise in any of the routes after the given
-// point.
+
+
+// Tutkii kullakin reitillä suurinta nousua annetulta rastilta lähtien ja
+// tulostaa tuloksen.
+// Ei paluuarvoa, viitearametrina rastin nimi.
 void OrienteeringMap::greatest_rise(const std::string &point_name) const
 {
     if (rasti_map_.find(point_name) == rasti_map_.end())
@@ -202,8 +228,7 @@ void OrienteeringMap::greatest_rise(const std::string &point_name) const
         return;
     }
 
-    set<string> setti;
-    //string suurin_nousu_reitilla;
+    set<string> reitti_setti;
     int suurin_nousu = 0;
 
     for (auto tietopari : reitti_map_)  //tutkii kutakin reittiä
@@ -211,48 +236,51 @@ void OrienteeringMap::greatest_rise(const std::string &point_name) const
         vector<string>::iterator iter= tietopari.second.begin();
         bool reitti_aloitettu = false;
         int vertailu = 0;
-        int start_height = 0;
+        int aloitus_korkeus = 0;
         //lähtee selvittään yhden reitin suurinta nousua kyseiseltä rastilta
         for (; iter != tietopari.second.end(); ++iter)
         {
-            if (*iter == point_name)    //kun rasti löytyy reitiltä, alustetaan lähtökorkeus ja vertailukorkeus
+            // Kun rasti löytyy reitiltä, alustetaan lähtökorkeus ja vertailukorkeus
+            if (*iter == point_name)
             {
-                start_height = rasti_map_.at(*iter).korkeus;
+                aloitus_korkeus = rasti_map_.at(*iter).korkeus;
                 vertailu = rasti_map_.at(*iter).korkeus;
                 reitti_aloitettu = true;
-
             }
-            else if (reitti_aloitettu == true and rasti_map_.at(*iter).korkeus >= vertailu)//reitti aloitettu ja korkeus edellistä suurempi
+            // Jos aloitusrasti on löytynyt ja
+            //seuraava rasti sitä korkeampi tai yhtä korkea
+            else if (reitti_aloitettu == true
+                     and rasti_map_.at(*iter).korkeus >= vertailu)
             {
                 vertailu = rasti_map_.at(*iter).korkeus;
 
             }
-
-            else if (reitti_aloitettu == true and rasti_map_.at(*iter).korkeus < vertailu)//reitti aloitettu mutta korkeus pienempi kuin edellisen
-            {
+            // Jos aloitusrasti on löytynyt mutta seuraava rasti sitä matalampi
+            else if (reitti_aloitettu == true
+                     and rasti_map_.at(*iter).korkeus < vertailu)
                 break;
-            }
         }
-        if (vertailu - start_height > suurin_nousu)
+        //Ennen seuraavaan reittiin siirtymistä muokataan
+        // muuttujia suurin_nousu ja reitti_setti
+        if (vertailu - aloitus_korkeus > suurin_nousu)
         {
-            setti.clear();
-            setti.insert(tietopari.first);
-            suurin_nousu = vertailu - start_height;
+            reitti_setti.clear();
+            reitti_setti.insert(tietopari.first);
+            suurin_nousu = vertailu - aloitus_korkeus;
         }
-        else if (vertailu - start_height == suurin_nousu and suurin_nousu > 0)
-            setti.insert(tietopari.first);
-
-
+        else if (vertailu - aloitus_korkeus == suurin_nousu and suurin_nousu > 0)
+            reitti_setti.insert(tietopari.first);
     }
-    if (setti.size() > 0)
+
+    // Tulostukset
+    if (reitti_setti.size() > 0)
     {
         cout << "Greatest rise after point " << point_name << ", "<<suurin_nousu
              <<" meters, is on route(s):" << endl;
-        for (auto alkio : setti)
+        for (auto alkio : reitti_setti)
             cout << " - "<< alkio << endl;
     }
 
     else
         cout << "No route rises after point " << point_name << endl;
-
 }
