@@ -203,83 +203,56 @@ void OrienteeringMap::greatest_rise(const std::string &point_name) const
     }
 
     set<string> setti;
-    string suurin_nousu_reitilla;
+    //string suurin_nousu_reitilla;
     int suurin_nousu = 0;
-    for (auto tietopari : reitti_map_)
+
+    for (auto tietopari : reitti_map_)  //tutkii kutakin reittiä
     {
         vector<string>::iterator iter= tietopari.second.begin();
+        bool reitti_aloitettu = false;
         int vertailu = 0;
         int start_height = 0;
         //lähtee selvittään yhden reitin suurinta nousua kyseiseltä rastilta
         for (; iter != tietopari.second.end(); ++iter)
         {
-            if (point_name == *iter)
+            if (*iter == point_name)    //kun rasti löytyy reitiltä, alustetaan lähtökorkeus ja vertailukorkeus
             {
-                start_height = rasti_map_.at(*iter).korkeus;    //lähtörastin korkeus tallentuu
+                start_height = rasti_map_.at(*iter).korkeus;
+                vertailu = rasti_map_.at(*iter).korkeus;
+                reitti_aloitettu = true;
+
+            }
+            else if (reitti_aloitettu == true and rasti_map_.at(*iter).korkeus >= vertailu)//reitti aloitettu ja korkeus edellistä suurempi
+            {
                 vertailu = rasti_map_.at(*iter).korkeus;
 
-                cout << "testi" << endl;
+            }
 
-                while(iter != tietopari.second.end())
-                {
-
-                    if (rasti_map_.at(*iter).korkeus >= vertailu)
-                    {
-                        vertailu = rasti_map_.at(*iter).korkeus;
-                        ++iter;
-
-                        cout << "testi2" << endl;
-                        if (iter == tietopari.second.end())
-                        {
-                            vertailu = vertailu - start_height;
-                            if (suurin_nousu < vertailu)    //jos suurempi nousu kuin edeltävä, suurinnousu uusi arvo, setti.clear ja insert
-                            {
-                                suurin_nousu = vertailu;
-                                setti.clear();
-                                setti.insert(tietopari.first);
-                            }
-                            else if (suurin_nousu == vertailu)  //jos yhtäsuuri, lisätään nimi settiin
-                            {
-                                setti.insert(tietopari.first);
-                            }
-                            //reitin nimi pitäs tallentaa johonkin ja olla poistamis kelpoinen
-                            break;
-                         }
-
-
-                        continue;
-                    }
-                    else
-                    {
-                        cout << "testi3" << endl;
-
-                        vertailu = vertailu - start_height;
-                        if (suurin_nousu < vertailu)    //jos suurempi nousu kuin edeltävä, suurinnousu uusi arvo, setti.clear ja insert
-                        {
-                            suurin_nousu = vertailu;
-                            setti.clear();
-                            setti.insert(tietopari.first);
-                        }
-                        else if (suurin_nousu == vertailu)  //jos yhtäsuuri, lisätään nimi settiin
-                        {
-                            setti.insert(tietopari.first);
-                        }
-                        //reitin nimi pitäs tallentaa johonkin ja olla poistamis kelpoinen
-                        break;
-                    }
-                }
+            else if (reitti_aloitettu == true and rasti_map_.at(*iter).korkeus < vertailu)//reitti aloitettu mutta korkeus pienempi kuin edellisen
+            {
+                break;
             }
         }
+        if (vertailu - start_height > suurin_nousu)
+        {
+            setti.clear();
+            setti.insert(tietopari.first);
+            suurin_nousu = vertailu - start_height;
+        }
+        else if (vertailu - start_height == suurin_nousu and suurin_nousu > 0)
+            setti.insert(tietopari.first);
+
+
     }
-    if (suurin_nousu > 0)
+    if (setti.size() > 0)
     {
         cout << "Greatest rise after point " << point_name << ", "<<suurin_nousu
              <<" meters, is on route(s):" << endl;
         for (auto alkio : setti)
             cout << " - "<< alkio << endl;
     }
+
     else
         cout << "No route rises after point " << point_name << endl;
-
 
 }
