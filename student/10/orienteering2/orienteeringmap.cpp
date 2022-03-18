@@ -198,7 +198,7 @@ void OrienteeringMap::greatest_rise(const std::string &point_name) const
 {
     if (rasti_map_.find(point_name) == rasti_map_.end())
     {
-        cout << "Error: Route named " << point_name << " can't be found" << endl;
+        cout << "Error: Point named " << point_name << " can't be found" << endl;
         return;
     }
 
