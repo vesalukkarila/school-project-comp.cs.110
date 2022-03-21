@@ -1,6 +1,6 @@
 #include "cockatoo.hh"
 
-Cockatoo::Cockatoo()
+Cockatoo::Cockatoo() : Bird() //lisätty bird-rakentajan kutsu, bird kutsuu animal "Flap flap" parametrilla
 {
 
 }

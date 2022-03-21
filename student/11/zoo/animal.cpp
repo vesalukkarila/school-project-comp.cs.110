@@ -1,17 +1,17 @@
 #include "animal.hh"
 
-Animal::Animal(): x_(0), y_(0), moving_noise_("")
+Animal::Animal(): x_(0), y_(0), moving_noise_("")   //tyhjän olion rakentaja? attribuuttien alustus
 {
 
 }
 
-Animal::Animal(const std::string& moving_noise):
+Animal::Animal(const std::string& moving_noise):    //varsinainen rakentaja jolle parametrina liikkumisenääni
     x_(0), y_(0), moving_noise_(moving_noise)
 {
 
 }
 
-Animal::~Animal()
+Animal::~Animal()   //purkaja, animal luokan
 {
 
 }

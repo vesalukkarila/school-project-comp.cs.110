@@ -1,6 +1,6 @@
 #include "owl.hh"
 
-Owl::Owl()
+Owl::Owl() : Bird() //kutsuu birdin rakentajaa joka kutsuu animalin rakentajaa "flap flap" parametrilla
 {
 
 }

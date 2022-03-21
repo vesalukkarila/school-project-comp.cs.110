@@ -2,7 +2,7 @@
 #define GIRAFFE_HH
 #include "mammal.hh"
 
-class Giraffe : public Mammal
+class Giraffe : public Mammal   //periyttää mammal_luokan julkiset metodit
 {
 public:
     Giraffe();

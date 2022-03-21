@@ -2,7 +2,7 @@
 #define MAMMAL_HH
 #include "animal.hh"
 
-class Mammal : public Animal
+class Mammal : public Animal    //periyttää animal-luokan julkiset metodit
 {
 public:
     Mammal();
