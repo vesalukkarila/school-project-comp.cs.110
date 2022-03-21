@@ -34,10 +34,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->horizontalSliderRed, &QSlider::valueChanged, this, &MainWindow::onColorChanged); //object1, signal1, object2, slot2
     connect(ui->horizontalSliderGreen, &QSlider::valueChanged, this, &MainWindow::onColorChanged);
     connect(ui->horizontalSliderBlue, &QSlider::valueChanged, this, &MainWindow::onColorChanged);
-
-   /* connect(ui->horizontalSliderRed, &QSlider::valueChanged, ui->spinBoxRed, &QSpinBox::setValue);
+/*
+   connect(ui->horizontalSliderRed, &QSlider::valueChanged, ui->spinBoxRed, &QSpinBox::setValue);
     connect(ui->horizontalSliderGreen, &QSlider::valueChanged, ui->spinBoxGreen, &QSpinBox::setValue);
-    connect(ui->horizontalSliderBlue, &QSlider::valueChanged, ui->spinBoxBlue, &QSpinBox::setValue);*/
+    connect(ui->horizontalSliderBlue, &QSlider::valueChanged, ui->spinBoxBlue, &QSpinBox::setValue);
+    connect(ui->spinBoxRed, &QSpinBox::setValue, ui->horizontalSliderRed, &QSlider::valueChanged);*///yritetty kirjoittaa suoraan
 
     onColorChanged();
 }
@@ -72,5 +73,36 @@ void MainWindow::onColorChanged()   //miten ikkunan on tarkoitus toimia kun käy
 void MainWindow::on_horizontalSliderRed_valueChanged(int value)
 {
     ui->spinBoxRed->setValue(value);
+}
+
+
+void MainWindow::on_spinBoxRed_valueChanged(int arg1)
+{
+    ui->horizontalSliderRed->setValue(arg1);
+}
+
+
+void MainWindow::on_spinBoxGreen_valueChanged(int arg1)
+{
+    ui->horizontalSliderGreen->setValue(arg1);
+}
+
+
+
+void MainWindow::on_horizontalSliderGreen_valueChanged(int value)
+{
+    ui->spinBoxGreen->setValue(value);
+}
+
+
+void MainWindow::on_horizontalSliderBlue_valueChanged(int value)
+{
+    ui->spinBoxBlue->setValue(value);
+}
+
+
+void MainWindow::on_spinBoxBlue_valueChanged(int arg1)
+{
+    ui->horizontalSliderBlue->setValue(arg1);
 }
 
