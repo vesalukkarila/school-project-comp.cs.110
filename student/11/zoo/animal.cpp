@@ -1,9 +1,9 @@
 #include "animal.hh"
 
-Animal::Animal(): x_(0), y_(0), moving_noise_("")   //tyhjän olion rakentaja? attribuuttien alustus
-{
+/*Animal::Animal(): x_(0), y_(0), moving_noise_("")   //tyhjän olion rakentaja? attribuuttien alustus jos ei parametreja luulisin
+{                                                   //JEP, ohjelma toimii poiskommentoitunakin
 
-}
+}*/
 
 Animal::Animal(const std::string& moving_noise):    //varsinainen rakentaja jolle parametrina liikkumisenääni
     x_(0), y_(0), moving_noise_(moving_noise)
