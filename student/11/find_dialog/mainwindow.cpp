@@ -40,7 +40,6 @@ void MainWindow::on_findPushButton_clicked()
         ui->textBrowser->setText("File not found");
     else
     {
-        ui->textBrowser->setText("Toimii"); //poista myhöemmin
         //avautuu mutta sanaa ei annettu
         if (testi_.size() == 0)
         {
@@ -53,13 +52,29 @@ void MainWindow::on_findPushButton_clicked()
         {
             while(!stream.atEnd())
             {
+                QString apu = "";
+                QString attriibuutinapu = "";
                 QString line = stream.readLine();
                 //avautuu ja sana löytyy
-                if (line.contains(testi_) and testi_.size() != 0)
+                if (line.contains(testi_) and ui->matchCheckBox->isChecked())
                 {
                     ui->textBrowser->setText("Word found");
                     file.close();
                     return;
+                }
+                else if (! ui->matchCheckBox->isChecked())    //jos isoilla kirjaimilla ei ole väliä
+                {
+                    for (auto c : line)
+                    {
+                        apu += c.toUpper();
+                    }
+                    for (auto k : testi_)
+                        attriibuutinapu += k.toUpper();
+                    if (apu==attriibuutinapu)
+                        ui->textBrowser->setText("Word found");
+                    file.close();
+                    return;
+
                 }
             }
             //avautuu mutta sanaa ei löydy
