@@ -47,6 +47,8 @@ void MainWindow::on_findPushButton_clicked()
             file.close();
             return;
         }
+        bool found = false;
+
 
         QTextStream stream(&file);      //voidrealm videosta, striimin määrittely
         {
@@ -56,11 +58,11 @@ void MainWindow::on_findPushButton_clicked()
                 QString attriibuutinapu = "";
                 QString line = stream.readLine();
                 //avautuu ja sana löytyy
-                if (line.contains(testi_) and ui->matchCheckBox->isChecked())
+                if (line.contains(testi_))  //jos löytyy sellaisenaan
                 {
                     ui->textBrowser->setText("Word found");
-                    file.close();
-                    return;
+                    found = true;
+
                 }
                 else if (! ui->matchCheckBox->isChecked())    //jos isoilla kirjaimilla ei ole väliä
                 {
@@ -72,13 +74,13 @@ void MainWindow::on_findPushButton_clicked()
                         attriibuutinapu += k.toUpper();
                     if (apu==attriibuutinapu)
                         ui->textBrowser->setText("Word found");
-                    file.close();
-                    return;
+                    found = true;
 
                 }
             }
             //avautuu mutta sanaa ei löydy
-            ui->textBrowser->setText("Word not found");
+            if (found == false)
+                ui->textBrowser->setText("Word not found");
 
         }
     }
