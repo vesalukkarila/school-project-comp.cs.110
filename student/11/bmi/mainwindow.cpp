@@ -34,7 +34,7 @@ void MainWindow::on_heightLineEdit_editingFinished()
 
 void MainWindow::on_countButton_clicked()
 {
-    if (paino <= 0 or paino_string.length() == 0)
+    if (pituus <= 0 or pituus_string.length() == 0)
     {
         ui->resultLabel->setText("Cannot count");
         ui->infoTextBrowser->setText("");
