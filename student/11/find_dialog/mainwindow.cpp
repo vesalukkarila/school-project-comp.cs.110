@@ -8,7 +8,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow), testi_(), tiedosto_()
+    , ui(new Ui::MainWindow), nimi_(), tiedosto_()
 {
     ui->setupUi(this);
 }
@@ -28,7 +28,7 @@ void MainWindow::on_keyLineEdit_textEdited(const QString &arg1)
 */
 void MainWindow::on_keyLineEdit_textChanged(const QString &arg1)
 {
-    testi_ = arg1;
+    nimi_ = arg1;
 }
 
 
@@ -41,10 +41,10 @@ void MainWindow::on_findPushButton_clicked()
     else
     {
         //avautuu mutta sanaa ei annettu
-        if (testi_.size() == 0)
+        if (nimi_.size() == 0)
         {
             ui->textBrowser->setText("File found");
-            file.close();
+            file.close();   //??tarpeellinen tässä??
             return;
         }
         bool found = false;
@@ -58,7 +58,7 @@ void MainWindow::on_findPushButton_clicked()
                 QString attriibuutinapu = "";
                 QString line = stream.readLine();
                 //avautuu ja sana löytyy
-                if (line.contains(testi_))  //jos löytyy sellaisenaan
+                if (line.contains(nimi_) and ui->matchCheckBox->isChecked())  //isoilla väliä ja löytyy
                 {
                     ui->textBrowser->setText("Word found");
                     found = true;
@@ -70,11 +70,13 @@ void MainWindow::on_findPushButton_clicked()
                     {
                         apu += c.toUpper();
                     }
-                    for (auto k : testi_)
+                    for (auto k : nimi_)
                         attriibuutinapu += k.toUpper();
                     if (apu==attriibuutinapu)
+                    {
                         ui->textBrowser->setText("Word found");
-                    found = true;
+                        found = true;
+                    }
 
                 }
             }

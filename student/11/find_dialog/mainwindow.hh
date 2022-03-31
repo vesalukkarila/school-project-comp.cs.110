@@ -30,7 +30,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QString testi_;
+    QString nimi_;
     QString tiedosto_;
 };
 #endif // MAINWINDOW_HH
