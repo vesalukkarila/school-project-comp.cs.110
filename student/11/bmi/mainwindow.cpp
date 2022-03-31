@@ -36,7 +36,7 @@ void MainWindow::on_countButton_clicked()
 {
     if (paino <= 0 or paino_string.length() == 0)
     {
-        ui->resultLabel->setText("Cannot count.");
+        ui->resultLabel->setText("Cannot count");
         ui->infoTextBrowser->setText("");
 
     }
@@ -50,7 +50,7 @@ void MainWindow::on_countButton_clicked()
         else if (indeksi > 25)
             ui->infoTextBrowser->setText("You are overweight.");
         else
-            ui->infoTextBrowser->setText("You weight is normal.");
+            ui->infoTextBrowser->setText("Your weight is normal.");
 
 
     }
