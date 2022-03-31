@@ -23,12 +23,15 @@ public:
 
 private slots:
     // Add your slots here
+    void startTimer();
+    void stopTimer();
+    void resetTimer();
 
-    void on_startButton_clicked();
+   // void on_startButton_clicked();
 
-    void on_stopButton_clicked();
+   // void on_stopButton_clicked();
 
-    void on_resetButton_clicked();
+   // void on_resetButton_clicked();
     void updateLcd();
 
 private:
