@@ -53,7 +53,7 @@ void MainWindow::on_findPushButton_clicked()
         {
             while(!stream.atEnd())
             {
-                QString apu = "";
+                QString apu = "";   //
                 QString attriibuutinapu = "";
                 QString line = stream.readLine();
                 //avautuu ja sana löytyy
