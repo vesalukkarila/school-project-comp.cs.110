@@ -19,14 +19,9 @@ public:
 
 
 private slots:
-    //void on_keyLineEdit_textEdited(const QString &arg1);
-
-    //void on_keyLineEdit_textChanged(const QString &arg1);
-
 
     void on_findPushButton_clicked();
 
-    //void on_fileLineEdit_textChanged(const QString &arg1);
 
     void on_fileLineEdit_editingFinished();
 

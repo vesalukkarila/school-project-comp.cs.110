@@ -18,19 +18,17 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-/*
-void MainWindow::on_keyLineEdit_textEdited(const QString &arg1)
+void MainWindow::on_fileLineEdit_editingFinished()
 {
-    if (arg1 == "kala")
-        testi_ = arg1;
+    tiedosto_ = ui->fileLineEdit->text();
 }
 
-*/
-/*
-void MainWindow::on_keyLineEdit_textChanged(const QString &arg1)
+
+void MainWindow::on_keyLineEdit_editingFinished()
 {
-    nimi_ = arg1;
-}*/
+    nimi_ = ui->keyLineEdit->text();
+
+}
 
 
 
@@ -91,22 +89,6 @@ void MainWindow::on_findPushButton_clicked()
 }
 
 
-/*void MainWindow::on_fileLineEdit_textChanged(const QString &arg1)
-{
-    tiedosto_ = arg1;
-}*/
 
 
-void MainWindow::on_fileLineEdit_editingFinished()
-{
-    tiedosto_ = ui->fileLineEdit->text();
-   // tiedosto_ =
-}
-
-
-void MainWindow::on_keyLineEdit_editingFinished()
-{
-    nimi_ = ui->keyLineEdit->text();
-
-}
 
