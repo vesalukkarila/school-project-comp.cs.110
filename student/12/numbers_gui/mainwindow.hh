@@ -35,6 +35,15 @@ private slots:
 
     void on_resetPushButton_clicked();
 
+
+    void on_upPushButton_clicked();
+
+    void on_rightPushButton_clicked();
+
+    void on_downPushButton_clicked();
+
+    void on_leftPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;     //osoitin pääikkunaa, toimii parenttina muille widgeteille
     int seed_,
@@ -45,7 +54,7 @@ private:
     vector<vector<QPushButton*>> pb_vektori;
     const int ruudun_koko = 40;
 
-    GameBoard* board_;
+    GameBoard* board_;          //Katso että tuhotaan dynaaminen olio
 
     const vector<int> APPROVED_GOALS =
     {2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192};
@@ -53,5 +62,7 @@ private:
     void init_empty_blocks();
     void initiate_gameboard();
     void tietorakenne_graafiseksi();
+    void voitto_funktio();
+    void havio_funktio();
 };
 #endif // MAINWINDOW_HH

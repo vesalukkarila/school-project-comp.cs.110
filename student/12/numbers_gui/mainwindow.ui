@@ -93,11 +93,11 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="upPushButton">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>410</y>
+      <x>120</x>
+      <y>320</y>
       <width>84</width>
       <height>28</height>
      </rect>
@@ -106,11 +106,11 @@
      <string>Up</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="downPushButton">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>480</y>
+      <x>120</x>
+      <y>380</y>
       <width>84</width>
       <height>28</height>
      </rect>
@@ -119,11 +119,11 @@
      <string>Down</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="leftPushButton">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>440</y>
+      <x>40</x>
+      <y>350</y>
       <width>84</width>
       <height>28</height>
      </rect>
@@ -132,11 +132,11 @@
      <string>Left</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="rightPushButton">
     <property name="geometry">
      <rect>
-      <x>630</x>
-      <y>440</y>
+      <x>200</x>
+      <y>350</y>
       <width>84</width>
       <height>28</height>
      </rect>
@@ -150,8 +150,8 @@
      <rect>
       <x>30</x>
       <y>30</y>
-      <width>256</width>
-      <height>192</height>
+      <width>321</width>
+      <height>261</height>
      </rect>
     </property>
    </widget>
@@ -160,8 +160,8 @@
      <rect>
       <x>40</x>
       <y>40</y>
-      <width>231</width>
-      <height>171</height>
+      <width>301</width>
+      <height>241</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2"/>

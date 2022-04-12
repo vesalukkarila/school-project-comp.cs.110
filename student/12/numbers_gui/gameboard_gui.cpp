@@ -48,11 +48,11 @@ void GameBoard::fill(int seed)
 
     for( int i = 0 ; i < SIZE ; ++i )
     {
-        new_value();
+        new_value();        //kutsuu tästä parametrilla true
     }
 }
 
-void GameBoard::new_value(bool check_if_empty)      //mitä funkku tekee??
+void GameBoard::new_value(bool check_if_empty)      //asettaa yhden uuden luvun eli numbertilen vektorin osoittimen päähän
 {
     if( check_if_empty and is_full() ){                      //check_if_empty=oletusparametri, mainista lopussa falsena
         // So that we will not be stuck in a forever loop

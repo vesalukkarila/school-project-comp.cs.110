@@ -9,11 +9,18 @@
 #include <QPushButton>
 #include <utility>
 
+
+const Coords LEFT = {0, -1};
+const Coords UP = {-1, 0};
+const Coords RIGHT = {0, 1};
+const Coords DOWN = {1, 0};
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
 
 /*
     //Canvas jolle ruudut luodaan
@@ -47,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    delete board_;  //tuhotaan dynaamisesti luotu gameboard olio
     delete ui;
 }
 
@@ -167,17 +175,15 @@ void MainWindow::tietorakenne_graafiseksi()
     {
         for (int x = 0; x < SIZE; ++x)
         {
-            pair <int, int> koordinaatit (x, y);
+            pair <int, int> koordinaatit (y, x);
             int numbertilen_arvo = board_->get_value(koordinaatit);
             QString arvo_tekstiksi = QString::number(numbertilen_arvo);
-           // QString s = QString::number(x); //testi joka toimii
-
-
             pb_vektori.at(y).at(x)->setText(arvo_tekstiksi);
 
         }
     }
 }
+
 
 
 void MainWindow::on_resetPushButton_clicked() //Luennosta 47:00 gameboard_fill muokattava (if lause) tai tehtävä
@@ -193,10 +199,15 @@ void MainWindow::on_resetPushButton_clicked() //Luennosta 47:00 gameboard_fill m
    ui->goalSpinBox->setValue(0);
    ui->textBrowser->setText("Nyt voi aloittaa pelin alusta, tässä ohjeet...:");
 
+   //MUISTA GAMEBOARD_EXISTS VAKIO!!!
+   //VOITTO JA HÄVIÄ PAKOTTAA TÄNNE, SEURAAVAKSI BACKENDISSÄ NUMBERTILIEN ARVOJEN MUUTTAMINEN JA UUDELLEEN ALUSTUS LÄHTÖTILANTEESEEN
+
    //init_empty_board() saattaa luoda uudet widgetit vanhojen päälle mutta sillä voi frontin hoitaa
    //filliä piti muuttaa
 }
-//Tarkistaa onko tavoiteluku kakkosen potenssi
+
+
+//VALMIS Tarkistaa onko tavoiteluku kakkosen potenssi
 bool MainWindow::is_goal_approved()
 {
     for (auto i : APPROVED_GOALS)
@@ -205,5 +216,79 @@ bool MainWindow::is_goal_approved()
     return false;
 }
 
+
+//VALMIS, VIKANA SE ETTEI TAPAHDU MITÄÄN JOS SUUNTAAN EI VOI LIIKKUA, KAIKKIIN SUUNTIIN SAMA, MUT VIKA BACKENDISSÄ
+void MainWindow::on_upPushButton_clicked()
+{
+    if (board_->move(UP, goal_))
+    {
+        voitto_funktio();
+    }
+    else if (board_->is_full())
+    {
+        havio_funktio();
+    }
+    board_->new_value(false);       //ihan täysin en ymmärrä miksi tuo false parametri on tarpeellinen
+    tietorakenne_graafiseksi();
+}
+
+//VALMIS
+void MainWindow::on_rightPushButton_clicked()
+{
+    if (board_->move(RIGHT, goal_))
+    {
+        voitto_funktio();
+    }
+    else if (board_->is_full())
+    {
+        havio_funktio();
+    }
+    board_->new_value(false);       //ihan täysin en ymmärrä miksi tuo false parametri on tarpeellinen
+    tietorakenne_graafiseksi();
+}
+
+//VALMIS
+void MainWindow::on_downPushButton_clicked()
+{
+    if (board_->move(DOWN, goal_))
+    {
+        voitto_funktio();
+    }
+    else if (board_->is_full())
+    {
+        havio_funktio();
+    }
+    board_->new_value(false);       //ihan täysin en ymmärrä miksi tuo false parametri on tarpeellinen
+    tietorakenne_graafiseksi();
+}
+
+//VALMIS
+void MainWindow::on_leftPushButton_clicked()
+{
+    if (board_->move(LEFT, goal_))
+    {
+        voitto_funktio();
+    }
+    else if (board_->is_full())
+    {
+        havio_funktio();
+    }
+    board_->new_value(false);       //ihan täysin en ymmärrä miksi tuo false parametri on tarpeellinen
+    tietorakenne_graafiseksi();
+}
+
+void MainWindow::voitto_funktio()
+{
+    QString tavoite = QString::number(goal_);
+    ui->textBrowser->setText("You won! you reached the goal" +tavoite);
+    //plus aktivoinnit&deaktivoinnit, mahdollisesti nollaus tästä tai resetistä
+    //Ehkä pakotus resetiin deaktivoinneilla ja sieltä backendin alustus lähtötilanteeseen
+}
+
+void MainWindow::havio_funktio()
+{
+    ui->textBrowser->setText("You lost. Can't add a new tile.");
+    //deaktivoinnit&aktivoinnit,  pakotus resetiin ja sieltä alustus lähtötilanteeseen
+}
 
 
