@@ -17,7 +17,7 @@ GameBoard::~GameBoard()
     }
 }
 
-void GameBoard::init_empty()    //HAA, luo tyhjän pelilaudan, tekee yhden sisemmän vektorin ja työntää sen x-kertaa ulompaan, kätevää
+void GameBoard::init_empty()    //Luo tietorakenteen jossa osoittimet nullptr, ei luo nt-olioita tässä
 {
     std::vector<NumberTile*> row;
     for( int i = 0; i < SIZE; ++i)
@@ -32,27 +32,47 @@ void GameBoard::init_empty()    //HAA, luo tyhjän pelilaudan, tekee yhden sisem
 
 void GameBoard::fill(int seed)
 {
-    randomEng_.seed(seed);                                          //attribuutti
+    //Näitä tarvitaan newvaluessa
+    randomEng_.seed(seed);
     distribution_ = std::uniform_int_distribution<int>(0, SIZE - 1);
 
     // Wiping out the first random number (which is almost almost 0)
-    distribution_(randomEng_);                                      //attribuutti
+    distribution_(randomEng_);
 
-    for( auto y = 0; y < SIZE; ++y )
+    if (GAMEBOARD_EXISTS == false)  //Kun luodaan ensimmäinen alussa
     {
-        for( auto x = 0; x < SIZE; ++x )
+
+
+        for( auto y = 0; y < SIZE; ++y )
         {
-            board_.at(y).at(x) = new NumberTile(0, std::make_pair(y, x), this);
+            for( auto x = 0; x < SIZE; ++x )
+            {
+                board_.at(y).at(x) = new NumberTile(0, std::make_pair(y, x), this);//Tässä luo dynaamiseT numbertilet
+            }
         }
     }
 
+
+    else        //jos tullaan muuttamaan numbertilien arvot nolliksi
+    {
+        for( auto y = 0; y < SIZE; ++y )
+        {
+            for( auto x = 0; x < SIZE; ++x )
+            {
+                board_.at(y).at(x)->new_value(0);   // Muutetaan kaikkien arvot nollaksi, kutsumalla nt:n newvalueta
+            }
+        }
+    }
+
+
+    //Kummassakin tapauksessa neljä randomia pohjalle
     for( int i = 0 ; i < SIZE ; ++i )
     {
-        new_value();        //kutsuu tästä parametrilla true
+        new_value();        //kutsuu tästä parametrilla true, JA SIT VaiN KUTSUU NELJÄSTI UUDEN LUVUN
     }
 }
 
-void GameBoard::new_value(bool check_if_empty)      //asettaa yhden uuden luvun eli numbertilen vektorin osoittimen päähän
+void GameBoard::new_value(bool check_if_empty)      //asettaa yhden uuden luvun RANDOMIN NUMBERTILEN VALUEKSI
 {
     if( check_if_empty and is_full() ){                      //check_if_empty=oletusparametri, mainista lopussa falsena
         // So that we will not be stuck in a forever loop

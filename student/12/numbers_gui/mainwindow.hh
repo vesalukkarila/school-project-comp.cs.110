@@ -8,7 +8,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 
-static bool GAMEBOARD_EXISTS = false;
+//static bool GAMEBOARD_EXISTS = false;
 
 using namespace std;
 
@@ -44,6 +44,7 @@ private slots:
 
     void on_leftPushButton_clicked();
 
+
 private:
     Ui::MainWindow *ui;     //osoitin pääikkunaa, toimii parenttina muille widgeteille
     int seed_,
@@ -57,11 +58,11 @@ private:
     GameBoard* board_;          //Katso että tuhotaan dynaaminen olio
 
     const vector<int> APPROVED_GOALS =
-    {2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192};
+    {8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192};
     bool is_goal_approved();
     void init_empty_blocks();
-    void initiate_gameboard();
-    void tietorakenne_graafiseksi();
+    void luo_backend_tai_palauttaa_alkutilanteeseen();
+    void backend_tietorakenne_graafiseksi();
     void voitto_funktio();
     void havio_funktio();
 };

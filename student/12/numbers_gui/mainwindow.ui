@@ -183,12 +183,12 @@
  <connections>
   <connection>
    <sender>quitPushButton</sender>
-   <signal>clicked()</signal>
+   <signal>pressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>558</x>
+     <x>708</x>
      <y>390</y>
     </hint>
     <hint type="destinationlabel">

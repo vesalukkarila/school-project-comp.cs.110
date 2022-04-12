@@ -17,7 +17,7 @@ const Coords DOWN = {1, 0};
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow), seed_(0), goal_(0)    //Pitäs korjata cpp::222 conditional jump uninitialised values
 {
     ui->setupUi(this);
 
@@ -29,7 +29,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->leftPushButton->setDisabled(true),
     ui->rightPushButton->setDisabled(true);
 
+    init_empty_blocks();
 
+    ui->textBrowser->setText("Tervetuloa pelaamaan, tässä ohjeet...:");
 
 /*
     //Canvas jolle ruudut luodaan
@@ -55,17 +57,18 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //Okei, piirto onnistuu, grview:ta ei ole koodillisesti käsitelty, ui:ssa vain laitettu esille
-    init_empty_blocks();
 
-
-    ui->textBrowser->setText("Tervetuloa pelaamaan, tässä ohjeet...:");
 }
 
 MainWindow::~MainWindow()
 {
-    delete board_;  //tuhotaan dynaamisesti luotu gameboard olio
+    if (GAMEBOARD_EXISTS ==true)
+        delete board_;  //tuhotaan dynaamisesti luotu gameboard olio, jos se on olemassa
     delete ui;
 }
+
+
+
 //VALMIS
 void MainWindow::init_empty_blocks()
 {
@@ -85,7 +88,7 @@ void MainWindow::init_empty_blocks()
 
     for (int rivi_luku = 0;  rivi_luku < SIZE; ++rivi_luku )
     {
-        vector<QPushButton*> rivi;  //VOIS muuttaa labeliks, tai sit deaktivoi buttonin
+        vector<QPushButton*> rivi;
         for (int sarake = 0; sarake < SIZE; ++sarake)
         {
             QPushButton* osoitin = new QPushButton("", this);
@@ -93,24 +96,13 @@ void MainWindow::init_empty_blocks()
             osoitin->setPalette(palette);
 
             rivi.push_back(osoitin);
+            osoitin->setDisabled(true);             //deaktivoidaan
             ui->gridLayout_2->addWidget(osoitin, rivi_luku, sarake);
 
 
         }
         pb_vektori.push_back(rivi);
     }
-/*Peliruudukon voi toteuttaa esimerkiksi QGraphicsScene-ominaisuutena sekä etiketteinä (label).
- * QGraphicsScene-ominaisuutta on käytetty liikkuvassa ympyrässä ja vesipisarapelissä, joten niistä voit katsoa mallia.
-
- *QGraphicsScene:lle voidaan asettaa erilaisia kuvioita kuten suorakulmioita tai ympyröitä.
- *Liikkuvan ympyrän esimerkissä sille asetettiin ympyrä, mutta tässä tarvitset suorakulmioita (QGraphicsRectItem).
- *Huomaa, että suorakulmioon ei voi asettaa tekstiä (lukuja), joten todennäköisesti tarvitset myös etikettejä (QLabel).*/
-
-
-
-//Ihan eka tuo tietorakenne graafiseksi, graphicviewistä oli maininta ja saiko tehdä pelkästään labelilla, luennolta ohje?
-//ALUSSA ILMAN ETTÄ MITÄÄN KLIKATAAN PITÄS SAADA RUUDUKKO (JA TEXTBROWSERIIN OHJEISTUSTEKSTI)
-
 }
 
 //Valmis
@@ -146,10 +138,11 @@ void MainWindow::on_startPushButton_clicked()
 
     ui->textBrowser->setText("Play hard!");
     //Luo backendissä tietorakenne ja kaikki tarvittava aloitusta varten
-    initiate_gameboard();   //käy luomassa pelilautaolion ja alustaa sen alkua varten
+    luo_backend_tai_palauttaa_alkutilanteeseen();
 
-    //Haluan loopata läpi widgetit ja kirjoittaa niihin numbertilen arvon
-    tietorakenne_graafiseksi();
+
+    //Looppaa widgetit ja kirjoittaa niihin numbertilen arvon
+    backend_tietorakenne_graafiseksi();
 
     //Toiminnan ohjaamiseksi painonappien aktivointi ja deaktivointi
     ui->resetPushButton->setEnabled(true);
@@ -164,22 +157,27 @@ void MainWindow::on_startPushButton_clicked()
 }
 
 //Valmis
-void MainWindow::initiate_gameboard()
+void MainWindow::luo_backend_tai_palauttaa_alkutilanteeseen()
 {
-    if (GAMEBOARD_EXISTS == false)  //siltä varalta että reset yhteydessä haluaa käyttää tämän elseä
+    if (GAMEBOARD_EXISTS == false)  //Siirretty gameboard.hh:n, näin sitä voi käyttää fillissä
     {
-        board_ = new GameBoard;        //luodaan pelilautaolio oman attribuuttiosoittimen päähän, MUISTA DELETOIDA KUN DYNAAMINEN
-        board_->init_empty();
-        board_->fill(seed_);
+        board_ = new GameBoard;        //luodaan gb-pelilautaolio oman attribuuttiosoittimen päähän, MUISTA DELETOIDA KUN DYNAAMINEN
+        board_->init_empty();   //gb:n metodi, tarvitaan vain ekan kerran, eli jos gb-olio ei ole olemassa
+        board_->fill(seed_);    //gb:n metodi tarvitaan modattuna resetin painon jälkeen
         GAMEBOARD_EXISTS = true;
 
     }
-    //else käännetään kaikki nollaan tai nullptr miten nyt ikinä, tai suoraan board.fill tms
+
+    else
+    {
+        board_->fill(seed_);
+    }
+
 }
 
 
 //Valmis
-void MainWindow::tietorakenne_graafiseksi()
+void MainWindow::backend_tietorakenne_graafiseksi()
 {
 
     for ( int y = 0; y < SIZE; ++y)
@@ -189,6 +187,8 @@ void MainWindow::tietorakenne_graafiseksi()
             pair <int, int> koordinaatit (y, x);
             int numbertilen_arvo = board_->get_value(koordinaatit);
             QString arvo_tekstiksi = QString::number(numbertilen_arvo);
+            if (arvo_tekstiksi == "0")
+                arvo_tekstiksi = "";
             pb_vektori.at(y).at(x)->setText(arvo_tekstiksi);
 
         }
@@ -200,17 +200,12 @@ void MainWindow::tietorakenne_graafiseksi()
 void MainWindow::on_resetPushButton_clicked() //Luennosta 47:00 gameboard_fill muokattava (if lause) tai tehtävä
                         //oma metodi resetille joka antaa tyhjät arvo ja pakottaa valitsemaan uudet siemenen ja goalin
 {
-    /*Uudelleenaloituksessa (reset) huomaa, että NumberTile-olioita ei kannata luoda uudelleen
-     * (ks. GameBoard::fill) vaan antaa olemassa oleville olioille uudet (tyhjät) arvot.
-     * Yksi vaihtoehto hoitaa asia on muokata edellä mainittua metodia hieman.
-     * Tee kuitenkin muokkaus niin, että ohjelma toimii myös alkuperäisellä ei-GUI-käyttöliittymällä oikein.
-     * Toinen vaihtoehto on toteuttaa toinen versio edellä mainitusta metodista.*/
 
    ui->seedSpinBox->setValue(0);
    ui->goalSpinBox->setValue(0);
    ui->textBrowser->setText("Nyt voi aloittaa pelin alusta, tässä ohjeet...:");
 
-   //Widgettien aktivointi ja deaktivointi toiminnan ohjaamiseksi
+   //Widgettien aktivointi ja deaktivointi toiminnan ohjaamiseksi, pakottaa Starttiin
    ui->seedSpinBox->setEnabled(true);
    ui->goalSpinBox->setEnabled(true);
    ui->resetPushButton->setDisabled(true);
@@ -219,11 +214,6 @@ void MainWindow::on_resetPushButton_clicked() //Luennosta 47:00 gameboard_fill m
    ui->downPushButton->setDisabled(true);
    ui->leftPushButton->setDisabled(true);
    ui->rightPushButton->setDisabled(true);
-
-
-
-   //MUISTA GAMEBOARD_EXISTS VAKIO!!!
-
 
 }
 
@@ -244,13 +234,17 @@ void MainWindow::on_upPushButton_clicked()
     if (board_->move(UP, goal_))
     {
         voitto_funktio();
+        return;
+
     }
     else if (board_->is_full())
     {
         havio_funktio();
+        return;
+
     }
     board_->new_value(false);       //ihan täysin en ymmärrä miksi tuo false parametri on tarpeellinen
-    tietorakenne_graafiseksi();
+    backend_tietorakenne_graafiseksi();
 }
 
 //VALMIS
@@ -259,13 +253,16 @@ void MainWindow::on_rightPushButton_clicked()
     if (board_->move(RIGHT, goal_))
     {
         voitto_funktio();
+        return;
     }
     else if (board_->is_full())
     {
         havio_funktio();
+        return;
+
     }
     board_->new_value(false);       //ihan täysin en ymmärrä miksi tuo false parametri on tarpeellinen
-    tietorakenne_graafiseksi();
+    backend_tietorakenne_graafiseksi();
 }
 
 //VALMIS
@@ -274,28 +271,38 @@ void MainWindow::on_downPushButton_clicked()
     if (board_->move(DOWN, goal_))
     {
         voitto_funktio();
+        return;
+
     }
     else if (board_->is_full())
     {
         havio_funktio();
+        return;
+
     }
     board_->new_value(false);       //ihan täysin en ymmärrä miksi tuo false parametri on tarpeellinen
-    tietorakenne_graafiseksi();
+    backend_tietorakenne_graafiseksi();
 }
 
 //VALMIS
 void MainWindow::on_leftPushButton_clicked()
 {
-    if (board_->move(LEFT, goal_))
+    if (board_->move(LEFT, goal_))  //Suorittaa board.moven, jos palautuu truena voittofunktio
     {
         voitto_funktio();
+        return;
+
     }
     else if (board_->is_full())
     {
         havio_funktio();
+        return;
     }
+
+
     board_->new_value(false);       //ihan täysin en ymmärrä miksi tuo false parametri on tarpeellinen
-    tietorakenne_graafiseksi();
+    backend_tietorakenne_graafiseksi();
+
 }
 
 void MainWindow::voitto_funktio()
@@ -320,5 +327,8 @@ void MainWindow::havio_funktio()
     ui->leftPushButton->setDisabled(true);
     ui->rightPushButton->setDisabled(true);
 }
+
+
+
 
 

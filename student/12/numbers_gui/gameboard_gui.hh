@@ -10,6 +10,8 @@ const int PRINT_WIDTH = 5;
 const int NEW_VALUE = 2;
 const int DEFAULT_GOAL = 2048;
 
+static bool GAMEBOARD_EXISTS = false;
+
 class GameBoard
 {
 public:
