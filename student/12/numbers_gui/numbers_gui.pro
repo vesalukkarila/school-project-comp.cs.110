@@ -9,15 +9,15 @@ CONFIG += c++14     #MUUTETTU 11 -> 14
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    gameboard.cpp \
+    gameboard_gui.cpp \
     main.cpp \
     mainwindow.cpp \
-    numbertile.cpp
+    numbertile_gui.cpp
 
 HEADERS += \
-    gameboard.hh \
+    gameboard_gui.hh \
     mainwindow.hh \
-    numbertile.hh
+    numbertile_gui.hh
 
 FORMS += \
     mainwindow.ui

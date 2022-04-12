@@ -1,7 +1,7 @@
-#ifndef GAMEBOARD_HH
-#define GAMEBOARD_HH
+#ifndef GAMEBOARD_GUI_H
+#define GAMEBOARD_GUI_H
 
-#include "numbertile.hh"
+#include "numbertile_gui.hh"
 #include <vector>
 #include <random>
 
@@ -46,6 +46,8 @@ public:
     // Returns the element (number tile) in the given coordinates.
     NumberTile* get_item(Coords coords);
 
+    int get_value(Coords coords);       //LISÄTTY!!!!
+
 private:
     // Internal structure of the game board
     std::vector<std::vector<NumberTile*>> board_;
@@ -56,4 +58,4 @@ private:
     std::uniform_int_distribution<int> distribution_;
 };
 
-#endif // GAMEBOARD_HH
+#endif // GAMEBOARD_GUI_H

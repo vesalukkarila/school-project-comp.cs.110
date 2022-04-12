@@ -1,5 +1,5 @@
-#ifndef NUMBERTILE_HH
-#define NUMBERTILE_HH
+#ifndef NUMBERTILE_GUI_H
+#define NUMBERTILE_GUI_H
 
 #include <vector>
 
@@ -35,6 +35,8 @@ public:
     // Sets the value of is_merged_ as false.
     void reset_turn();
 
+    int get_nt_value();    //LISÄTTY kutsuja on numbertile olio, eikö joten ei parametreja?
+
 private:
     // Value in the number tile
     int value_;
@@ -54,4 +56,4 @@ private:
     bool is_on_board(Coords coords);
 };
 
-#endif // NUMBERTILE_HH
+#endif // NUMBERTILE_GUI_H

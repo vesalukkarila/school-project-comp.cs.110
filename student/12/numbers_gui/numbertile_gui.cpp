@@ -1,5 +1,5 @@
-#include "numbertile.hh"
-#include "gameboard.hh"
+#include "numbertile_gui.hh"
+#include "gameboard_gui.hh"
 #include <iomanip>
 #include <iostream>
 
@@ -72,6 +72,16 @@ void NumberTile::reset_turn()
     is_merged_ = false;
 }
 
+int NumberTile::get_nt_value()  //gameboard.cpp kutsuja on dynaaminen olio, ymmärtäisin
+{
+    return value_;
+}
+
+/*nt NumberTile::get_nt_value(Coords coords) //LISÄTTY
+{
+    return
+}
+*/
 bool NumberTile::is_on_board(Coords coords)
 {
     return coords.first >= 0 and coords.first < SIZE and

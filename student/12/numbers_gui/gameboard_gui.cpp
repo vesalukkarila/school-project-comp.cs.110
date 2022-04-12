@@ -1,4 +1,4 @@
-#include "gameboard.hh"
+#include "gameboard_gui.hh"
 #include <iostream>
 
 GameBoard::GameBoard()
@@ -109,6 +109,11 @@ bool GameBoard::move(Coords dir, int goal)
 NumberTile* GameBoard::get_item(Coords coords)
 {
     return board_.at(coords.first).at(coords.second);
+}
+
+int GameBoard::get_value(Coords coords) //LISÄTTY
+{
+    return board_.at(coords.first).at(coords.second)->get_nt_value();
 }
 
 bool GameBoard::is_full() const
