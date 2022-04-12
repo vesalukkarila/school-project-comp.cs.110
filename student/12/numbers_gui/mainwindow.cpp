@@ -21,6 +21,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    //Deaktivoidaan toiminnan ohjaamiseksi painonappeja
+    ui->resetPushButton->setDisabled(true),
+    ui->startPushButton->setDisabled(true),
+    ui->upPushButton->setDisabled(true),
+    ui->downPushButton->setDisabled(true),
+    ui->leftPushButton->setDisabled(true),
+    ui->rightPushButton->setDisabled(true);
+
+
 
 /*
     //Canvas jolle ruudut luodaan
@@ -57,7 +66,7 @@ MainWindow::~MainWindow()
     delete board_;  //tuhotaan dynaamisesti luotu gameboard olio
     delete ui;
 }
-
+//VALMIS
 void MainWindow::init_empty_blocks()
 {
     //vektorinvektorinalkioihin osoittimet widgetteihin jotka painonappeja tai labeleita tai rectangleja
@@ -104,57 +113,57 @@ void MainWindow::init_empty_blocks()
 
 }
 
-
-
-
+//Valmis
 void MainWindow::on_seedSpinBox_valueChanged(int arg1)
 {
     seed_ = arg1;
+    if (seed_ > 0 and is_goal_approved())
+        ui->startPushButton->setEnabled(true);
+    else
+        ui->startPushButton->setDisabled(true);
+
 }
 
 
-
+//Valmis
 void MainWindow::on_goalSpinBox_valueChanged(int arg1)
 {
     goal_ = arg1;
-    //periaatteessa tässä vois tarkistaa onko goal hyväksyttävä ja sit updatestartbutton, movingcircle esimerkkinä
-    /*Tavoiteluvun on tarkoitus olla kakkosen potenssi, joten tavoiteluvun kysymisen sijaan voit kysyä vastaavaa
-     * potenssia (jolloin mahdollisia arvoja on huomattavasti vähemmän).*/
+    if (seed_ > 0 and is_goal_approved())
+        ui->startPushButton->setEnabled(true);
+    else
+        ui->startPushButton->setDisabled(true);
 
-    //vois eka tarkistaa vaikka vektoria vasten että luku hyväksyttävä
     //Vaihtoehtona toi spin-widget joka vois muuttaa lukua esim just tuon vektorin mukaan jossa vain hyväksyttävät arvot
     //Sit vaihtiksena myös vain validi goal antaa raksin ruutuun ja vapauttaa näppäimiä
 }
 
 
-
+//valmis
 void MainWindow::on_startPushButton_clicked()
 {
 
-    if (seed_ > 0 and is_goal_approved())
-    {
-        ui->textBrowser->setText("Jepulis");
-        //Luo backendissä tietorakenne ja kaikki tarvittava aloitusta varten
-        initiate_gameboard();   //käy luomassa pelilautaolion ja alustaa sen alkua varten
 
-        //Haluan loopata läpi widgetit ja kirjoittaa niihin numbertilen arvon
-        tietorakenne_graafiseksi();
+    ui->textBrowser->setText("Play hard!");
+    //Luo backendissä tietorakenne ja kaikki tarvittava aloitusta varten
+    initiate_gameboard();   //käy luomassa pelilautaolion ja alustaa sen alkua varten
 
+    //Haluan loopata läpi widgetit ja kirjoittaa niihin numbertilen arvon
+    tietorakenne_graafiseksi();
 
-
-
-        //Mitä jos kävis tuon tietorakenteen läpi ja loisi labelit esim canvasille sen pohjalta suoraan
-        //ja kun nuolinäppäimiä painetaan vie käskyn backendiin ja piirtää tietorakenteen uudelleen.., silloin
-        //widgettejä piirretään koko ajan uusiksi
-        //parempi tapa olisi varmaan muuttaa widgettien arvoa tietorakenteen pohjalta 0-2048 väliltä
-
-    }
-    else
-        ui->textBrowser->setText("Siemenluvun täytyy olla suurempi kuin nolla ja tavoiteluvun "
-                                        "jokin 2:n potenssi, kuitenkin maksimissaan 8192.");
+    //Toiminnan ohjaamiseksi painonappien aktivointi ja deaktivointi
+    ui->resetPushButton->setEnabled(true);
+    ui->startPushButton->setDisabled(true);
+    ui->goalSpinBox->setDisabled(true);
+    ui->seedSpinBox->setDisabled(true);
+    //Ja suunnat
+    ui->upPushButton->setEnabled(true);
+    ui->downPushButton->setEnabled(true);
+    ui->leftPushButton->setEnabled(true);
+    ui->rightPushButton->setEnabled(true);
 }
 
-
+//Valmis
 void MainWindow::initiate_gameboard()
 {
     if (GAMEBOARD_EXISTS == false)  //siltä varalta että reset yhteydessä haluaa käyttää tämän elseä
@@ -167,7 +176,9 @@ void MainWindow::initiate_gameboard()
     }
     //else käännetään kaikki nollaan tai nullptr miten nyt ikinä, tai suoraan board.fill tms
 }
-//Haluan loopata läpi widgetit ja kirjoittaa niihin numbertilen arvon
+
+
+//Valmis
 void MainWindow::tietorakenne_graafiseksi()
 {
 
@@ -199,11 +210,21 @@ void MainWindow::on_resetPushButton_clicked() //Luennosta 47:00 gameboard_fill m
    ui->goalSpinBox->setValue(0);
    ui->textBrowser->setText("Nyt voi aloittaa pelin alusta, tässä ohjeet...:");
 
-   //MUISTA GAMEBOARD_EXISTS VAKIO!!!
-   //VOITTO JA HÄVIÄ PAKOTTAA TÄNNE, SEURAAVAKSI BACKENDISSÄ NUMBERTILIEN ARVOJEN MUUTTAMINEN JA UUDELLEEN ALUSTUS LÄHTÖTILANTEESEEN
+   //Widgettien aktivointi ja deaktivointi toiminnan ohjaamiseksi
+   ui->seedSpinBox->setEnabled(true);
+   ui->goalSpinBox->setEnabled(true);
+   ui->resetPushButton->setDisabled(true);
+   //Ja suunnat..
+   ui->upPushButton->setDisabled(true);
+   ui->downPushButton->setDisabled(true);
+   ui->leftPushButton->setDisabled(true);
+   ui->rightPushButton->setDisabled(true);
 
-   //init_empty_board() saattaa luoda uudet widgetit vanhojen päälle mutta sillä voi frontin hoitaa
-   //filliä piti muuttaa
+
+
+   //MUISTA GAMEBOARD_EXISTS VAKIO!!!
+
+
 }
 
 
@@ -283,12 +304,21 @@ void MainWindow::voitto_funktio()
     ui->textBrowser->setText("You won! you reached the goal" +tavoite);
     //plus aktivoinnit&deaktivoinnit, mahdollisesti nollaus tästä tai resetistä
     //Ehkä pakotus resetiin deaktivoinneilla ja sieltä backendin alustus lähtötilanteeseen
+    // Suuntien deaktivointi
+    ui->upPushButton->setDisabled(true);
+    ui->downPushButton->setDisabled(true);
+    ui->leftPushButton->setDisabled(true);
+    ui->rightPushButton->setDisabled(true);
 }
 
 void MainWindow::havio_funktio()
 {
     ui->textBrowser->setText("You lost. Can't add a new tile.");
-    //deaktivoinnit&aktivoinnit,  pakotus resetiin ja sieltä alustus lähtötilanteeseen
+    // Suuntien deaktivointi
+    ui->upPushButton->setDisabled(true);
+    ui->downPushButton->setDisabled(true);
+    ui->leftPushButton->setDisabled(true);
+    ui->rightPushButton->setDisabled(true);
 }
 
 
