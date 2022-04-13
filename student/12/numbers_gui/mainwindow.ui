@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>967</width>
     <height>600</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <rect>
       <x>410</x>
       <y>20</y>
-      <width>511</width>
+      <width>431</width>
       <height>361</height>
      </rect>
     </property>
@@ -27,7 +27,7 @@
      <item row="2" column="0">
       <widget class="QPushButton" name="startPushButton">
        <property name="text">
-        <string>Start</string>
+        <string>Aloita</string>
        </property>
       </widget>
      </item>
@@ -35,7 +35,7 @@
       <widget class="QSpinBox" name="goalSpinBox">
        <property name="minimumSize">
         <size>
-         <width>423</width>
+         <width>50</width>
          <height>29</height>
         </size>
        </property>
@@ -58,7 +58,7 @@
        <item>
         <widget class="QLabel" name="seedLabel">
          <property name="text">
-          <string>Seed</string>
+          <string>Siemenluku</string>
          </property>
         </widget>
        </item>
@@ -67,7 +67,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Goal</string>
+        <string>Tavoite</string>
        </property>
       </widget>
      </item>
@@ -87,7 +87,7 @@
      <item row="3" column="2">
       <widget class="QPushButton" name="quitPushButton">
        <property name="text">
-        <string>Quit</string>
+        <string>Lopeta</string>
        </property>
       </widget>
      </item>
@@ -103,7 +103,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Up</string>
+     <string>Ylös</string>
     </property>
    </widget>
    <widget class="QPushButton" name="downPushButton">
@@ -116,7 +116,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Down</string>
+     <string>Alas</string>
     </property>
    </widget>
    <widget class="QPushButton" name="leftPushButton">
@@ -129,7 +129,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Left</string>
+     <string>Vasen</string>
     </property>
    </widget>
    <widget class="QPushButton" name="rightPushButton">
@@ -142,7 +142,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Right</string>
+     <string>Oikea</string>
     </property>
    </widget>
    <widget class="QGraphicsView" name="graphicsView">
@@ -172,7 +172,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>967</width>
      <height>25</height>
     </rect>
    </property>

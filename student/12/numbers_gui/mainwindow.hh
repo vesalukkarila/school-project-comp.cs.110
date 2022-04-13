@@ -60,10 +60,17 @@ private:
     const vector<int> APPROVED_GOALS =
     {8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192};
     bool is_goal_approved();
-    void init_empty_blocks();
+    void widgetit_tietorakenteeseen_ja_ruudulle();
     void luo_backend_tai_palauttaa_alkutilanteeseen();
     void backend_tietorakenne_graafiseksi();
     void voitto_funktio();
     void havio_funktio();
+    QString hae_laatikon_vari(int luku);
+
+    const map<int, QString> vari_kartta =           //Saako tämän alustaa täällä, oli joku läppä asiasta mitä .hh:ssa saa tehdä
+    {{0,"lightyellow"}, {2, "blue"}, {4, "green"},
+    {8, "red"}, {16, "blue"}, {32, "green"}, {64, "blue"},
+    {128, "blue"}, {256, "blue"}, {512, "blue"}, {1024, "blue"},
+    {2048, "blue"}, {4096, "blue"}, {8192, "blue"} };
 };
 #endif // MAINWINDOW_HH
