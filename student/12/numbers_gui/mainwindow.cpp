@@ -3,32 +3,30 @@
 #include "numbertile_gui.hh"
 #include "ui_mainwindow.h"
 
-#include <QGraphicsRectItem>    //poisto??
-
 #include <QGridLayout>
 #include <QPushButton>
 #include <utility>
 #include <QDebug>
-#include <QFont>    //tarpeellinen?
-#include <QLineEdit>    //tarpeellinen??
 #include <map>
 #include <QString>
 
 
-
-
-const Coords LEFT = {0, -1};    //Saako nämä olla täällä vai private osassa?
+const Coords LEFT = {0, -1};
 const Coords UP = {-1, 0};
 const Coords RIGHT = {0, 1};
 const Coords DOWN = {1, 0};
 
+
+// Pääikkunan alustustoimenpiteet.
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow), seed_(0), goal_(0)    //Pitäs korjata cpp::222 conditional jump uninitialised values
+    , ui(new Ui::MainWindow), seed_(0), goal_(0)
 {
     ui->setupUi(this);
 
-    //Deaktivoidaan toiminnan ohjaamiseksi painonappeja
+    ui->graphicsView->setStyleSheet("background-color: palegoldenrod");
+
+    // Deaktivoidaan toiminnan ohjaamiseksi painonappeja.
     ui->resetPushButton->setDisabled(true),
     ui->startPushButton->setDisabled(true),
     ui->upPushButton->setDisabled(true),
@@ -46,39 +44,39 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 
+// Purkaja, tuhoaa myös dynaamisesti luodun gameboard-olion mikäli olemassa.
 MainWindow::~MainWindow()
 {
-    if (GAMEBOARD_EXISTS ==true)
-        delete board_;  //tuhotaan dynaamisesti luotu gameboard olio, jos se on olemassa
+    if (GAMEBOARD_EXISTS == true)
+        delete board_;
     delete ui;
 }
 
 
-
-//VALMIS
+// Luo widgetit silmukassa ja lisää tietorakenteeseen osoittimen päähän.
+// Ei paluuarvoa, ei parametreja.
 void MainWindow::widgetit_tietorakenteeseen_ja_ruudulle()
 {
-
     for (int rivi_luku = 0;  rivi_luku < SIZE; ++rivi_luku )
     {
         vector<QPushButton*> rivi;
         for (int sarake = 0; sarake < SIZE; ++sarake)
         {
             QPushButton* osoitin = new QPushButton("", this);
+
+            //Widgetin muotoilua
             osoitin->setFixedWidth(ruudun_koko);
-            osoitin->setStyleSheet("background-color: beige");   //Heti alusta tän värinnen, tarpeellinen??
+            osoitin->setStyleSheet("background-color: beige");
+            osoitin->setDisabled(true);
 
             rivi.push_back(osoitin);
-            osoitin->setDisabled(true);             //deaktivoidaan
-            ui->gridLayout_2->addWidget(osoitin, rivi_luku, sarake);    //Piirretään gridille
-
-
+            ui->gridLayout_2->addWidget(osoitin, rivi_luku, sarake);
         }
         pb_vektori.push_back(rivi);
     }
 }
 
-//OK
+
 //Muuttaa pelilaudan tietorakenteen graafiseksi.
 //Värjää apufunktion avulla ruudut luvun mukaan.
 //Ei paluuarvoa, ei parametria.
@@ -109,7 +107,6 @@ void MainWindow::backend_tietorakenne_graafiseksi()
 }
 
 
-//OK
 // Palauttaa värin qstringinä, parametrina kokonaisluku.
 QString MainWindow::hae_laatikon_vari(int luku)
 {
@@ -123,7 +120,6 @@ QString MainWindow::hae_laatikon_vari(int luku)
 }
 
 
-//OK
 // Asettaa seedspinboxin arvon attribuuttiin seed_
 // Toiminnan ohjaamiseksi aktivoi/deaktivoi painonappeja.
 void MainWindow::on_seedSpinBox_valueChanged(int arg1)
@@ -137,7 +133,6 @@ void MainWindow::on_seedSpinBox_valueChanged(int arg1)
 }
 
 
-//OK
 // Asettaa goalspinboxin arvon attribuuttiin goal_
 // Toiminnan ohjaamiseksi aktivoi/deaktivoi painonappeja.
 void MainWindow::on_goalSpinBox_valueChanged(int arg1)
@@ -149,7 +144,7 @@ void MainWindow::on_goalSpinBox_valueChanged(int arg1)
         ui->startPushButton->setDisabled(true);
 }
 
-//OK
+
 // Aloittaa pelin.
 // Toiminnan ohjaamiseksi aktivoi/deaktivoi painonappeja.
 void MainWindow::on_startPushButton_clicked()
@@ -171,7 +166,7 @@ void MainWindow::on_startPushButton_clicked()
     ui->rightPushButton->setEnabled(true);
 }
 
-//OK
+
 // Luo backend-tietorakenteen tai muokkaa sitä jos jo olemassa.
 // Ei paluuarvoa, ei parametreja.
 void MainWindow::luo_backend_tai_palauttaa_alkutilanteeseen()
@@ -194,7 +189,7 @@ void MainWindow::luo_backend_tai_palauttaa_alkutilanteeseen()
 
 }
 
-// OK
+
 // Keskeyttää pelin aktivoimalla/deaktivoimalla painonappeja.
 // Nolla spinboxit, peliohje textbrowseriin.
 void MainWindow::on_resetPushButton_clicked()
@@ -218,7 +213,7 @@ void MainWindow::on_resetPushButton_clicked()
 
 }
 
-// OK
+
 // Tarkistaa onko tavoiteluku kakkosen potenssi.
 // Paluuarvona boolean, ei parametreja.
 bool MainWindow::is_goal_approved()
@@ -230,7 +225,7 @@ bool MainWindow::is_goal_approved()
 }
 
 
-// OK
+
 // Välittää suuntakäskyn backendille ja lisää uuden ruudun.
 // Tarkistaa voitto&häviötilanteen, piirtää muutokset graafiseksi.
 void MainWindow::on_upPushButton_clicked()
@@ -251,7 +246,7 @@ void MainWindow::on_upPushButton_clicked()
     backend_tietorakenne_graafiseksi();
 }
 
-// OK
+
 // Välittää suuntakäskyn backendille ja lisää uuden ruudun.
 // Tarkistaa voitto&häviötilanteen, piirtää muutokset graafiseksi.
 void MainWindow::on_rightPushButton_clicked()
@@ -272,7 +267,7 @@ void MainWindow::on_rightPushButton_clicked()
     backend_tietorakenne_graafiseksi();
 }
 
-// OK
+
 // Välittää suuntakäskyn backendille ja lisää uuden ruudun.
 // Tarkistaa voitto&häviötilanteen, piirtää muutokset graafiseksi.
 void MainWindow::on_downPushButton_clicked()
@@ -293,7 +288,7 @@ void MainWindow::on_downPushButton_clicked()
     backend_tietorakenne_graafiseksi();
 }
 
-// OK
+
 // Välittää suuntakäskyn backendille ja lisää uuden ruudun.
 // Tarkistaa voitto&häviötilanteen, piirtää muutokset graafiseksi.
 void MainWindow::on_leftPushButton_clicked()
@@ -314,12 +309,13 @@ void MainWindow::on_leftPushButton_clicked()
     backend_tietorakenne_graafiseksi();
 }
 
-//OK
+
 // Voittotilanteesta ilmoitus. Ohjaa painamaan Reset tai Lopeta painonappeja
 // aktivoimalla/deaktivoimalla.
 // Ei paluuarvoa, ei parametreja.
 void MainWindow::voitto_funktio()
 {
+    backend_tietorakenne_graafiseksi();
     QString tavoite = QString::number(goal_);
     ui->textBrowser->setText("Voitit! Saavutit tavoitteen " +tavoite +"."
                             " Paina Reset aloittaaksesi uudelleen tai "
@@ -332,12 +328,13 @@ void MainWindow::voitto_funktio()
     ui->rightPushButton->setDisabled(true);
 }
 
-// OK
+
 // Häviötilanteesta ilmoitus. Ohjaa painamaan Reset tai Lopeta painonappeja
 // aktivoimalla/deaktivoimalla.
 // Ei paluuarvoa, ei parametreja.
 void MainWindow::havio_funktio()
 {
+    backend_tietorakenne_graafiseksi();
     ui->textBrowser->setText("Hävisit. Ruudukko on täynnä."
                             " Paina Reset aloittaaksesi uudelleen tai "
                             "Sulje lopettaaksesi");

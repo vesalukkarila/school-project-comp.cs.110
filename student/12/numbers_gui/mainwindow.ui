@@ -93,58 +93,6 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="upPushButton">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>320</y>
-      <width>84</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ylös</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="downPushButton">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>380</y>
-      <width>84</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Alas</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="leftPushButton">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>350</y>
-      <width>84</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Vasen</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="rightPushButton">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>350</y>
-      <width>84</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Oikea</string>
-    </property>
-   </widget>
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
@@ -166,6 +114,53 @@
     </property>
     <layout class="QGridLayout" name="gridLayout_2"/>
    </widget>
+   <widget class="QWidget" name="gridLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>300</y>
+      <width>181</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_3">
+     <property name="horizontalSpacing">
+      <number>8</number>
+     </property>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="leftPushButton">
+       <property name="text">
+        <string>Vasen</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QPushButton" name="downPushButton">
+       <property name="text">
+        <string>Alas</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QPushButton" name="rightPushButton">
+       <property name="text">
+        <string>Oikea</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="upPushButton">
+       <property name="text">
+        <string>Ylös</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <zorder>graphicsView</zorder>
+   <zorder>gridLayoutWidget</zorder>
+   <zorder>gridLayoutWidget_2</zorder>
+   <zorder>gridLayoutWidget_3</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

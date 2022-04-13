@@ -3,12 +3,10 @@
 
 
 #include <QMainWindow>
-#include <QGraphicsScene>   //Tuotu iha ite, poisto?
 #include <QLabel>
 #include <QPushButton>
 #include <QGridLayout>
 
-//static bool GAMEBOARD_EXISTS = false;
 
 using namespace std;
 
@@ -35,7 +33,6 @@ private slots:
 
     void on_resetPushButton_clicked();
 
-
     void on_upPushButton_clicked();
 
     void on_rightPushButton_clicked();
@@ -46,19 +43,30 @@ private slots:
 
 
 private:
-    Ui::MainWindow *ui;     //osoitin pääikkunaa, toimii parenttina muille widgeteille
-    int seed_,
-        goal_;
-    QGraphicsScene* scene_; //osoitin canvasiin joka graphicsviewin sisällä
-    QGridLayout* grid_lay_out_;
+    //Attribuutit
+    Ui::MainWindow* ui;
+            int seed_,
+                goal_;
 
+    // Attribuuttiosoitin backend-olioon.
+     GameBoard* board_;
+
+     // Tietorakenne peliruuduille
     vector<vector<QPushButton*>> pb_vektori;
-    const int ruudun_koko = 40;
 
-    GameBoard* board_;          //Katso että tuhotaan dynaaminen olio
+    // Vakiomuuttujat
+    const int ruudun_koko = 40;
 
     const vector<int> APPROVED_GOALS =
     {8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192};
+
+    const map<int, QString> vari_kartta =
+    {{0,"lightyellow"}, {2, "lightpink"}, {4, "lightsalmon"},
+    {8, "lightsteelblue"}, {16, "lightskyblue"}, {32, "aqua"}, {64, "lightgreen"},
+    {128, "lightseagreen"}, {256, "mediumseagreen"}, {512, "darkgreen"},
+    {1024, "lightcoral"}, {2048, "indianred"}, {4096, "tomato"}, {8192, "violet"}};
+
+    // Funktiot
     bool is_goal_approved();
     void widgetit_tietorakenteeseen_ja_ruudulle();
     void luo_backend_tai_palauttaa_alkutilanteeseen();
@@ -67,10 +75,6 @@ private:
     void havio_funktio();
     QString hae_laatikon_vari(int luku);
 
-    const map<int, QString> vari_kartta =           //Saako tämän alustaa täällä, oli joku läppä asiasta mitä .hh:ssa saa tehdä
-    {{0,"lightyellow"}, {2, "blue"}, {4, "green"},
-    {8, "red"}, {16, "blue"}, {32, "green"}, {64, "blue"},
-    {128, "blue"}, {256, "blue"}, {512, "blue"}, {1024, "blue"},
-    {2048, "blue"}, {4096, "blue"}, {8192, "blue"} };
+
 };
 #endif // MAINWINDOW_HH
