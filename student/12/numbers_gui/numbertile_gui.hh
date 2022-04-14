@@ -1,3 +1,12 @@
+/*Lisätty get_nt_value - metodi
+ *
+ *Ohjelman kirjoittaja
+ * Nimi: Vesa Lukkarila
+ * Opiskelijanumero: 150372523
+ * Käyttäjätunnus: h6vlukka
+ * E-Mail: vesa.lukkarila@tuni.fi
+*/
+
 #ifndef NUMBERTILE_GUI_H
 #define NUMBERTILE_GUI_H
 

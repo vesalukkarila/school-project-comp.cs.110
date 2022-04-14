@@ -1,3 +1,14 @@
+/* Lisätty gameboard_exists_ attribuutti
+ * Lisätty get_value- metodi
+ * fill- metodia muokattu
+ *
+ * Ohjelman kirjoittaja
+ * Nimi: Vesa Lukkarila
+ * Opiskelijanumero: 150372523
+ * Käyttäjätunnus: h6vlukka
+ * E-Mail: vesa.lukkarila@tuni.fi
+*/
+
 #ifndef GAMEBOARD_GUI_H
 #define GAMEBOARD_GUI_H
 
@@ -46,6 +57,7 @@ public:
     // Returns the element (number tile) in the given coordinates.
     NumberTile* get_item(Coords coords);
 
+
     // Tekijän lisäämä metodi. Palauttaa numbertilen luvun.
     int get_value(Coords coords);
 
@@ -59,6 +71,7 @@ private:
     std::default_random_engine randomEng_;
     std::uniform_int_distribution<int> distribution_;
 
+    // Tekijän lisäämä attribuutti
     bool gameboard_exists_;
 
 

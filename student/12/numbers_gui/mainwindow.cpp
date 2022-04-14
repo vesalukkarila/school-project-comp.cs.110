@@ -1,3 +1,24 @@
+/*Peli 2048
+ * Peliohjeet:
+ * Valitse siemenluku väliltä 1-99. Tavoitteeksi ohjelma hyväksyy
+ * vain jonkin 2:n potenssin väliltä 8-8192. Pelin voi aloittaa vain jos
+ * siemenluku ja tavoite ovat hyväksyttäviä.
+ * Painamalla Aloita pääset pelaamaan.
+ * Pelissä on tarkoitus ruudulla näkyvien nuolinäppäimien avulla liikutella
+ * ruutuja ja pyrkiä kasvattamaan suurimman ruudun arvoa kohti tavoitetta.
+ * Peli päättyy häviöön jos pelilauta täyttyy ruuduista ja voittoon jos
+ * tavoiteluku saavutetaan.
+ * Resetistä voit aloittaa pelin alusta ja Lopeta-painikkeella
+ * ohjelma sulkeutuu.
+ * Tekstikentässä näet ohjeet pelaamisen aikana.
+ *
+ * Ohjelman kirjoittaja
+ * Nimi: Vesa Lukkarila
+ * Opiskelijanumero: 150372523
+ * Käyttäjätunnus: h6vlukka
+ * E-Mail: vesa.lukkarila@tuni.fi
+*/
+
 #include "mainwindow.hh"
 #include "gameboard_gui.hh"
 #include "numbertile_gui.hh"
@@ -7,8 +28,6 @@
 #include <QPushButton>
 #include <utility>
 #include <QDebug>
-#include <map>
-#include <QString>
 
 
 const Coords LEFT = {0, -1};

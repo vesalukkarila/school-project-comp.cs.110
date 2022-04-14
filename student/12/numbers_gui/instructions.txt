@@ -1,0 +1,52 @@
+Dokumentti
+
+Peliohjeet:
+* Peliohjeet:
+* Valitse siemenluku väliltä 1-99. Tavoitteeksi ohjelma hyväksyy
+* vain jonkin 2:n potenssin väliltä 8-8192. Pelin voi aloittaa vain jos
+* siemenluku ja tavoite ovat hyväksyttäviä.
+* Painamalla Aloita pääset pelaamaan.
+* Pelissä on tarkoitus ruudulla näkyvien nuolinäppäimien avulla liikutella
+* ja yhdistellä samansuuruisia ruutuja ja pyrkiä kasvattamaan suurimman ruudun arvoa kohti tavoitetta.
+* Peli päättyy häviöön jos pelilauta täyttyy ruuduista ja voittoon jos
+* tavoiteluku saavutetaan.
+* Resetistä voit aloittaa pelin alusta ja Lopeta-painikkeella
+* ohjelma sulkeutuu.
+* Tekstikentässä näet ohjeet pelaamisen aikana.
+
+Ohjelman toiminta:
+
+Ohjelman toimintavarmuus nojaa pushbuttoneiden aktivoimiseen ja deaktivoimiseen, joilla pelaajan toimintaa ohjataan vahvasti.
+Käytännössä graafisen käyttöliittymän komennoilla virhetilanteita ei pääse syntymään backendiin.
+Esim.: Graafinen käyttöliittymä pakottaa valitsemaan hyväksytyn tavoiteluvun, peliä ei voi aloittaa uudellen painamatta Reset,
+siemen- ja tavoiteluku on deaktivoitu pelin aikana, jne. Nämä käyvät intuiitivisesti ilmi peliä pelatessasi.
+
+Ainoastaan Aloita-painikkeesta alkava tapahtumaketju aktivoi backendin muutokset, luo tietorakenteen jos sitä ei ole ennestään
+ja muokkaa tietorakennetta jos se on jo olemassa ( on_start_pushbuttonclicked -> luo_backend_tai_palauta_alkutilanteeseen )
+
+GameBoard-luokkaan on lisätty attribuutti gameboard_exists_ ja metodi get_value. Kyseisen luokan fill-metodia on muokattu siten,
+että se toimii myös alkuperäisessä versiossa ilman graafista käyttöliittymää.
+NumberTile-luokkaan lisätty metodi get_nt_value.
+
+
+
+Oma arvio 60 pistettä:
+
+Tehtävän tekeminen oli minulle erittäin haastavaa, pelkästään alkuun pääseminen kesti viikon.
+Aikaa kului kaikin puolin liikaa ja siksi lisäominaisuuksista toteutui vain yksi.
+
+Hyvät puolet:
+- Ohjelma on käyttäjäystävällinen.
+- Minimivaatimukset täyttyy. (kts.lista niistä toisaalla)           50 p
+- Peli on vakaa, valgrind ei herjaa eikä ohjelma ei kaadu missään skenaariossa.
+- Front- ja backend on selkeästi erillään.
+- Koodi on lähellä sitä dataa jota se käsittelee.
+- Koodin asettelu hyvä, muuttuja- ja funktionimet ovat kuvaavia.
+- Funktiot ja muu tarpeellinen on kommentoitu.
+- Ruutujen värit muuttuu luvun mukaan.                              10 p.
+
+Parannettavaa ensi kerralle:
+- Peliruudut ovat nyt deaktivoituja pushbuttoneita, esim. label olisi parempi. Näiden ympärille olisi voinut laittaa raamit.
+- Suuntanappien painallukset olisi voinut lukea onKeyPressEvent-slotilla, nyt jokaiselle on oma.
+- Ja ne olisi voinut luoda loopissa.
+- Widgettejä olisi voinut tehdä enemmän koodillisesti.
