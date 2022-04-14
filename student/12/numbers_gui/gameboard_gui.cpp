@@ -1,8 +1,11 @@
 #include "gameboard_gui.hh"
 #include <iostream>
 
-GameBoard::GameBoard()
+
+GameBoard::GameBoard():
+gameboard_exists_(false)    //Lisätty attribuutin alustus
 {
+
 }
 
 GameBoard::~GameBoard()
@@ -17,12 +20,13 @@ GameBoard::~GameBoard()
     }
 }
 
-void GameBoard::init_empty()    //Luo tietorakenteen jossa osoittimet nullptr, ei luo nt-olioita tässä
+
+void GameBoard::init_empty()
 {
     std::vector<NumberTile*> row;
     for( int i = 0; i < SIZE; ++i)
     {
-        row.push_back(nullptr); //NumberTile* = nullptr, muutoin NumberTile* = &muistiosoite
+        row.push_back(nullptr);
     }
     for( int i = 0; i < SIZE; ++i)
     {
@@ -30,19 +34,18 @@ void GameBoard::init_empty()    //Luo tietorakenteen jossa osoittimet nullptr, e
     }
 }
 
+
 void GameBoard::fill(int seed)
 {
-    //Näitä tarvitaan newvaluessa
     randomEng_.seed(seed);
     distribution_ = std::uniform_int_distribution<int>(0, SIZE - 1);
 
     // Wiping out the first random number (which is almost almost 0)
     distribution_(randomEng_);
 
-    if (GAMEBOARD_EXISTS == false)  //Kun luodaan ensimmäinen alussa
+    // Ensimmäisellä kerralla luodaan numbertile oliot
+    if (gameboard_exists_ == false)
     {
-
-
         for( auto y = 0; y < SIZE; ++y )
         {
             for( auto x = 0; x < SIZE; ++x )
@@ -50,16 +53,18 @@ void GameBoard::fill(int seed)
                 board_.at(y).at(x) = new NumberTile(0, std::make_pair(y, x), this);//Tässä luo dynaamiseT numbertilet
             }
         }
+        gameboard_exists_ = true;
+
     }
 
-
-    else        //jos tullaan muuttamaan numbertilien arvot nolliksi
+    //Jos pelilauta ennestään olemassa muutetaan kaikki numbertile arvot nollaksi
+    else
     {
         for( auto y = 0; y < SIZE; ++y )
         {
             for( auto x = 0; x < SIZE; ++x )
             {
-                board_.at(y).at(x)->new_value(0);   // Muutetaan kaikkien arvot nollaksi, kutsumalla nt:n newvalueta
+                board_.at(y).at(x)->new_value(0);
             }
         }
     }
@@ -68,13 +73,15 @@ void GameBoard::fill(int seed)
     //Kummassakin tapauksessa neljä randomia pohjalle
     for( int i = 0 ; i < SIZE ; ++i )
     {
-        new_value();        //kutsuu tästä parametrilla true, JA SIT VaiN KUTSUU NELJÄSTI UUDEN LUVUN
+        new_value();
     }
 }
 
-void GameBoard::new_value(bool check_if_empty)      //asettaa yhden uuden luvun RANDOMIN NUMBERTILEN VALUEKSI
+
+
+void GameBoard::new_value(bool check_if_empty)
 {
-    if( check_if_empty and is_full() ){                      //check_if_empty=oletusparametri, mainista lopussa falsena
+    if( check_if_empty and is_full() ){
         // So that we will not be stuck in a forever loop
         return;
     }
@@ -86,6 +93,7 @@ void GameBoard::new_value(bool check_if_empty)      //asettaa yhden uuden luvun 
         random_y = distribution_(randomEng_);
     } while( not board_.at(random_y).at(random_x)->new_value(NEW_VALUE) );
 }
+
 
 void GameBoard::print() const   //printtaa NumberTilen printistä, y=ulompi x =sisempi, x=pointterin päässä dyn. NumberTile-olio
 {
@@ -100,6 +108,7 @@ void GameBoard::print() const   //printtaa NumberTilen printistä, y=ulompi x =s
     }
     std::cout << std::string(PRINT_WIDTH * SIZE + 1, '-') << std::endl;
 }
+
 
 bool GameBoard::move(Coords dir, int goal)
 {
@@ -126,15 +135,22 @@ bool GameBoard::move(Coords dir, int goal)
     return has_won;
 }
 
+
 NumberTile* GameBoard::get_item(Coords coords)
 {
     return board_.at(coords.first).at(coords.second);
 }
 
-int GameBoard::get_value(Coords coords) //LISÄTTY
+
+// Tekijän lisäämä metodi
+// Hakee Numbertile luokan metodista arvon ja palauttaa mainwindow kutsujalle
+// Paluuarvo int, parametrina koordinaatit
+int GameBoard::get_value(Coords coords)
 {
     return board_.at(coords.first).at(coords.second)->get_nt_value();
 }
+
+
 
 bool GameBoard::is_full() const
 {

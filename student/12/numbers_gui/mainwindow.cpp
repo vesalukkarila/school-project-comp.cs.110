@@ -20,7 +20,7 @@ const Coords DOWN = {1, 0};
 // Pääikkunan alustustoimenpiteet.
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow), seed_(0), goal_(0)
+    , ui(new Ui::MainWindow), seed_(0), goal_(0), board_(nullptr)
 {
     ui->setupUi(this);
 
@@ -47,8 +47,11 @@ MainWindow::MainWindow(QWidget *parent)
 // Purkaja, tuhoaa myös dynaamisesti luodun gameboard-olion mikäli olemassa.
 MainWindow::~MainWindow()
 {
-    if (GAMEBOARD_EXISTS == true)
+    if (board_ != nullptr)
+    {
         delete board_;
+    }
+
     delete ui;
 }
 
@@ -171,20 +174,19 @@ void MainWindow::on_startPushButton_clicked()
 // Ei paluuarvoa, ei parametreja.
 void MainWindow::luo_backend_tai_palauttaa_alkutilanteeseen()
 {
-    //GAMEBOARD-EXISTS gameboard_gui.hh:ssa näin sitä voidaan käyttää myös
-    //gameboard_gui.cpp:n fill() funktiossa, jota muokattu.
-    if (GAMEBOARD_EXISTS == false)
+    // Mikäli gameboard-olio ei vielä olemassa
+    if (board_ == nullptr)
     {
         board_ = new GameBoard;
         board_->init_empty();
         board_->fill(seed_);
-        GAMEBOARD_EXISTS = true;
-
     }
 
+    // Muutoin muokatun fill-metodin avulla olemassaolevan tietorakenteen muokkaus
     else
     {
         board_->fill(seed_);
+
     }
 
 }

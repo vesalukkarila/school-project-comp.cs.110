@@ -35,7 +35,9 @@ public:
     // Sets the value of is_merged_ as false.
     void reset_turn();
 
-    int get_nt_value();    //LISÄTTY kutsuja on numbertile olio, eikö joten ei parametreja?
+
+    //Tekijän lisäämä metodi. Palauttaa numbertilen luvun (int)
+    int get_nt_value();
 
 private:
     // Value in the number tile

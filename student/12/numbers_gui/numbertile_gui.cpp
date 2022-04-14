@@ -72,16 +72,15 @@ void NumberTile::reset_turn()
     is_merged_ = false;
 }
 
-int NumberTile::get_nt_value()  //gameboard.cpp kutsuja on dynaaminen olio, ymmärtäisin
+
+// Tekijän lisäämä metodi.
+// Paluuarvona int (nt:n luku), ei parametreja
+int NumberTile::get_nt_value()
 {
     return value_;
 }
 
-/*nt NumberTile::get_nt_value(Coords coords) //LISÄTTY
-{
-    return
-}
-*/
+
 bool NumberTile::is_on_board(Coords coords)
 {
     return coords.first >= 0 and coords.first < SIZE and

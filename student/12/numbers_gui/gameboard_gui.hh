@@ -10,8 +10,6 @@ const int PRINT_WIDTH = 5;
 const int NEW_VALUE = 2;
 const int DEFAULT_GOAL = 2048;
 
-static bool GAMEBOARD_EXISTS = false;
-
 class GameBoard
 {
 public:
@@ -48,7 +46,9 @@ public:
     // Returns the element (number tile) in the given coordinates.
     NumberTile* get_item(Coords coords);
 
-    int get_value(Coords coords);       //LISÄTTY!!!!
+    // Tekijän lisäämä metodi. Palauttaa numbertilen luvun.
+    int get_value(Coords coords);
+
 
 private:
     // Internal structure of the game board
@@ -58,6 +58,10 @@ private:
     // they work better, if they are attributes of a class.
     std::default_random_engine randomEng_;
     std::uniform_int_distribution<int> distribution_;
+
+    bool gameboard_exists_;
+
+
 };
 
 #endif // GAMEBOARD_GUI_H
