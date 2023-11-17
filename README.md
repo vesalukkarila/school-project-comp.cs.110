@@ -1,9 +1,12 @@
-Ohjelmointi 2: Rakenteet / Programming 2: Structures
+# school-project-comp.cs.140
+Programming course 2, individual project, spring -22.
 
-Kevät/Spring 2022
+## Usage
 
-Tämä repo sisältää opiskelijalle jaettavat materiaalit. /
-This repository contains materials for students.
+### Run locally
 
-Kurssin materiaali / Course material:
-https://plus.tuni.fi/comp.cs.110/spring-2022/
+
+### Learning goals
+
+
+### Description
