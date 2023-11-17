@@ -1,5 +1,5 @@
 # school-project-comp.cs.140
-Programming course 2, individual project, spring -22.
+Programming course 2, individual project, spring -22. Implementation of the game called "2048".
 
 ## Usage
 
@@ -18,10 +18,10 @@ make
 ```
 (if running executable failes, check Makefile´s "TARGET" to see where it places the executable.
 
-### Learning goals
+## Learning goals
 Design and implementing a graphical user interface with Qt.  
 Using Qt documentation.  
 Modularity and separating user interface from the action logic of the program.
 
-### Description
-Implementation of the game called "2048".
+
+
