@@ -4,7 +4,7 @@ Programming course 2, individual project, spring -22. Implementation of the game
 ## Usage
 
 ### Run locally
-Generate makefile with qmake
+Generate Makefile with qmake
 ```sh
 qmake -o Makefile numbers_gui.pro
 ```
