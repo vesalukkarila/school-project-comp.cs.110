@@ -15,8 +15,13 @@ qmake -o Makefile numbers_gui.pro
 make
 ```
 .. and run the executable
+on macOs
 ```sh
-./numbers.gui
+open numbers_gui.app
+```
+non-macOs
+```sh
+./numbers_gui
 ```
 (if running executable failes, check Makefile´s "TARGET" to see where it places the executable.
 
