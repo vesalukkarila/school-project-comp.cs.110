@@ -1,4 +1,4 @@
-# school-project-comp.cs.140
+# school-project-comp.cs.110
 - Programming course 2, individual project, spring -22.
 - Implementation of the game called "2048".
 - Overall grade for the course: 4
