@@ -6,6 +6,7 @@
 ## Usage
 
 ### Run locally
+in path: school-project-comp.cs.110/student/12/numbers_gui  
 Generate Makefile with qmake
 ```sh
 qmake -o Makefile numbers_gui.pro
@@ -19,11 +20,11 @@ on macOs
 ```sh
 open numbers_gui.app
 ```
-non-macOs
+non-macOs, check Makefile´s "TARGET" to see where it places the executable and run
 ```sh
 ./numbers_gui
 ```
-(if running executable failes, check Makefile´s "TARGET" to see where it places the executable.
+
 
 ## Learning goals
 Designing and implementing a graphical user interface with Qt.  
